@@ -67,4 +67,4 @@ gem 'devise_ldap_authenticatable'
 gem 'rolify'
 
 gem 'airbrake', '~> 5.0'
-gem 'dotenv-rails'
+gem 'dotenv-rails', :groups => [:development, :test]

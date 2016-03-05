@@ -38,6 +38,8 @@ class BadgesController < ApplicationController
 
     # print the badge and save the record
 
+    id = info_params[:number]
+
     p = Prawn::Document.new({ page_size: [2.125 * 72, 3.375 * 72], page_layout: :landscape, margin: 7 })
 
     #p.stroke_axis
@@ -56,13 +58,15 @@ class BadgesController < ApplicationController
     p.text_box '#' + info_params[:number], at: [0, p.cursor], height: 10, width: 130, overflow: :shrink_to_fit, size: 10, align: :right
     p.move_down 10
 
-    p.image "/tmp/picture_5218.jpg", width: 100, at: [p.bounds.right - 95, p.bounds.top]
+    p.image "/tmp/picture_#{id}.jpg", width: 100, at: [p.bounds.right - 95, p.bounds.top]
     p.image Rails.root.join('app', 'assets', 'images', 'kpblogot.jpg'), width: 90, at: [0, p.bounds.bottom + 86]
-    p.render_file("/tmp/badge_.pdf")  # TODO: put employee number in file name
+    p.render_file("/tmp/badge_#{id}.pdf")  # TODO: put employee number in file name
     
-
-
-
+    # # convert to jpg to show a sample
+    # require 'RMagick'
+    # pdf_file_name = "/tmp/badge_#{id}.pdf"
+    # img = Magick::Image.read(pdf_file_name)
+    # img[0].write("/tmp/badge_#{id}.jpg")
   end
 
   # PATCH/PUT /badges/1
@@ -102,26 +106,22 @@ class BadgesController < ApplicationController
   end
 
   def lookup
-    info = nil
-    results = Badge.lookup_employee("employeeId", params[:id])
-    if results.present?
-      info = {
-        name: results.givenname.first + " " + results.sn.first,
-        dept: results.department.first,
-        title: results.title.first,
-        number: results.employeeid.first,
-        manager: results.manager.first,
-        mail: results.mail.first
-      }
+    # find, don't find, or error
+    # use ldap or not
+    errors = []
+    begin
+      info = Badge.lookup_employee("employeeId", params[:id])
+    rescue => e
+      errors << "#{e.class} #{e.message}"
     end
 
     respond_to do |format|
-      if !info.blank?
+      if errors.blank?
         format.html { render :lookup, layout: false, locals: { info: info } }
         format.json { render json: info, status: :ok }
       else
-        format.html { render text: "<div class='alert alert-warning'>Employee not found.</div>" }
-        format.json { render json: {}, status: :not_found }
+        format.html { render text: "<div class='alert alert-danger'>#{errors.join(', ')}</div>" }
+        format.json { render json: errors, status: :not_found }
       end
     end
   end
