@@ -2,15 +2,14 @@
 
 <h1>Listing Badges</h1>
 
-<table>
+<table class="table table-striped">
   <thead>
     <tr>
       <th>Employee</th>
       <th>Name</th>
       <th>Title</th>
       <th>Department</th>
-      <th>Picture</th>
-      <th colspan="3"></th>
+      <th></th>
     </tr>
   </thead>
 
@@ -21,10 +20,9 @@
         <td><%= badge.name %></td>
         <td><%= badge.title %></td>
         <td><%= badge.department %></td>
-        <td><%= badge.picture %></td>
-        <td><%= link_to 'Show', badge %></td>
-        <td><%= link_to 'Edit', edit_badge_path(badge) %></td>
-        <td><%= link_to 'Destroy', badge, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Show', badge %>
+        <%= link_to 'Edit', edit_badge_path(badge) %>
+        <%= link_to 'Destroy', badge, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -32,4 +30,4 @@
 
 <br>
 
-<%= link_to 'New Badge', new_badge_path %>
+<%= link_to 'New Badge', new_badge_path, class: 'btn btn-primary' %>

@@ -1,11 +1,3 @@
 <% if info[:name].nil? %>
   <div class="alert alert-warning">Employee not found</div>
 <% end %>
-
-<%= simple_form_for :info, url: { controller: :badges, action: :create}, remote: true do |f| %>
-  <%= f.input :name, input_html: { value: info[:name] } %>
-  <%= f.input :dept, input_html: { value: info[:dept] } %>
-  <%= f.input :title, input_html: { value: info[:title] } %>
-  <%= f.input :number, input_html: { value: info[:number] } %>
-  <%= f.button :submit, "Print Card", class: 'btn btn-primary' %>
-<% end %>

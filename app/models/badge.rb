@@ -1,4 +1,8 @@
 class Badge < ActiveRecord::Base
+  validates :name, presence: true
+  validates :department, presence: true
+  validates :title, presence: true
+  validates :employee_id, presence: true
 
   def self.lookup_employee(attribute, value)
     info = {}
@@ -30,11 +34,9 @@ class Badge < ActiveRecord::Base
         if results.size == 1
           info = {
             name: results.givenname.first + " " + results.sn.first,
-            dept: results.department.first,
+            department: results.department.first,
             title: results.title.first,
-            number: results.employeeid.first,
-            manager: results.manager.first,
-            mail: results.mail.first
+            employee_id: results.employeeid.first,
           }
         end
       end

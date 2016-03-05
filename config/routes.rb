@@ -56,7 +56,12 @@ Rails.application.routes.draw do
   #     resources :products
   #   end
 
-  resources :badges
+  resources :badges do
+    member do
+      get 'photo'
+      get 'print'
+    end
+  end
 
   post 'upload_image' => 'badges#upload_image'
   post 'lookup' => 'badges#lookup', as: :lookup

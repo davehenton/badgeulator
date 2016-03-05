@@ -25,7 +25,7 @@ function discardSnapshot() {
 
 function useSnapshot() {
   if (snapshot !== null) {
-    snapshot.upload({ api_url: "/upload_image?id=" + encodeURIComponent($('#employee_id').val()) }).done(function(response) {
+    snapshot.upload({ api_url: "/upload_image?id=" + encodeURIComponent($('#badge_employee_id').val()) }).done(function(response) {
       $('#upload_response').html(response);
       // this.discard(); // discard snapshot and show video stream again
     }).fail(function(status_code, error_message, response) {
@@ -40,7 +40,15 @@ function handleLookup() {
   $('.lookup-form')
     .on('ajax:success', function (e, data, status, xhr) {
       console.log('lookup success');
-      $('.employee-info').html(data);
+      if (typeof data["name"] === "undefined" || data["name"] === null) {
+        $('.lookup-status').text("Employee not found.");
+      } else {
+        $('.lookup-status').text("");
+        $('#badge_name').val(data["name"]);
+        $('#badge_department').val(data["department"]);
+        $('#badge_title').val(data["title"]);
+        $('#badge_employee_id').val(data["employee_id"]);
+      }
     })
     .on('ajax:error', function (e, xhr, status, error) {
       console.log('lookup error');

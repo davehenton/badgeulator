@@ -1,5 +1,5 @@
 class BadgesController < ApplicationController
-  before_action :set_badge, only: [:show, :edit, :update, :destroy]
+  before_action :set_badge, only: [:show, :edit, :update, :destroy, :photo, :print]
 
   # GET /badges
   # GET /badges.json
@@ -24,21 +24,28 @@ class BadgesController < ApplicationController
   # POST /badges
   # POST /badges.json
   def create
-    # @badge = Badge.new(badge_params)
+    @badge = Badge.new(badge_params)
 
-    # respond_to do |format|
-    #   if @badge.save
-    #     format.html { redirect_to @badge, notice: 'Badge was successfully created.' }
-    #     format.json { render :show, status: :created, location: @badge }
-    #   else
-    #     format.html { render :new }
-    #     format.json { render json: @badge.errors, status: :unprocessable_entity }
-    #   end
-    # end
+    respond_to do |format|
+      if @badge.save
+        format.html { redirect_to photo_badge_url(@badge) }
+        format.json { render :show, status: :created, location: @badge }
+      else
+        format.html { render :new }
+        format.json { render json: @badge.errors, status: :unprocessable_entity }
+      end
+    end
+  end
 
+  # GET /badges/new
+  def photo
+
+  end
+
+  def print
     # print the badge and save the record
 
-    id = info_params[:number]
+    id = @badge.employee_id
 
     p = Prawn::Document.new({ page_size: [2.125 * 72, 3.375 * 72], page_layout: :landscape, margin: 7 })
 
@@ -47,15 +54,15 @@ class BadgesController < ApplicationController
     p.move_down 4
     p.text_box "Kenai Peninsula Borough", at: [0, p.cursor], height: 12, width: 134, overflow: :shrink_to_fit, size: 12
     p.move_down 14
-    p.text_box info_params[:name], at: [0, p.cursor], height: 14, width: 134, overflow: :shrink_to_fit, style: :bold, size: 14
+    p.text_box @badge.name, at: [0, p.cursor], height: 14, width: 134, overflow: :shrink_to_fit, style: :bold, size: 14
     p.move_down 14
     p.stroke_horizontal_rule
     p.move_down 4
-    p.text_box info_params[:dept], at: [0, p.cursor], height: 10, width: 134, overflow: :shrink_to_fit, style: :italic, size: 10
+    p.text_box @badge.department, at: [0, p.cursor], height: 10, width: 134, overflow: :shrink_to_fit, style: :italic, size: 10
     p.move_down 10
-    p.text_box info_params[:title], at: [0, p.cursor], height: 8, width: 134, overflow: :shrink_to_fit, style: :italic, size: 8
+    p.text_box @badge.title, at: [0, p.cursor], height: 8, width: 134, overflow: :shrink_to_fit, style: :italic, size: 8
     p.move_down 12
-    p.text_box '#' + info_params[:number], at: [0, p.cursor], height: 10, width: 130, overflow: :shrink_to_fit, size: 10, align: :right
+    p.text_box '#' + id, at: [0, p.cursor], height: 10, width: 130, overflow: :shrink_to_fit, size: 10, align: :right
     p.move_down 10
 
     p.image "/tmp/picture_#{id}.jpg", width: 100, at: [p.bounds.right - 95, p.bounds.top]
@@ -67,6 +74,10 @@ class BadgesController < ApplicationController
     # pdf_file_name = "/tmp/badge_#{id}.pdf"
     # img = Magick::Image.read(pdf_file_name)
     # img[0].write("/tmp/badge_#{id}.jpg")
+
+    respond_to do |format|
+      format.html { redirect_to badges_url }
+    end
   end
 
   # PATCH/PUT /badges/1
@@ -136,8 +147,5 @@ class BadgesController < ApplicationController
     def badge_params
       params.require(:badge).permit(:employee_id, :name, :title, :department, :picture)
     end
-    
-    def info_params
-      params.require(:info).permit(:number, :name, :title, :dept)
-    end
+  
 end

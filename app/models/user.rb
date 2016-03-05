@@ -24,6 +24,5 @@ class User < ActiveRecord::Base
     end
     # make the first user and admin
     self.add_role :admin if User.count == 0
-    self.add_role :user if self.roles.empty?
   end
 end

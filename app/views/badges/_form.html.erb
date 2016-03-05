@@ -1,10 +1,20 @@
-<%= simple_form_for :lookup, url: lookup_url, remote: true, html: { class: "form-inline lookup-form" } do %>
-  <div class="form-group">
-    <label for="employee_id">Employee ID</label>
-    <input type="text" name="id" id="employee_id" class="form-control"/>
-    <button class='btn btn-primary lookup-employee'>Lookup</button>
-  </div>
+<% if @badge.new_record? %>
+<div class="lookup-form">
+  <%= simple_form_for :lookup, url: lookup_url(format: :json), remote: true, html: { class: "form-inline lookup-form" } do %>
+    <div class="form-group">
+      <label for="employee_id">Employee ID</label>
+      <input type="text" name="id" id="employee_id" class="form-control"/>
+      <button class='btn btn-default lookup-employee'>Lookup</button>
+    </div>
+    <div class="lookup-status"></div>
+  <% end %>
+</div>
 <% end %>
 
-<div class="employee-info">
-</div>
+<%= simple_form_for @badge do |f| %>
+  <%= f.input :name %>
+  <%= f.input :department %>
+  <%= f.input :title %>
+  <%= f.input :employee_id, label: 'Employee ID' %>
+  <%= f.button :submit, "Next >", class: 'btn btn-primary' if @badge.new_record? %>
+<% end %>
