@@ -1,0 +1,24 @@
+<h1>New Badge</h1>
+
+<div class="row">
+  <div class="col-xs-6 col-sm-4">
+    <%= render 'form' %>
+  </div>
+  <div class="col-xs-3 col-sm-4">
+    <div id="camera"></div>
+    <button class="btn btn-primary take-snapshot" onclick="takeSnapshot()">Take</button>
+    <button class="btn btn-default discard-snapshot hidden" onclick="discardSnapshot()">Retry</button>
+    <button class="btn btn-primary use-snapshot hidden" onclick="useSnapshot()">Use</button>
+  </div>
+  <div class="col-xs-3 col-sm-4">
+    <div id="card"></div>
+  </div>
+</div>
+
+<div id="upload_response"></div>
+
+<%#= link_to 'Back', badges_path %>
+<script>
+  $(document).ready(startCamera);
+  $(document).on('page:load', startCamera);
+</script>

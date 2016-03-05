@@ -1,0 +1,10 @@
+<%= simple_form_for :lookup, url: lookup_url, remote: true, html: { class: "form-inline lookup-form" } do %>
+  <div class="form-group">
+    <label for="employee_id">Employee ID</label>
+    <input type="text" name="id" id="employee_id" class="form-control"/>
+    <button class='btn btn-primary lookup-employee'>Lookup</button>
+  </div>
+<% end %>
+
+<div class="employee-info">
+</div>

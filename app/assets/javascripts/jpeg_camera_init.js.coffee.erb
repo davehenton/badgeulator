@@ -1,0 +1,8 @@
+$ ->
+  if window.JpegCamera
+    JpegCamera.DefaultOptions.shutter_mp3_url =
+      "<%= asset_path "jpeg_camera/shutter.mp3" %>"
+    JpegCamera.DefaultOptions.shutter_ogg_url =
+      "<%= asset_path "jpeg_camera/shutter.ogg" %>"
+    JpegCamera.DefaultOptions.csrf_token =
+      $("meta[name=\"csrf-token\"]").attr("content")

@@ -1,0 +1,11 @@
+<%= simple_form_for :info, url: { controller: :badges, action: :create}, remote: true do |f| %>
+  <h1 class="employee-name"><%= info[:name] %></h1>
+  <h2 class="employee-dept"><%= info[:dept] %></h2>
+  <h3 class="employee-title"><%= info[:title] %></h3>
+  <h4 class="employee-number"><%= info[:number] %></h4>
+  <%= f.input :name, as: :hidden, input_html: { value: info[:name] } %>
+  <%= f.input :dept, as: :hidden, input_html: { value: info[:dept] } %>
+  <%= f.input :title, as: :hidden, input_html: { value: info[:title] } %>
+  <%= f.input :number, as: :hidden, input_html: { value: info[:number] } %>
+  <%= f.button :submit, "Print Card", class: 'btn btn-primary' %>
+<% end %>

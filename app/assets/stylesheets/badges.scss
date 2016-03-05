@@ -1,0 +1,15 @@
+// Place all the styles related to the badges controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+div#camera, div#snapshot {
+  width: 150px;
+  height: 200px;
+  border: solid 1px gray;
+  margin-bottom: .25em;
+}
+
+div.employee-info {
+  h1, h2, h3, h4 { margin: 0; margin-bottom: .25em; }
+  margin: 1em .5em;
+}
