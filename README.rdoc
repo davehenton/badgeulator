@@ -1,3 +1,5 @@
 == README
 
-A system to keep track of employee identification cards and print them.
+A system to keep track of employee identification cards and print them.  Uses LDAP to look up employee information and jpeg_camera to access the webcam.  Publishes photo to LDAP.
+
+You'll need your own ldap.yml, database.yml, and secrets.yml.
