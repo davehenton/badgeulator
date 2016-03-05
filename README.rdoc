@@ -1,5 +1,7 @@
 == README
 
+- A WORK IN PROGRESS
+
 A system to keep track of and print employee identification cards.  
 
 = FEATURES
