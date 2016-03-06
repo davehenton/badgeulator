@@ -1,5 +1,5 @@
 class BadgesController < ApplicationController
-  before_action :set_badge, only: [:show, :edit, :update, :destroy, :camera, :print, :image, :snapshot]
+  before_action :set_badge, only: [:show, :edit, :update, :destroy, :camera, :print, :image, :snapshot, :preview]
 
   # GET /badges
   # GET /badges.json
@@ -47,6 +47,10 @@ class BadgesController < ApplicationController
     send_file "/tmp/picture_#{@badge.id}.jpg", disposition: 'inline'
   end
 
+  def preview
+    send_file "/tmp/badge_#{@badge.id}.jpg", disposition: 'inline'
+  end
+
   def print
     # print the badge and save the record
 
@@ -75,10 +79,13 @@ class BadgesController < ApplicationController
     p.render_file("/tmp/badge_#{id}.pdf")  # TODO: put employee number in file name
     
     # # convert to jpg to show a sample
+    # horrible quality
     # require 'RMagick'
     # pdf_file_name = "/tmp/badge_#{id}.pdf"
     # img = Magick::Image.read(pdf_file_name)
     # img[0].write("/tmp/badge_#{id}.jpg")
+
+    system("pdftoppm -r 300 -singlefile /tmp/badge_#{id}.pdf /tmp/badge_#{id} && convert /tmp/badge_#{id}.ppm /tmp/badge_#{id}.jpg")
 
     respond_to do |format|
       format.html { redirect_to badges_url }

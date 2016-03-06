@@ -20,3 +20,15 @@ div.employee-info {
   h1, h2, h3, h4 { margin: 0; margin-bottom: .25em; }
   margin: 1em .5em;
 }
+
+div#preview {
+  display: inline-block;
+  background-color: #ccc;
+  padding: 8px;
+}
+
+div#preview img {
+  max-width: 318px;  // .629629
+  max-height: 200px;
+  border-radius: 6px;
+}

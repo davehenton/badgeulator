@@ -60,7 +60,8 @@ Rails.application.routes.draw do
     member do
       get 'camera'  # takes image
       get 'print'
-      get 'image'  # returns image
+      get 'image'     # returns snapshot jpg
+      get 'preview'   # returns badge jpg
       post 'snapshot'
     end
   end
