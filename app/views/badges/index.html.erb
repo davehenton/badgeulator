@@ -5,7 +5,7 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th>Employee</th>
+      <th>Employee Id</th>
       <th>Name</th>
       <th>Title</th>
       <th>Department</th>
@@ -17,17 +17,14 @@
     <% @badges.each do |badge| %>
       <tr>
         <td><%= badge.employee_id %></td>
-        <td><%= badge.name %></td>
+        <td><%= link_to badge.name, badge %></td>
         <td><%= badge.title %></td>
         <td><%= badge.department %></td>
-        <td><%= link_to 'Show', badge %>
-        <%= link_to 'Edit', edit_badge_path(badge) %>
-        <%= link_to 'Destroy', badge, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td>
+        <%= link_to 'Delete', badge, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-xs btn-danger' if !current_user.nil? && current_user.has_role?(:admin) %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
-<br>
 
 <%= link_to 'New Badge', new_badge_path, class: 'btn btn-primary' %>

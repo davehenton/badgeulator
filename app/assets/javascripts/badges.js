@@ -2,8 +2,10 @@ var camera;
 var snapshot; // only one at a time
 
 function startCamera() {
-  console.log('starting camera');
-  camera = new JpegCamera("#camera");
+  if ($('#camera').length == 1) {
+    console.log('starting camera');
+    camera = new JpegCamera("#camera");
+  }
 }
 
 function takeSnapshot() {
@@ -25,7 +27,7 @@ function discardSnapshot() {
 
 function useSnapshot() {
   if (snapshot !== null) {
-    snapshot.upload({ api_url: "/upload_image?id=" + encodeURIComponent($('#badge_employee_id').val()) }).done(function(response) {
+    snapshot.upload({ api_url: $('.use-snapshot').data('url') }).done(function(response) {
       $('#upload_response').html(response);
       // this.discard(); // discard snapshot and show video stream again
     }).fail(function(status_code, error_message, response) {

@@ -1,29 +1,22 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Employee:</strong>
-  <%= @badge.employee_id %>
-</p>
+<h1>Badge</h1>
 
-<p>
-  <strong>Name:</strong>
-  <%= @badge.name %>
-</p>
+<div class="row">
+  <div class="col-xs-6 col-sm-4">
+    <%= simple_form_for @badge do |f| %>
+      <%= f.input :name, input_html: { readonly: :readonly } %>
+      <%= f.input :department, input_html: { readonly: :readonly } %>
+      <%= f.input :title, input_html: { readonly: :readonly } %>
+      <%= f.input :employee_id, label: 'Employee ID', input_html: { readonly: :readonly } %>
+    <% end %>
+  </div>
+  <div class="col-xs-6 col-sm-4">
+    <div id="snapshot">
+      <img src="<%= image_badge_url(@badge) %>" />
+    </div>
+  </div>
+</div>
+<%= link_to "Print", print_badge_url(@badge, remote: true), class: 'btn btn-primary' %>
 
-<p>
-  <strong>Title:</strong>
-  <%= @badge.title %>
-</p>
-
-<p>
-  <strong>Department:</strong>
-  <%= @badge.department %>
-</p>
-
-<p>
-  <strong>Picture:</strong>
-  <%= @badge.picture %>
-</p>
-
-<%= link_to 'Edit', edit_badge_path(@badge) %> |
-<%= link_to 'Back', badges_path %>
+<%= link_to 'Back', badges_path, class: 'btn btn-default' %>

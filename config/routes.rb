@@ -58,12 +58,12 @@ Rails.application.routes.draw do
 
   resources :badges do
     member do
-      get 'photo'
+      get 'camera'  # takes image
       get 'print'
+      get 'image'  # returns image
+      post 'snapshot'
     end
   end
 
-  post 'upload_image' => 'badges#upload_image'
   post 'lookup' => 'badges#lookup', as: :lookup
-
 end

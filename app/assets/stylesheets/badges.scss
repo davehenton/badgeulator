@@ -9,6 +9,13 @@ div#camera, div#snapshot {
   margin-bottom: .25em;
 }
 
+div#snapshot {
+  img {
+    max-width: 150px;
+    max-height: 200px;
+  }
+}
+
 div.employee-info {
   h1, h2, h3, h4 { margin: 0; margin-bottom: .25em; }
   margin: 1em .5em;

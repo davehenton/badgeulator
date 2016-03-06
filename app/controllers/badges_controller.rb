@@ -1,5 +1,5 @@
 class BadgesController < ApplicationController
-  before_action :set_badge, only: [:show, :edit, :update, :destroy, :photo, :print]
+  before_action :set_badge, only: [:show, :edit, :update, :destroy, :camera, :print, :image, :snapshot]
 
   # GET /badges
   # GET /badges.json
@@ -28,7 +28,7 @@ class BadgesController < ApplicationController
 
     respond_to do |format|
       if @badge.save
-        format.html { redirect_to photo_badge_url(@badge) }
+        format.html { redirect_to camera_badge_url(@badge) }
         format.json { render :show, status: :created, location: @badge }
       else
         format.html { render :new }
@@ -37,15 +37,20 @@ class BadgesController < ApplicationController
     end
   end
 
-  # GET /badges/new
-  def photo
+  # GET /badges/:id/camera
+  # shows camera, allows taking of snapshot
+  def camera
+  end
 
+  # returns snapshot from image
+  def image
+    send_file "/tmp/picture_#{@badge.id}.jpg", disposition: 'inline'
   end
 
   def print
     # print the badge and save the record
 
-    id = @badge.employee_id
+    id = @badge.id
 
     p = Prawn::Document.new({ page_size: [2.125 * 72, 3.375 * 72], page_layout: :landscape, margin: 7 })
 
@@ -62,7 +67,7 @@ class BadgesController < ApplicationController
     p.move_down 10
     p.text_box @badge.title, at: [0, p.cursor], height: 8, width: 134, overflow: :shrink_to_fit, style: :italic, size: 8
     p.move_down 12
-    p.text_box '#' + id, at: [0, p.cursor], height: 10, width: 130, overflow: :shrink_to_fit, size: 10, align: :right
+    p.text_box '#' + @badge.employee_id, at: [0, p.cursor], height: 10, width: 130, overflow: :shrink_to_fit, size: 10, align: :right
     p.move_down 10
 
     p.image "/tmp/picture_#{id}.jpg", width: 100, at: [p.bounds.right - 95, p.bounds.top]
@@ -104,9 +109,9 @@ class BadgesController < ApplicationController
     end
   end
 
-  # POST /upload_image
-  def upload_image
-    id = params[:id]
+  # POST /snapshot
+  def snapshot
+    id = @badge.id
     File.open("/tmp/picture_#{id}.jpg", 'wb') do |f|
       f.write(request.raw_post)
     end

@@ -13,11 +13,11 @@
     <div id="camera"></div>
     <button class="btn btn-primary take-snapshot" onclick="takeSnapshot()">Take</button>
     <button class="btn btn-default discard-snapshot hidden" onclick="discardSnapshot()">Retry</button>
-    <button class="btn btn-primary use-snapshot hidden" onclick="useSnapshot()">Use</button>
+    <button class="btn btn-primary use-snapshot hidden" onclick="useSnapshot()" data-url="<%= snapshot_badge_url(@badge)%>">Use</button>
     <div id="upload_response"></div>
   </div>
 </div>
-<%= link_to "Print", print_badge_url(@badge, remote: true), class: 'btn btn-primary' %>
+<%= link_to "Print", print_badge_url(@badge), class: 'btn btn-primary' %>
 
 <script>
   $(document).ready(startCamera);
