@@ -1,4 +1,7 @@
 class Badge < ActiveRecord::Base
+  has_attached_file :picture, styles: { badge: "300x400>", thumb: "150x200>" }
+  has_attached_file :card, styles: { landscape: "318x200>", portrait: "200x318" }
+
   validates :name, presence: true
   validates :department, presence: true
   validates :title, presence: true

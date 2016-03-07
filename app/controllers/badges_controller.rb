@@ -44,10 +44,12 @@ class BadgesController < ApplicationController
 
   # returns snapshot from image
   def image
+    # TODO! rework this with paperclip
     send_file "/tmp/picture_#{@badge.id}.jpg", disposition: 'inline'
   end
 
   def preview
+    # TODO! rework this with paperclip
     send_file "/tmp/badge_#{@badge.id}.jpg", disposition: 'inline'
   end
 
@@ -85,7 +87,11 @@ class BadgesController < ApplicationController
     # img = Magick::Image.read(pdf_file_name)
     # img[0].write("/tmp/badge_#{id}.jpg")
 
+# TODO! this is be in card generate not card print
+
     system("pdftoppm -r 300 -singlefile /tmp/badge_#{id}.pdf /tmp/badge_#{id} && convert /tmp/badge_#{id}.ppm /tmp/badge_#{id}.jpg")
+    @badge.card = "/tmp/badge_#{id}.pdf"
+    @badge.save!
 
     respond_to do |format|
       format.html { redirect_to badges_url }
@@ -122,6 +128,10 @@ class BadgesController < ApplicationController
     File.open("/tmp/picture_#{id}.jpg", 'wb') do |f|
       f.write(request.raw_post)
     end
+    @badge.picture =  File.open "/tmp/picture_#{id}.jpg"
+    @badge.save!
+    File.delete("/tmp/picture_#{id}.jpg") if File.exist?("/tmp/picture_#{id}.jpg")
+
     respond_to do |format|
       format.html { render text: "" }
       format.json { render json: "", status: :ok }
@@ -157,7 +167,7 @@ class BadgesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def badge_params
-      params.require(:badge).permit(:employee_id, :name, :title, :department, :picture)
+      params.require(:badge).permit(:employee_id, :name, :title, :department)
     end
   
 end
