@@ -7,7 +7,8 @@ class Badge < ActiveRecord::Base
   def self.lookup_employee(attribute, value)
     info = {}
 
-    if ENV["USE_LDAP"] == true
+    if ENV["USE_LDAP"] == "true"
+      Rails.logger.debug("using ldap employee lookup")
       require 'net/ldap'
 
       ldap_config = YAML.load(ERB.new(File.read(Devise.ldap_config || "#{Rails.root}/config/ldap.yml")).result)[Rails.env]
@@ -31,7 +32,9 @@ class Badge < ActiveRecord::Base
         results = ldap.search(
           filter: "(#{attribute}=#{value})",      # active_filter, 
           attributes: %w(givenname mail dn sn employeeID manager title department) )
+          Rails.logger.debug("#{results.size} results found")        
         if results.size == 1
+          results = results.first
           info = {
             name: results.givenname.first + " " + results.sn.first,
             department: results.department.first,
@@ -40,6 +43,8 @@ class Badge < ActiveRecord::Base
           }
         end
       end
+    else
+      Rails.logger.debug("no employee lookup defined")
     end
     
     info

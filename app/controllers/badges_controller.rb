@@ -75,7 +75,11 @@ class BadgesController < ApplicationController
     p.move_down 10
 
     p.image "/tmp/picture_#{id}.jpg", width: 100, at: [p.bounds.right - 95, p.bounds.top]
-    p.image Rails.root.join('app', 'assets', 'images', 'kpblogot.jpg'), width: 90, at: [0, p.bounds.bottom + 86]
+
+    p.transparent(0.5) do
+      p.image Rails.root.join('app', 'assets', 'images', 'kpblogot.jpg'), width: 90, at: [0, p.bounds.bottom + 86]
+    end
+
     p.render_file("/tmp/badge_#{id}.pdf")  # TODO: put employee number in file name
     
     # # convert to jpg to show a sample
