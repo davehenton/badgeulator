@@ -17,4 +17,5 @@
 //= require jpeg_camera/canvas-to-blob
 //= require jpeg_camera/jpeg_camera_no_flash
 //= require jpeg_camera_init
+//= require jquery.Jcrop
 //= require_tree .

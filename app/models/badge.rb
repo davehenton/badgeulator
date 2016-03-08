@@ -1,11 +1,25 @@
 class Badge < ActiveRecord::Base
-  has_attached_file :picture, styles: { badge: "300x400>", thumb: "150x200>" }
-  has_attached_file :card, styles: { landscape: "318x200>", portrait: "200x318" }
+  has_attached_file :picture, styles: { badge: "300x400>", thumb: "150x200>" }, processors: [:cropper]
+  has_attached_file :card, styles: { preview: [ "318x200>", :jpg ] } # TODO! , processors: [:pdf2ppm]
+
+  attr_accessor :crop_x, :crop_y, :crop_h, :crop_w
+
+  validates_attachment :picture, content_type: { content_type: "image/jpeg" }
+  validates_attachment :card, content_type: { content_type: "application/pdf" }
 
   validates :name, presence: true
   validates :department, presence: true
   validates :title, presence: true
   validates :employee_id, presence: true
+
+  def cropping?
+    return !crop_x.blank?
+  end
+
+  def picture_geometry(style = :original)
+    @geometry ||= {}
+    @geometry[style] ||= Paperclip::Geometry.from_file(picture.path(style))
+  end
 
   def self.lookup_employee(attribute, value)
     info = {}

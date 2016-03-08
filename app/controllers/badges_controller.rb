@@ -1,5 +1,5 @@
 class BadgesController < ApplicationController
-  before_action :set_badge, only: [:show, :edit, :update, :destroy, :camera, :print, :image, :snapshot, :preview]
+  before_action :set_badge, only: [:show, :edit, :update, :destroy, :camera, :print, :snapshot, :crop]
 
   # GET /badges
   # GET /badges.json
@@ -42,17 +42,6 @@ class BadgesController < ApplicationController
   def camera
   end
 
-  # returns snapshot from image
-  def image
-    # TODO! rework this with paperclip
-    send_file "/tmp/picture_#{@badge.id}.jpg", disposition: 'inline'
-  end
-
-  def preview
-    # TODO! rework this with paperclip
-    send_file "/tmp/badge_#{@badge.id}.jpg", disposition: 'inline'
-  end
-
   def print
     # print the badge and save the record
 
@@ -76,7 +65,7 @@ class BadgesController < ApplicationController
     p.text_box '#' + @badge.employee_id, at: [0, p.cursor], height: 10, width: 130, overflow: :shrink_to_fit, size: 10, align: :right
     p.move_down 10
 
-    p.image "/tmp/picture_#{id}.jpg", width: 100, at: [p.bounds.right - 95, p.bounds.top]
+    p.image @badge.picture.path(:badge), width: 100, at: [p.bounds.right - 95, p.bounds.top]
 
     p.transparent(0.5) do
       p.image Rails.root.join('app', 'assets', 'images', 'kpblogot.jpg'), width: 90, at: [0, p.bounds.bottom + 86]
@@ -94,8 +83,9 @@ class BadgesController < ApplicationController
 # TODO! this is be in card generate not card print
 
     system("pdftoppm -r 300 -singlefile /tmp/badge_#{id}.pdf /tmp/badge_#{id} && convert /tmp/badge_#{id}.ppm /tmp/badge_#{id}.jpg")
-    @badge.card = "/tmp/badge_#{id}.pdf"
+    @badge.card = File.open "/tmp/badge_#{id}.pdf"
     @badge.save!
+    File.delete("/tmp/badge_#{id}.pdf") if File.exist?("/tmp/badge_#{id}.pdf")
 
     respond_to do |format|
       format.html { redirect_to badges_url }
@@ -126,6 +116,17 @@ class BadgesController < ApplicationController
     end
   end
 
+  # GET /badges/1/crop
+  def crop
+    ratio = @badge.picture_geometry(:original).width / @badge.picture_geometry(:badge).width
+    @badge.crop_x = params[:x].to_i * ratio
+    @badge.crop_y = params[:y].to_i * ratio
+    @badge.crop_w = params[:w].to_i * ratio
+    @badge.crop_h = params[:h].to_i * ratio
+
+    @badge.picture.reprocess! :badge
+  end
+
   # POST /snapshot
   def snapshot
     id = @badge.id
@@ -137,8 +138,8 @@ class BadgesController < ApplicationController
     File.delete("/tmp/picture_#{id}.jpg") if File.exist?("/tmp/picture_#{id}.jpg")
 
     respond_to do |format|
-      format.html { render text: "" }
-      format.json { render json: "", status: :ok }
+      format.html { render text: @badge.picture.url(:badge) }
+      format.json { render json: { url: @badge.picture.url(:badge) }, status: :ok }
     end
   end
 

@@ -9,6 +9,11 @@ div#camera, div#snapshot {
   margin-bottom: .25em;
 }
 
+div#cropbox > .jcrop-holder {
+  border: solid 1px gray;
+  margin-bottom: .25em;
+}
+
 div#snapshot {
   img {
     max-width: 300px;

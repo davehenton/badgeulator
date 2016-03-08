@@ -12,13 +12,8 @@
     <% end %>
   </div>
   <div class="col-xs-6 col-sm-4">
-<!--
-    <div id="snapshot">
-      <img src="<%= image_badge_url(@badge) %>" />
-    </div>
--->    
     <div id="preview">
-      <img src="<%= preview_badge_url(@badge) %>" />
+      <img src="<%= @badge.card.url(:preview) %>" />
     </div>
   </div>
 </div>

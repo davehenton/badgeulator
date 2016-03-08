@@ -58,11 +58,11 @@ Rails.application.routes.draw do
 
   resources :badges do
     member do
-      get 'camera'  # takes image
-      get 'print'
-      get 'image'     # returns snapshot jpg
-      get 'preview'   # returns badge jpg
-      post 'snapshot'
+      get 'camera'    # takes image
+      get 'print'     # prints badge
+
+      get 'crop'      # crops picture
+      post 'snapshot' # uploads snapshot
     end
   end
 

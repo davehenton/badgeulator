@@ -10,11 +10,18 @@
     <% end %>
   </div>
   <div class="col-xs-6 col-sm-4">
-    <div id="camera"></div>
-    <button class="btn btn-primary take-snapshot" onclick="takeSnapshot()">Take</button>
-    <button class="btn btn-default discard-snapshot hidden" onclick="discardSnapshot()">Retry</button>
-    <button class="btn btn-primary use-snapshot hidden" onclick="useSnapshot()" data-url="<%= snapshot_badge_url(@badge)%>">Use</button>
-    <div id="upload_response"></div>
+    <div id="camerabox">
+      <div id="camera"></div>
+      <button class="btn btn-primary take-snapshot" onclick="takeSnapshot()">Take</button>
+      <button class="btn btn-default retake-snapshot hidden" onclick="discardSnapshot()">Retake</button>
+      <button class="btn btn-primary use-snapshot hidden" onclick="useSnapshot()" data-url="<%= snapshot_badge_url(@badge)%>">Use</button>
+      <div id="upload_response"></div>
+    </div>
+    <div id="cropbox" class="hidden">
+      <img/>
+      <button class='btn btn-primary retake2-snapshot' onclick="discardSnapshot()">Retake</button>
+      <button class='btn btn-primary crop-snapshot' onclick="cropSnapshot()" data-url="<%= crop_badge_url(@badge, format: :json)%>">Crop</button>
+    </div>
   </div>
 </div>
 <%= link_to "Print", print_badge_url(@badge), class: 'btn btn-primary' %>
