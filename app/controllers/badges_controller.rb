@@ -125,6 +125,7 @@ class BadgesController < ApplicationController
     @badge.crop_h = params[:h].to_i * ratio
 
     @badge.picture.reprocess! :badge
+    @badge.picture.reprocess! :thumb
   end
 
   # POST /snapshot
