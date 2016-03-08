@@ -1,6 +1,6 @@
 class Badge < ActiveRecord::Base
   has_attached_file :picture, styles: { badge: "300x400>", thumb: "150x200>" }, processors: [:cropper]
-  has_attached_file :card, styles: { preview: [ "318x200>", :jpg ] } # TODO! , processors: [:pdf2ppm]
+  has_attached_file :card, styles: { preview: { geometry: "318x200>", format: :png, convert_options: "-png" }}, processors: [:pdftoppm]
 
   attr_accessor :crop_x, :crop_y, :crop_h, :crop_w
 
