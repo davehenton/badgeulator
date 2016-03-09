@@ -1,5 +1,5 @@
 class BadgesController < ApplicationController
-  before_action :set_badge, only: [:show, :edit, :update, :destroy, :camera, :print, :image, :snapshot, :preview]
+  before_action :set_badge, only: [:show, :edit, :update, :destroy, :camera, :print, :snapshot, :crop]
 
   # GET /badges
   # GET /badges.json
@@ -42,54 +42,8 @@ class BadgesController < ApplicationController
   def camera
   end
 
-  # returns snapshot from image
-  def image
-    send_file "/tmp/picture_#{@badge.id}.jpg", disposition: 'inline'
-  end
-
-  def preview
-    send_file "/tmp/badge_#{@badge.id}.jpg", disposition: 'inline'
-  end
-
   def print
-    # print the badge and save the record
-
-    id = @badge.id
-
-    p = Prawn::Document.new({ page_size: [2.125 * 72, 3.375 * 72], page_layout: :landscape, margin: 7 })
-
-    #p.stroke_axis
-
-    p.move_down 4
-    p.text_box "Kenai Peninsula Borough", at: [0, p.cursor], height: 12, width: 134, overflow: :shrink_to_fit, size: 12
-    p.move_down 14
-    p.text_box @badge.name, at: [0, p.cursor], height: 14, width: 134, overflow: :shrink_to_fit, style: :bold, size: 14
-    p.move_down 14
-    p.stroke_horizontal_rule
-    p.move_down 4
-    p.text_box @badge.department, at: [0, p.cursor], height: 10, width: 134, overflow: :shrink_to_fit, style: :italic, size: 10
-    p.move_down 10
-    p.text_box @badge.title, at: [0, p.cursor], height: 8, width: 134, overflow: :shrink_to_fit, style: :italic, size: 8
-    p.move_down 12
-    p.text_box '#' + @badge.employee_id, at: [0, p.cursor], height: 10, width: 130, overflow: :shrink_to_fit, size: 10, align: :right
-    p.move_down 10
-
-    p.image "/tmp/picture_#{id}.jpg", width: 100, at: [p.bounds.right - 95, p.bounds.top]
-
-    p.transparent(0.5) do
-      p.image Rails.root.join('app', 'assets', 'images', 'kpblogot.jpg'), width: 90, at: [0, p.bounds.bottom + 86]
-    end
-
-    p.render_file("/tmp/badge_#{id}.pdf")  # TODO: put employee number in file name
-    
-    # # convert to jpg to show a sample
-    # horrible quality
-    # require 'RMagick'
-    # pdf_file_name = "/tmp/badge_#{id}.pdf"
-    # img = Magick::Image.read(pdf_file_name)
-    # img[0].write("/tmp/badge_#{id}.jpg")
-
-    system("pdftoppm -r 300 -singlefile /tmp/badge_#{id}.pdf /tmp/badge_#{id} && convert /tmp/badge_#{id}.ppm /tmp/badge_#{id}.jpg")
+    # print the badge
 
     respond_to do |format|
       format.html { redirect_to badges_url }
@@ -120,15 +74,39 @@ class BadgesController < ApplicationController
     end
   end
 
+  # GET /badges/1/crop
+  def crop
+    ratio = @badge.picture_geometry(:original).width / @badge.picture_geometry(:badge).width
+    @badge.crop_x = params[:x].to_i * ratio
+    @badge.crop_y = params[:y].to_i * ratio
+    @badge.crop_w = params[:w].to_i * ratio
+    @badge.crop_h = params[:h].to_i * ratio
+
+    @badge.picture.reprocess! :badge
+    @badge.picture.reprocess! :thumb
+
+    @badge.generate_card
+    @badge.update_ad_thumbnail
+
+    respond_to do |format|
+      format.html { render text: @badge.card.url(:preview) }
+      format.json { render json: { url: @badge.card.url(:preview) } }
+    end
+  end
+
   # POST /snapshot
   def snapshot
     id = @badge.id
     File.open("/tmp/picture_#{id}.jpg", 'wb') do |f|
       f.write(request.raw_post)
     end
+    @badge.picture =  File.open "/tmp/picture_#{id}.jpg"
+    @badge.save!
+    File.delete("/tmp/picture_#{id}.jpg") if File.exist?("/tmp/picture_#{id}.jpg")
+
     respond_to do |format|
-      format.html { render text: "" }
-      format.json { render json: "", status: :ok }
+      format.html { render text: @badge.picture.url(:badge) }
+      format.json { render json: { url: @badge.picture.url(:badge) }, status: :ok }
     end
   end
 
@@ -161,7 +139,7 @@ class BadgesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def badge_params
-      params.require(:badge).permit(:employee_id, :name, :title, :department, :picture)
+      params.require(:badge).permit(:employee_id, :name, :title, :department, :dn)
     end
   
 end

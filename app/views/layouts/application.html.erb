@@ -8,6 +8,27 @@
 </head>
 <body>
   <div class="container-fluid">
+
+    <% flash.each do |type, content| %>
+      <% # only show flashes of certain types since devise uses the flash for other stuff and we dont want it showing here
+        if %w(notice alert danger warning error).include?(type.to_s.downcase) 
+        %>
+        <% if content.respond_to?('each') 
+            content.each do |item| %>
+                <%= render 'layouts/alert', 
+                    type: type,
+                    content: item %>
+            <% end %>
+        <% else %>
+            <%= render 'layouts/alert', 
+                    type: type,
+                    content: content %>
+        <% end %>
+      <% else %>
+        <!-- layout ignored unhandled flash of type <%= type.to_s %> -->
+      <% end %>
+    <% end %>
+
     <%= yield %>
   </div>
 </body>

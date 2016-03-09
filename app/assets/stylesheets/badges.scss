@@ -3,16 +3,21 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 div#camera, div#snapshot {
-  width: 150px;
-  height: 200px;
+  width: 300px;
+  height: 400px;
+  border: solid 1px gray;
+  margin-bottom: .25em;
+}
+
+div#cropbox > .jcrop-holder {
   border: solid 1px gray;
   margin-bottom: .25em;
 }
 
 div#snapshot {
   img {
-    max-width: 150px;
-    max-height: 200px;
+    max-width: 300px;
+    max-height: 400px;
   }
 }
 
@@ -32,3 +37,14 @@ div#preview img {
   max-height: 200px;
   border-radius: 6px;
 }
+
+.lookup-form {
+  background-color: #ededed;
+  padding: .25em;
+
+  .lookup-status {
+    font-style: italic;
+    color: #ee0000;
+  }
+}
+

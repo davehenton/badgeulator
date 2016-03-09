@@ -1,5 +1,3 @@
-<p id="notice"><%= notice %></p>
-
 <h1>Badge</h1>
 
 <div class="row">
@@ -9,16 +7,12 @@
       <%= f.input :department, input_html: { readonly: :readonly } %>
       <%= f.input :title, input_html: { readonly: :readonly } %>
       <%= f.input :employee_id, label: 'Employee ID', input_html: { readonly: :readonly } %>
+      <%= f.hidden_field :dn, label: 'AD Distinguished Name', title: 'required for updating thumbnail in AD' %>
     <% end %>
   </div>
   <div class="col-xs-6 col-sm-4">
-<!--
-    <div id="snapshot">
-      <img src="<%= image_badge_url(@badge) %>" />
-    </div>
--->    
     <div id="preview">
-      <img src="<%= preview_badge_url(@badge) %>" />
+      <img src="<%= @badge.card.url(:preview) %>" />
     </div>
   </div>
 </div>

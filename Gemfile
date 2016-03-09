@@ -56,11 +56,13 @@ gem 'capistrano-passenger'
 end
 
 gem 'jpeg_camera', '~> 1.3.2'
+gem 'jcrop-rails-v2'
 gem 'bootstrap-sass'
 gem 'simple_form'
 gem 'will_paginate'
 gem 'will_paginate-bootstrap'
 gem 'prawn'
+gem 'paperclip', '~> 4.3.5'
 
 gem 'devise'
 gem 'devise_ldap_authenticatable'
