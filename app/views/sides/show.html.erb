@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Design:</strong>
+  <%= @side.design %>
+</p>
+
+<p>
+  <strong>Order:</strong>
+  <%= @side.order %>
+</p>
+
+<p>
+  <strong>Orientation:</strong>
+  <%= @side.orientation %>
+</p>
+
+<p>
+  <strong>Margin:</strong>
+  <%= @side.margin %>
+</p>
+
+<p>
+  <strong>Width:</strong>
+  <%= @side.width %>
+</p>
+
+<p>
+  <strong>Height:</strong>
+  <%= @side.height %>
+</p>
+
+<%= link_to 'Edit', edit_side_path(@side) %> |
+<%= link_to 'Back', sides_path %>

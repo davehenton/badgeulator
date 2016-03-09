@@ -1,0 +1,15 @@
+<%= simple_form_for(@artifact) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.association :side %>
+    <%= f.input :name %>
+    <%= f.input :order %>
+    <%= f.input :description %>
+    <%= f.input :value %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

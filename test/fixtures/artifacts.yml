@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  side_id: 
+  name: MyString
+  order: 1
+  description: MyString
+  value: MyString
+
+two:
+  side_id: 
+  name: MyString
+  order: 1
+  description: MyString
+  value: MyString

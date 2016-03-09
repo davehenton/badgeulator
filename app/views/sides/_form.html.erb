@@ -1,0 +1,16 @@
+<%= simple_form_for(@side) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.association :design %>
+    <%= f.input :order %>
+    <%= f.input :orientation %>
+    <%= f.input :margin %>
+    <%= f.input :width %>
+    <%= f.input :height %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>
