@@ -69,6 +69,7 @@ class SidesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def side_params
-      params.require(:side).permit(:design_id, :order, :orientation, :margin, :width, :height)
+      params.require(:side).permit(:design_id, :order, :orientation, :margin, :width, :height,
+        artifacts_attributes: [:id, :side_id, :name, :order, :description, :value, :_destroy])
     end
 end

@@ -9,7 +9,15 @@
     <%= f.input :value %>
   </div>
 
+  <h2>Properties</h2>
+  <div id="properties">
+    <%= f.simple_fields_for :properties do |property| %>
+      <%= render 'property_fields', f: property %>
+    <% end %>
+  </div>
+
   <div class="form-actions">
+    <%= link_to_add_association 'Add Property', f, :properties, class: 'btn btn-default' %>
     <%= f.button :submit %>
   </div>
 <% end %>
