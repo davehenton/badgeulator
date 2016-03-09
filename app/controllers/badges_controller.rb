@@ -43,49 +43,7 @@ class BadgesController < ApplicationController
   end
 
   def print
-    # print the badge and save the record
-
-    id = @badge.id
-
-    p = Prawn::Document.new({ page_size: [2.125 * 72, 3.375 * 72], page_layout: :landscape, margin: 7 })
-
-    #p.stroke_axis
-
-    p.move_down 4
-    p.text_box "Kenai Peninsula Borough", at: [0, p.cursor], height: 12, width: 134, overflow: :shrink_to_fit, size: 12
-    p.move_down 14
-    p.text_box @badge.name, at: [0, p.cursor], height: 14, width: 134, overflow: :shrink_to_fit, style: :bold, size: 14
-    p.move_down 14
-    p.stroke_horizontal_rule
-    p.move_down 4
-    p.text_box @badge.department, at: [0, p.cursor], height: 10, width: 134, overflow: :shrink_to_fit, style: :italic, size: 10
-    p.move_down 10
-    p.text_box @badge.title, at: [0, p.cursor], height: 8, width: 134, overflow: :shrink_to_fit, style: :italic, size: 8
-    p.move_down 12
-    p.text_box '#' + @badge.employee_id, at: [0, p.cursor], height: 10, width: 130, overflow: :shrink_to_fit, size: 10, align: :right
-    p.move_down 10
-
-    p.image @badge.picture.path(:badge), width: 100, at: [p.bounds.right - 95, p.bounds.top]
-
-    p.transparent(0.5) do
-      p.image Rails.root.join('app', 'assets', 'images', 'kpblogot.jpg'), width: 90, at: [0, p.bounds.bottom + 86]
-    end
-
-    p.render_file("/tmp/badge_#{id}.pdf")  # TODO: put employee number in file name
-    
-    # # convert to jpg to show a sample
-    # horrible quality
-    # require 'RMagick'
-    # pdf_file_name = "/tmp/badge_#{id}.pdf"
-    # img = Magick::Image.read(pdf_file_name)
-    # img[0].write("/tmp/badge_#{id}.jpg")
-
-# TODO! this is be in card generate not card print
-
-    system("pdftoppm -r 300 -singlefile /tmp/badge_#{id}.pdf /tmp/badge_#{id} && convert /tmp/badge_#{id}.ppm /tmp/badge_#{id}.jpg")
-    @badge.card = File.open "/tmp/badge_#{id}.pdf"
-    @badge.save!
-    File.delete("/tmp/badge_#{id}.pdf") if File.exist?("/tmp/badge_#{id}.pdf")
+    # print the badge
 
     respond_to do |format|
       format.html { redirect_to badges_url }
@@ -126,6 +84,14 @@ class BadgesController < ApplicationController
 
     @badge.picture.reprocess! :badge
     @badge.picture.reprocess! :thumb
+
+    @badge.generate_card
+    @badge.update_ad_thumbnail
+
+    respond_to do |format|
+      format.html { render text: @badge.card.url(:preview) }
+      format.json { render json: { url: @badge.card.url(:preview) } }
+    end
   end
 
   # POST /snapshot
@@ -173,7 +139,7 @@ class BadgesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def badge_params
-      params.require(:badge).permit(:employee_id, :name, :title, :department)
+      params.require(:badge).permit(:employee_id, :name, :title, :department, :dn)
     end
   
 end

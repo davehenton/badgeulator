@@ -2,8 +2,8 @@
 <div class="lookup-form">
   <%= simple_form_for :lookup, url: lookup_url(format: :json), remote: true, html: { class: "form-inline lookup-form" } do %>
     <div class="form-group">
-      <label for="employee_id">Employee ID</label>
-      <input type="text" name="id" id="employee_id" class="form-control"/>
+      <label for="employee_id">Employee ID </label>
+      <input type="text" name="id" id="employee_id" class="form-control required"/>
       <button class='btn btn-default lookup-employee'>Lookup</button>
     </div>
     <div class="lookup-status"></div>
@@ -16,5 +16,6 @@
   <%= f.input :department %>
   <%= f.input :title %>
   <%= f.input :employee_id, label: 'Employee ID' %>
+  <%= f.hidden_field :dn, label: 'AD Distinguished Name', title: 'required for updating thumbnail in AD' %>
   <%= f.button :submit, "Next >", class: 'btn btn-primary' if @badge.new_record? %>
 <% end %>

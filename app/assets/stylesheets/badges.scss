@@ -37,3 +37,14 @@ div#preview img {
   max-height: 200px;
   border-radius: 6px;
 }
+
+.lookup-form {
+  background-color: #ededed;
+  padding: .25em;
+
+  .lookup-status {
+    font-style: italic;
+    color: #ee0000;
+  }
+}
+

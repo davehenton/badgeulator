@@ -7,6 +7,7 @@
       <%= f.input :department, input_html: { readonly: :readonly } %>
       <%= f.input :title, input_html: { readonly: :readonly } %>
       <%= f.input :employee_id, label: 'Employee ID', input_html: { readonly: :readonly } %>
+      <%= f.hidden_field :dn, label: 'AD Distinguished Name', title: 'required for updating thumbnail in AD' %>
     <% end %>
   </div>
   <div class="col-xs-6 col-sm-4">
@@ -24,7 +25,7 @@
     </div>
   </div>
 </div>
-<%= link_to "Print", print_badge_url(@badge), class: 'btn btn-primary' %>
+<%= link_to "Print", print_badge_url(@badge), class: 'btn btn-primary print-card hidden' %>
 
 <script>
   $(document).ready(startCamera);
