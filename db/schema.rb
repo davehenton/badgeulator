@@ -11,7 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160308222720) do
+ActiveRecord::Schema.define(version: 20160309013542) do
+
+  create_table "artifacts", force: :cascade do |t|
+    t.integer  "side_id"
+    t.string   "name"
+    t.integer  "order"
+    t.string   "description"
+    t.string   "value"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "artifacts", ["side_id"], name: "index_artifacts_on_side_id"
 
   create_table "badges", force: :cascade do |t|
     t.string   "employee_id"
@@ -31,6 +43,22 @@ ActiveRecord::Schema.define(version: 20160308222720) do
     t.string   "dn"
   end
 
+  create_table "designs", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "properties", force: :cascade do |t|
+    t.integer  "artifact_id"
+    t.string   "name"
+    t.string   "value"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "properties", ["artifact_id"], name: "index_properties_on_artifact_id"
+
   create_table "roles", force: :cascade do |t|
     t.string   "name"
     t.integer  "resource_id"
@@ -41,6 +69,19 @@ ActiveRecord::Schema.define(version: 20160308222720) do
 
   add_index "roles", ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id"
   add_index "roles", ["name"], name: "index_roles_on_name"
+
+  create_table "sides", force: :cascade do |t|
+    t.integer  "design_id"
+    t.integer  "order"
+    t.integer  "orientation"
+    t.integer  "margin"
+    t.integer  "width"
+    t.integer  "height"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "sides", ["design_id"], name: "index_sides_on_design_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
