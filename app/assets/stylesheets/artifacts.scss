@@ -1,0 +1,29 @@
+// Place all the styles related to the artifacts controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+ul.props {
+  list-style-type: none;
+  padding-left: 0;
+  
+  li {
+    display: inline-block;
+
+    span {
+      font-weight: bold;
+    }
+  }
+}
+
+.card-preview {
+  display: inline-block;
+  background-color: #ccc;
+  padding: 8px;
+
+  img {
+    max-width: 636px;  // .629629
+    max-height: 400px;
+    border-radius: 6px;
+  }
+}
+

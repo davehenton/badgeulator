@@ -18,4 +18,5 @@
 //= require jpeg_camera/jpeg_camera_no_flash
 //= require jpeg_camera_init
 //= require jquery.Jcrop
+//= require cocoon
 //= require_tree .

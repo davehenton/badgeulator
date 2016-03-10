@@ -1,0 +1,24 @@
+<h1>Designs</h1>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @designs.each do |design| %>
+      <tr>
+        <td><%= link_to design.name, design %></td>
+        <td><%= link_to 'Edit', edit_design_path(design) %>
+        <%= link_to 'Destroy', design, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Design', new_design_path, class: 'btn btn-default' %>

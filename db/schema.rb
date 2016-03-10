@@ -11,11 +11,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160308222720) do
+ActiveRecord::Schema.define(version: 20160310193127) do
+
+  create_table "artifacts", force: :cascade do |t|
+    t.integer  "side_id"
+    t.string   "name"
+    t.integer  "order",                   default: 0
+    t.string   "description"
+    t.string   "value"
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+    t.string   "attachment_file_name"
+    t.string   "attachment_content_type"
+    t.integer  "attachment_file_size"
+    t.datetime "attachment_updated_at"
+  end
+
+  add_index "artifacts", ["side_id"], name: "index_artifacts_on_side_id"
 
   create_table "badges", force: :cascade do |t|
     t.string   "employee_id"
-    t.string   "name"
+    t.string   "last_name"
     t.string   "title"
     t.string   "department"
     t.datetime "created_at",           null: false
@@ -29,7 +45,28 @@ ActiveRecord::Schema.define(version: 20160308222720) do
     t.integer  "card_file_size"
     t.datetime "card_updated_at"
     t.string   "dn"
+    t.string   "first_name"
   end
+
+  create_table "designs", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.string   "sample_file_name"
+    t.string   "sample_content_type"
+    t.integer  "sample_file_size"
+    t.datetime "sample_updated_at"
+  end
+
+  create_table "properties", force: :cascade do |t|
+    t.integer  "artifact_id"
+    t.string   "name"
+    t.string   "value"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "properties", ["artifact_id"], name: "index_properties_on_artifact_id"
 
   create_table "roles", force: :cascade do |t|
     t.string   "name"
@@ -41,6 +78,19 @@ ActiveRecord::Schema.define(version: 20160308222720) do
 
   add_index "roles", ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id"
   add_index "roles", ["name"], name: "index_roles_on_name"
+
+  create_table "sides", force: :cascade do |t|
+    t.integer  "design_id"
+    t.integer  "order",       default: 0
+    t.integer  "orientation"
+    t.integer  "margin"
+    t.integer  "width"
+    t.integer  "height"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "sides", ["design_id"], name: "index_sides_on_design_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false

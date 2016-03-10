@@ -70,3 +70,6 @@ gem 'rolify'
 
 gem 'airbrake', '~> 5.0'
 gem 'dotenv-rails', :groups => [:development, :test]
+
+gem 'haml'
+gem 'cocoon'

@@ -1,0 +1,19 @@
+<%= simple_form_for(@design) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :name %>
+  </div>
+
+  <h2>Sides</h2>
+  <div id="sides">
+    <%= f.simple_fields_for :sides do |side| %>
+      <%= render 'side_fields', f: side %>
+    <% end %>
+  </div>
+
+  <div class="form-actions">
+    <%= link_to_add_association 'Add Side', f, :sides, class: 'btn btn-default' %>
+    <%= f.button :submit, class: 'btn btn-default' %>
+  </div>
+<% end %>

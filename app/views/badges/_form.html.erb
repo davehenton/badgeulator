@@ -12,7 +12,8 @@
 <% end %>
 
 <%= simple_form_for @badge do |f| %>
-  <%= f.input :name %>
+  <%= f.input :first_name %>
+  <%= f.input :last_name %>
   <%= f.input :department %>
   <%= f.input :title %>
   <%= f.input :employee_id, label: 'Employee ID' %>
