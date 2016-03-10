@@ -1,16 +1,23 @@
 <%= simple_form_for(@side) do |f| %>
-  <%= f.error_notification %>
 
   <div class="form-inputs">
-    <%= f.association :design %>
-    <%= f.input :order %>
-    <%= f.input :orientation %>
-    <%= f.input :margin %>
-    <%= f.input :width %>
-    <%= f.input :height %>
+    <%= f.association :design, wrapper_html: { class: 'col-xs-12' } %>
+    <%= f.input :order, wrapper_html: { class: 'col-xs-3' } %>
+    <%= f.input :orientation, wrapper_html: { class: 'col-xs-3' } %>
+    <%= f.input :margin, wrapper_html: { class: 'col-xs-2' } %>
+    <%= f.input :width, wrapper_html: { class: 'col-xs-2' } %>
+    <%= f.input :height, wrapper_html: { class: 'col-xs-2' } %>
+  </div>
+
+  <h2>Artifacts</h2>
+  <div id="artifacts">
+    <%= f.simple_fields_for :artifacts do |artifact| %>
+      <%= render 'artifact_fields', f: artifact %>
+    <% end %>
   </div>
 
   <div class="form-actions">
-    <%= f.button :submit %>
+    <%= link_to_add_association 'Add Artifact', f, :artifacts, class: 'btn btn-default' %>
+    <%= f.button :submit, class: 'btn btn-default' %>
   </div>
 <% end %>

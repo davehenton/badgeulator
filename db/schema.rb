@@ -11,16 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160309013542) do
+ActiveRecord::Schema.define(version: 20160309235113) do
 
   create_table "artifacts", force: :cascade do |t|
     t.integer  "side_id"
     t.string   "name"
-    t.integer  "order"
+    t.integer  "order",             default: 0
     t.string   "description"
     t.string   "value"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.string   "logo_file_name"
+    t.string   "logo_content_type"
+    t.integer  "logo_file_size"
+    t.datetime "logo_updated_at"
   end
 
   add_index "artifacts", ["side_id"], name: "index_artifacts_on_side_id"
@@ -72,13 +76,13 @@ ActiveRecord::Schema.define(version: 20160309013542) do
 
   create_table "sides", force: :cascade do |t|
     t.integer  "design_id"
-    t.integer  "order"
+    t.integer  "order",       default: 0
     t.integer  "orientation"
     t.integer  "margin"
     t.integer  "width"
     t.integer  "height"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
   add_index "sides", ["design_id"], name: "index_sides_on_design_id"

@@ -1,0 +1,29 @@
+%h1= link_to "Design #{@side.design.name}", @side.design
+%h2= "Side #{@side.side_name}"
+%ul
+  %li= "Orientation: #{@side.orientation_name}"
+  %li= "Margin: #{@side.margin}"
+  %li= "Width: #{@side.width}"
+  %li= "Height: #{@side.height}"
+%h3 Artifacts
+%table.table.table-striped
+  %thead
+    %tr
+      %th Name
+      %th Order
+      %th Description
+      %th Value
+      %th Properties
+  %tbody
+    -@side.artifacts.each do |a|
+      %tr
+        %td= link_to a.name, a
+        %td= a.order
+        %td= a.description
+        %td= a.value
+        %td
+          - a.properties.each do |p|
+            .property= "#{p.name}: #{p.value}"
+
+= link_to 'Edit', edit_side_path(@side), class: "btn btn-default"
+= link_to 'Back', sides_path, class: "btn btn-default"

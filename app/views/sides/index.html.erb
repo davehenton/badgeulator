@@ -16,8 +16,8 @@
   <tbody>
     <% @sides.each do |side| %>
       <tr>
-        <td><%= side.design %></td>
-        <td><%= side.order %></td>
+        <td><%= side.design.name %></td>
+        <td><%= side.side_name %></td>
         <td><%= side.orientation %></td>
         <td><%= side.margin %></td>
         <td><%= side.width %></td>
@@ -33,3 +33,4 @@
 <br>
 
 <%= link_to 'New Side', new_side_path, class: "btn btn-default" %>
+<%= link_to 'Designs', designs_path, class: "btn btn-default" %>

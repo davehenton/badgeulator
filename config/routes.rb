@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   resources :properties
-  resources :artifacts
+  resources :artifacts do
+    member do
+      get 'copy_props'
+    end
+  end
   resources :sides
   resources :designs
   devise_for :users

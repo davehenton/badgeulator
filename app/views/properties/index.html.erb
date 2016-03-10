@@ -1,8 +1,6 @@
-<p id="notice"><%= notice %></p>
-
 <h1>Listing Properties</h1>
 
-<table>
+<table class="table table-striped">
   <thead>
     <tr>
       <th>Artifact</th>
@@ -15,12 +13,12 @@
   <tbody>
     <% @properties.each do |property| %>
       <tr>
-        <td><%= property.artifact %></td>
+        <td><%= property.artifact.description %></td>
         <td><%= property.name %></td>
         <td><%= property.value %></td>
-        <td><%= link_to 'Show', property %></td>
-        <td><%= link_to 'Edit', edit_property_path(property) %></td>
-        <td><%= link_to 'Destroy', property, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Show', property, class: 'btn btn-default' %></td>
+        <td><%= link_to 'Edit', edit_property_path(property), class: 'btn btn-default' %></td>
+        <td><%= link_to 'Destroy', property, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-default' %></td>
       </tr>
     <% end %>
   </tbody>
@@ -28,4 +26,5 @@
 
 <br>
 
-<%= link_to 'New Property', new_property_path %>
+<%= link_to 'New Property', new_property_path, class: 'btn btn-default' %>
+<%= link_to 'Artifacts', artifacts_path, class: 'btn btn-default' %>

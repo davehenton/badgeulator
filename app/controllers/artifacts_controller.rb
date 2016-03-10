@@ -1,5 +1,5 @@
 class ArtifactsController < ApplicationController
-  before_action :set_artifact, only: [:show, :edit, :update, :destroy]
+  before_action :set_artifact, only: [:show, :edit, :update, :destroy, :copy_props]
 
   # GET /artifacts
   # GET /artifacts.json
@@ -61,6 +61,19 @@ class ArtifactsController < ApplicationController
     end
   end
 
+  def copy_props
+    prior = Artifact.where('side_id = :side and "order" < :order', side: @artifact.side_id, order: @artifact.order).last
+    unless prior.blank?
+      # TODO! merge, dont blindly add
+      prior.properties.each do |property|
+        @artifact.properties.build({name: property.name, value: property.value}) unless @artifact.properties.exists?(name: property.name)
+      end
+      @artifact.save
+    end
+
+    redirect_to artifacts_url
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_artifact
@@ -69,7 +82,7 @@ class ArtifactsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def artifact_params
-      params.require(:artifact).permit(:side_id, :name, :order, :description, :value,
+      params.require(:artifact).permit(:side_id, :name, :order, :description, :value, :logo,
         properties_attributes: [:id, :artifact_id, :name, :value, :_destroy])
     end
 end

@@ -1,6 +1,6 @@
 %h1= @design.name
 - @design.sides.each do |s|
-  %h2= "Side #{s.order}"
+  %h2= link_to "Side #{s.order}", edit_side_path(s)
   %ul
     %li= "Orientation: #{s.orientation}"
     %li= "Margin: #{s.margin}"
@@ -18,7 +18,7 @@
     %tbody
       -s.artifacts.each do |a|
         %tr
-          %td= a.name
+          %td= link_to a.name, a
           %td= a.order
           %td= a.description
           %td= a.value

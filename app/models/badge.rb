@@ -81,36 +81,36 @@ class Badge < ActiveRecord::Base
     info
   end
 
-  def generate_card
-    p = Prawn::Document.new({ page_size: [2.125 * 72, 3.375 * 72], page_layout: :landscape, margin: 7 })
+  # def generate_card
+  #   p = Prawn::Document.new({ page_size: [2.125 * 72, 3.375 * 72], page_layout: :landscape, margin: 7 })
 
-    #p.stroke_axis
+  #   #p.stroke_axis
 
-    p.move_down 4
-    p.text_box "Kenai Peninsula Borough", at: [0, p.cursor], height: 12, width: 134, overflow: :shrink_to_fit, size: 12
-    p.move_down 14
-    p.text_box name, at: [0, p.cursor], height: 14, width: 134, overflow: :shrink_to_fit, style: :bold, size: 14
-    p.move_down 14
-    p.stroke_horizontal_rule
-    p.move_down 4
-    p.text_box department, at: [0, p.cursor], height: 10, width: 134, overflow: :shrink_to_fit, style: :italic, size: 10
-    p.move_down 10
-    p.text_box title, at: [0, p.cursor], height: 8, width: 134, overflow: :shrink_to_fit, style: :italic, size: 8
-    p.move_down 12
-    p.text_box '#' + employee_id, at: [0, p.cursor], height: 10, width: 130, overflow: :shrink_to_fit, size: 10, align: :right
-    p.move_down 10
+  #   p.move_down 4
+  #   p.text_box "Kenai Peninsula Borough", at: [0, p.cursor], height: 12, width: 134, overflow: :shrink_to_fit, size: 12
+  #   p.move_down 14
+  #   p.text_box name, at: [0, p.cursor], height: 14, width: 134, overflow: :shrink_to_fit, style: :bold, size: 14
+  #   p.move_down 14
+  #   p.stroke_horizontal_rule
+  #   p.move_down 4
+  #   p.text_box department, at: [0, p.cursor], height: 10, width: 134, overflow: :shrink_to_fit, style: :italic, size: 10
+  #   p.move_down 10
+  #   p.text_box title, at: [0, p.cursor], height: 8, width: 134, overflow: :shrink_to_fit, style: :italic, size: 8
+  #   p.move_down 12
+  #   p.text_box '#' + employee_id, at: [0, p.cursor], height: 10, width: 130, overflow: :shrink_to_fit, size: 10, align: :right
+  #   p.move_down 10
 
-    p.image picture.path(:badge), width: 100, at: [p.bounds.right - 95, p.bounds.top]
+  #   p.image picture.path(:badge), width: 100, at: [p.bounds.right - 95, p.bounds.top]
 
-    p.transparent(0.5) do
-      p.image Rails.root.join('app', 'assets', 'images', 'kpblogot.jpg'), width: 90, at: [0, p.bounds.bottom + 86]
-    end
+  #   p.transparent(0.5) do
+  #     p.image Rails.root.join('app', 'assets', 'images', 'kpblogot.jpg'), width: 90, at: [0, p.bounds.bottom + 86]
+  #   end
 
-    p.render_file("/tmp/badge_#{id}.pdf")
-    self.card = File.open "/tmp/badge_#{id}.pdf"
-    self.save!
-    File.delete("/tmp/badge_#{id}.pdf") if File.exist?("/tmp/badge_#{id}.pdf")
-  end
+  #   p.render_file("/tmp/badge_#{id}.pdf")
+  #   self.card = File.open "/tmp/badge_#{id}.pdf"
+  #   self.save!
+  #   File.delete("/tmp/badge_#{id}.pdf") if File.exist?("/tmp/badge_#{id}.pdf")
+  # end
 
   def update_ad_thumbnail
     return if ENV["USE_LDAP"] != "true" || dn.blank?

@@ -39,7 +39,7 @@ function useSnapshot() {
       $('#cropbox img').attr('src', response);
       $('#cropbox').removeClass("hidden");
       $('#cropbox img').Jcrop({ 
-        aspectRatio: 0.692, 
+        aspectRatio: 0.75, 
         setSelect: [0, 0, 150, 200],
         onChange: updateCrop,
         onSelect: updateCrop

@@ -26,3 +26,4 @@
 </table>
 
 <%= link_to 'New Badge', new_badge_path, class: 'btn btn-primary' %>
+<%= link_to 'Designs', designs_path, class: 'btn btn-default' if !current_user.nil? && current_user.has_role?(:admin) %>

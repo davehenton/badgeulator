@@ -1,0 +1,7 @@
+.nested-fields.row
+  = f.input :name, wrapper_html: { class: 'col-xs-2' }
+  = f.input :order, wrapper_html: { class: 'col-xs-2' }
+  = f.input :description, wrapper_html: { class: 'col-xs-3' }
+  = f.input :value, wrapper_html: { class: 'col-xs-3' }
+  %div.form-group.col-xs-2
+    = link_to_remove_association "remove", f, class: 'btn btn-default'

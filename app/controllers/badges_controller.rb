@@ -85,7 +85,7 @@ class BadgesController < ApplicationController
     @badge.picture.reprocess! :badge
     @badge.picture.reprocess! :thumb
 
-    @badge.generate_card
+    Design.first.render_card(@badge)
     @badge.update_ad_thumbnail
 
     respond_to do |format|

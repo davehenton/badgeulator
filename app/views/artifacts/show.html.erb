@@ -1,6 +1,6 @@
 <p>
   <strong>Side:</strong>
-  <%= @artifact.side %>
+  <%= @artifact.side.order %>
 </p>
 
 <p>
@@ -23,5 +23,28 @@
   <%= @artifact.value %>
 </p>
 
+<p>
+  <strong>Logo:</strong>
+  <%= image_tag @artifact.logo.url unless @artifact.logo.blank? %>
+</p>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @artifact.properties.each do |p| %>
+      <tr>
+        <td><%= p.name %></td>
+        <td><%= p.value %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
 <%= link_to 'Edit', edit_artifact_path(@artifact), class: "btn btn-default" %>
+<%= link_to 'New Property', new_property_path, class: "btn btn-default" %>
 <%= link_to 'Back', artifacts_path, class: "btn btn-default" %>
