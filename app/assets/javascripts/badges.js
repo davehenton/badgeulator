@@ -73,12 +73,13 @@ function handleLookup() {
   $('.lookup-form')
     .on('ajax:success', function (e, data, status, xhr) {
       console.log('lookup success');
-      if (typeof data["name"] === "undefined" || data["name"] === null) {
+      if (typeof data["first_name"] === "undefined" || data["first_name"] === null) {
         $('.lookup-status').text("Employee not found.");
-        $('#badge_name, #badge_department, #badge_title, #badge_employee_id, #badge_dn').val('');
+        $('#badge_first_name, #badge_last_name, #badge_department, #badge_title, #badge_employee_id, #badge_dn').val('');
       } else {
         $('.lookup-status').text("");
-        $('#badge_name').val(data["name"]);
+        $('#badge_first_name').val(data["first_name"]);
+        $('#badge_last_name').val(data["last_name"]);
         $('#badge_department').val(data["department"]);
         $('#badge_title').val(data["title"]);
         $('#badge_employee_id').val(data["employee_id"]);

@@ -16,7 +16,7 @@ class Design < ActiveRecord::Base
     p = Prawn::Document.new({ page_size: [front.width, front.height], page_layout: front.orientation_name.downcase.to_sym, margin: front.margin })
 
     #p.stroke_bounds
-    p.stroke_axis step_length: 20 unless !badge.blank?
+    p.stroke_axis step_length: 20 #unless !badge.blank?
 
     front.artifacts.includes(:properties).each do |artifact|
       # build the properties
@@ -38,14 +38,27 @@ class Design < ActiveRecord::Base
               value << v.to_i
             end
           end
-        elsif [:height, :width, :size, :rotate].include?(name)
+        elsif [:width].include?(name)
           if property.value.downcase == "{width}"
             value = p.bounds.width
+          elsif property.value.downcase == "{remaining}"
+            value = p.bounds.right
+            offset = 0
+            offset = props[:left] if props.key?(:left)
+            offset = props[:at].first if props.key?(:at)
+            value = value - offset
           else
             value = property.value.to_i
           end
-        elsif [:overflow, :style, :align, :valign, :position, :vposition].include?(name)
+        elsif [:height, :size, :rotate].include?(name)
+          value = property.value.to_i
+        elsif [:overflow, :style, :align, :valign].include?(name)
           value = property.value.downcase.to_sym
+        elsif [:position, :vposition].include?(name)
+          value = property.value.downcase.to_sym
+          if ![:left, :center, :right, :top, :center, :bottom].include?(value)
+            value = property.value.to_i rescue 0
+          end
         elsif [:final_gap, :fit].include?(name)
           value = property.value == "true"
         end
@@ -61,6 +74,8 @@ class Design < ActiveRecord::Base
       unless badge.blank?
         value = value.gsub("{employee_id}", badge.employee_id)
         value = value.gsub("{name}", badge.name)
+        value = value.gsub("{first_name}", badge.first_name)
+        value = value.gsub("{last_name}", badge.last_name)
         value = value.gsub("{department}", badge.department)
         value = value.gsub("{title}", badge.title)
         value = value.gsub("{photo}", badge.picture.path(:badge)) unless badge.picture.blank?
@@ -68,6 +83,11 @@ class Design < ActiveRecord::Base
       end
 
       if false
+      elsif artifact.name == "fill_rectangle"
+        color = p.fill_color
+        p.fill_color = props[:color] if props.key?(:color)
+        p.fill_rectangle props[:at], props[:width], props[:height]
+        p.fill_color = color
       elsif artifact.name == "image"
         if badge.blank? || !File.exist?(value)
           if props.key?(:at) && props.key?(:height) && props.key?(:width)
@@ -84,11 +104,11 @@ class Design < ActiveRecord::Base
       elsif artifact.name == "move_up"
         p.move_up value.to_i
       elsif artifact.name == "textbox" || artifact.name == "text_box"
-        # puts "p.text_box #{artifact.value}, #{props}"
         p.text_box value, props
         p.move_down props[:height] if props.key?(:height)
       end
 
+      puts "#{artifact.name} #{artifact.value}, #{props}"
     end
 
     # p.transparent(0.5) do

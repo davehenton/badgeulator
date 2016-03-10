@@ -2,10 +2,10 @@
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <%= f.association :side, label_method: :order, wrapper_html: { class: 'col-xs-6 col-sm-2' } %>
+    <%= f.association :side, label_method: :name, wrapper_html: { class: 'col-xs-6 col-sm-4' } %>
     <%= f.input :order, wrapper_html: { class: 'col-xs-6 col-sm-2' } %>
     <%= f.input :name, wrapper_html: { class: 'col-xs-6 col-sm-2' } %>
-    <%= f.input :value, wrapper_html: { class: 'col-xs-6 col-sm-6' } %>
+    <%= f.input :value, wrapper_html: { class: 'col-xs-6 col-sm-4' } %>
     <%= f.input :description, wrapper_html: { class: 'col-xs-12' } %>
     <%= f.input :logo, as: :file %>
   </div>

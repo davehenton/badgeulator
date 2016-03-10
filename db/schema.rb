@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160309235113) do
+ActiveRecord::Schema.define(version: 20160310073327) do
 
   create_table "artifacts", force: :cascade do |t|
     t.integer  "side_id"
@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(version: 20160309235113) do
 
   create_table "badges", force: :cascade do |t|
     t.string   "employee_id"
-    t.string   "name"
+    t.string   "last_name"
     t.string   "title"
     t.string   "department"
     t.datetime "created_at",           null: false
@@ -45,6 +45,7 @@ ActiveRecord::Schema.define(version: 20160309235113) do
     t.integer  "card_file_size"
     t.datetime "card_updated_at"
     t.string   "dn"
+    t.string   "first_name"
   end
 
   create_table "designs", force: :cascade do |t|

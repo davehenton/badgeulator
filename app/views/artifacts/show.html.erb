@@ -1,6 +1,11 @@
 <p>
+  <strong>Design:</strong>
+  <%= link_to @artifact.side.design.name, @artifact.side.design %>
+</p>
+
+<p>
   <strong>Side:</strong>
-  <%= @artifact.side.order %>
+  <%= link_to @artifact.side.side_name, @artifact.side %>
 </p>
 
 <p>
