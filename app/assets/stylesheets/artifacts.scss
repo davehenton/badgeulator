@@ -4,8 +4,26 @@
 
 ul.props {
   list-style-type: none;
+  padding-left: 0;
+  
+  li {
+    display: inline-block;
+
+    span {
+      font-weight: bold;
+    }
+  }
 }
 
-ul.props {
-  padding-left: 0;
+.card-preview {
+  display: inline-block;
+  background-color: #ccc;
+  padding: 8px;
+
+  img {
+    max-width: 636px;  // .629629
+    max-height: 400px;
+    border-radius: 6px;
+  }
 }
+

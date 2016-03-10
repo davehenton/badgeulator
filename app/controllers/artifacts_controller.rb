@@ -42,7 +42,11 @@ class ArtifactsController < ApplicationController
   def update
     respond_to do |format|
       if @artifact.update(artifact_params)
-        format.html { redirect_to @artifact, notice: 'Artifact was successfully updated.' }
+        # to assist in designing cards, update the sample when an artifact is updated
+        # TODO! check performance
+        @artifact.side.design.render_card Badge.last, false, true
+
+        format.html { redirect_to @artifact.side, notice: 'Artifact was successfully updated.' }
         format.json { render :show, status: :ok, location: @artifact }
       else
         format.html { render :edit }
@@ -82,7 +86,7 @@ class ArtifactsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def artifact_params
-      params.require(:artifact).permit(:side_id, :name, :order, :description, :value, :logo,
+      params.require(:artifact).permit(:side_id, :name, :order, :description, :value, :attachment,
         properties_attributes: [:id, :artifact_id, :name, :value, :_destroy])
     end
 end

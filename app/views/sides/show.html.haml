@@ -1,10 +1,15 @@
-%h1= link_to "Design #{@side.design.name}", @side.design
-%h2= link_to "Side #{@side.side_name}", edit_side_path(@side)
-%ul
-  %li= "Orientation: #{@side.orientation_name}"
-  %li= "Margin: #{@side.margin}"
-  %li= "Width: #{@side.width}"
-  %li= "Height: #{@side.height}"
+.row
+  .col-sm-6
+    %h1= link_to "Design #{@side.design.name}", @side.design
+    %h2= link_to "Side #{@side.side_name}", edit_side_path(@side)
+    %ul
+      %li= "Orientation: #{@side.orientation_name}"
+      %li= "Margin: #{@side.margin}"
+      %li= "Width: #{@side.width}"
+      %li= "Height: #{@side.height}"
+  .col-sm-6
+    .card-preview=image_tag @side.design.sample.url(:preview)
+
 %h3 Artifacts
 %table.table.table-striped
   %thead
@@ -22,8 +27,12 @@
         %td= a.description
         %td= a.value
         %td
-          - a.properties.each do |p|
-            .property= "#{p.name}: #{p.value}"
+          - if a.properties.present?
+            %ul.props
+              - a.properties.each do |p|
+                %li
+                  %span= "#{p.name}:"
+                  = "#{p.value}"
 
 = link_to 'Edit', edit_side_path(@side), class: "btn btn-default"
 = link_to 'Back', sides_path, class: "btn btn-default"
