@@ -1,4 +1,8 @@
+require 'ldap_helper'
+include LdapHelper
+
 class Badge < ActiveRecord::Base
+
   has_attached_file :picture, styles: { badge: "300x400>", thumb: ["96x96#", :png] }, processors: [:cropper]
   has_attached_file :card, styles: { preview: { geometry: "318x200>", format: :png, convert_options: "-png" } }, processors: [:pdftoppm]
 
@@ -24,31 +28,13 @@ class Badge < ActiveRecord::Base
 
   def self.ad_lookup(attribute, value)
     entry = nil
+
     if ENV["USE_LDAP"] == "true"
-      require 'net/ldap'
-
-      ldap_config = YAML.load(ERB.new(File.read(Devise.ldap_config || "#{Rails.root}/config/ldap.yml")).result)[Rails.env]
-      ldap_config["ssl"] = :simple_tls if ldap_config["ssl"] === true
-      ldap_options = {}
-      ldap_options[:encryption] = ldap_config["ssl"].to_sym if ldap_config["ssl"]
-
-      ldap = Net::LDAP.new(ldap_options)
-      ldap.host = ldap_config["host"]
-      ldap.port = ldap_config["port"]
-      ldap.base = ldap_config["base"]
-      ldap.auth ldap_config["admin_user"], ldap_config["admin_password"] 
-
-      if ldap.bind
-        # active_filter = Net::LDAP::Filter.construct("(&
-        #     (|(mail=*@kpb.us)(mail=*@borough.kenai.ak.us))
-        #     (objectCategory=person)
-        #     (objectClass=user)
-        #     (givenName=*)
-        #     (!(userAccountControl:1.2.840.113556.1.4.803:=2)))")
+      with_ldap do |ldap|
         results = ldap.search(
           filter: "(#{attribute}=#{value})",      # active_filter, 
           attributes: %w(givenname mail dn sn employeeID manager title department thumbnailPhoto) )
-          Rails.logger.debug("#{results.size} results found")        
+        Rails.logger.debug("#{results.size} results found")        
         if results.size == 1
           entry = results.first
         end
@@ -90,20 +76,10 @@ class Badge < ActiveRecord::Base
   def update_ad_thumbnail
     return if ENV["USE_LDAP"] != "true" || dn.blank?
 
-    require 'net/ldap'
-    ldap_config = YAML.load(ERB.new(File.read(Devise.ldap_config || "#{Rails.root}/config/ldap.yml")).result)[Rails.env]
-    ldap_config["ssl"] = :simple_tls if ldap_config["ssl"] === true
-    ldap_options = {}
-    ldap_options[:encryption] = ldap_config["ssl"].to_sym if ldap_config["ssl"]
-    ldap_options[:host] = ldap_config["host"]
-    ldap_options[:port] = ldap_config["port"]
-    ldap_options[:base] = ldap_config["base"]
-    ldap_options[:auth] = { method: :simple, username: ldap_config["admin_user"], password: ldap_config["admin_password"] }
-    ldap = Net::LDAP.new(ldap_options)
-    ldap.open do |ldap|
+    with_ldap do |ldap|
       picture_data = File.binread(picture.path(:thumb))
       ldap.replace_attribute dn, :thumbnailPhoto, picture_data
-      raise Exception, "unable to update thumbnailPhoto - #{ldap.get_operation_result.message}" if ldap.get_operation_result.code != 0
+      raise Exception, "Unable to update thumbnailPhoto - #{ldap.get_operation_result.message}" if ldap.get_operation_result.code != 0
     end
   end
 end

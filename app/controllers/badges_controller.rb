@@ -43,25 +43,31 @@ class BadgesController < ApplicationController
   end
 
   def print
-    message = {}
     if ENV["PRINTER"].blank?
-      message[:error] = "No printer defined in PRINTER environment variable."
+      flash[:error] = "No printer defined in PRINTER environment variable."
     elsif @badge.card.blank?
-      message[:error] = "No card has been generated."
-    else
+      # there is no card so try to generate one
+      begin
+        Design.selected.render_card(@badge)
+      rescue Exception => e
+        flash[:error] = "Unable to generate card - #{e.message}"
+      end
+    end
+
+    if flash[:error].blank?
       # -o raw 
       output = `lp -d #{ENV["PRINTER"]} #{@badge.card.path(:original)} 2>&1`
       printed_ok =$?.success?
       
       if printed_ok
-        message[:notice] = "Badge was sent to printer.  #{output}"
+        flash[:notice] = "Badge was sent to printer.  #{output}"
       else
-        message[:error] = "Unable to send badge to printer.  #{output}"
+        flash[:error] = "Unable to send badge to printer.  #{output}"
       end
     end
 
     respond_to do |format|
-      format.html { redirect_to @badge, message }
+      format.html { redirect_to @badge }
     end
   end
 
@@ -100,12 +106,27 @@ class BadgesController < ApplicationController
     @badge.picture.reprocess! :badge
     @badge.picture.reprocess! :thumb
 
-    if Design.selected.blank?
-      flash[:error] = "No default design has been set."
-    else
-      Design.selected.render_card(@badge)
+    begin
+      if Design.selected.blank?
+        flash[:error] ||= []
+        flash[:error] << "No default design has been set."
+      else
+        Design.selected.render_card(@badge)
+      end
+    rescue Exception => e
+      flash[:error] ||= []
+      flash[:error] << "Unable to print card - #{e.message}"
     end
-    @badge.update_ad_thumbnail
+
+    begin
+      @badge.update_ad_thumbnail
+    rescue => e
+      flash[:error] ||= []
+      flash[:error] << e.message
+    rescue Exception => e
+      flash[:error] ||= []
+      flash[:error] << e.message
+    end
 
     respond_to do |format|
       format.html { render text: badge_url(@badge) }
