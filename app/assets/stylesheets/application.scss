@@ -17,8 +17,7 @@
 @import 'bootstrap-sprockets';
 @import 'bootstrap';
 
-@import 'jquery.Jcrop';
+@import 'font-awesome-sprockets';
+@import 'font-awesome';
 
-body {
-  padding-top: 1em;
-}
+@import 'jquery.Jcrop';

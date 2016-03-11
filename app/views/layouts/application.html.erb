@@ -7,8 +7,9 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <div class="container-fluid">
+  <%= render 'layouts/navigation' %>
 
+  <div class="container-fluid">
     <% flash.each do |type, content| %>
       <% # only show flashes of certain types since devise uses the flash for other stuff and we dont want it showing here
         if %w(notice alert danger warning error).include?(type.to_s.downcase) 

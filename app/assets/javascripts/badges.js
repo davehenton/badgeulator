@@ -62,8 +62,7 @@ function cropSnapshot() {
   .success(function (data, status, jqxhr) {
     console.log('successfully cropped snapshot');
 
-    $('#cropbox').replaceWith('<div id="preview"><img src="' + data['url'] + '"/></div>');
-    $('.print-card').removeClass("hidden");
+    window.location =data['url'];
   });
 }
 

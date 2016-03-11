@@ -7,6 +7,7 @@
       <th>Name</th>
       <th>Title</th>
       <th>Department</th>
+      <th>Created</th>
       <th></th>
     </tr>
   </thead>
@@ -18,6 +19,7 @@
         <td><%= link_to badge.name, badge %></td>
         <td><%= badge.title %></td>
         <td><%= badge.department %></td>
+        <td><%= l(badge.created_at.localtime, format: :short) %></td>
         <td>
         <%= link_to 'Delete', badge, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-xs btn-danger' if !current_user.nil? && current_user.has_role?(:admin) %></td>
       </tr>
@@ -25,5 +27,4 @@
   </tbody>
 </table>
 
-<%= link_to 'New Badge', new_badge_path, class: 'btn btn-primary' %>
-<%= link_to 'Designs', designs_path, class: 'btn btn-default' if !current_user.nil? && current_user.has_role?(:admin) %>
+<%= link_to 'New Badge', new_badge_path, class: 'btn btn-default' %>

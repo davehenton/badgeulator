@@ -12,11 +12,16 @@
     <% end %>
   </div>
   <div class="col-xs-6 col-sm-4">
-    <div id="preview">
-      <img src="<%= @badge.card.url(:preview) %>" />
-    </div>
+    <% unless @badge.card.blank? %>
+      <div class="card-preview">
+        <img src="<%= @badge.card.url(:preview) %>" />
+      </div>
+    <% end %>
   </div>
 </div>
-<%= link_to "Print", print_badge_url(@badge, remote: true), class: 'btn btn-primary' %>
 
-<%= link_to 'Back', badges_path, class: 'btn btn-default' %>
+<%= link_to print_badge_url(@badge), class: 'btn btn-primary' do %>
+  <i class="fa fa-printer"></i> Print
+<% end %>
+
+<%= link_to 'List Badges', badges_path, class: 'btn btn-default' %>

@@ -29,9 +29,6 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Use Unicorn as the app server
 # gem 'unicorn'
 
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
-
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
@@ -39,6 +36,8 @@ group :development, :test do
   gem 'rubocop'
   gem 'quiet_assets'
   gem 'simplecov', require: false
+
+  gem 'dotenv-rails'
 end
 
 group :development do
@@ -58,6 +57,7 @@ end
 gem 'jpeg_camera', '~> 1.3.2'
 gem 'jcrop-rails-v2'
 gem 'bootstrap-sass'
+gem 'font-awesome-sass'
 gem 'simple_form'
 gem 'will_paginate'
 gem 'will_paginate-bootstrap'
@@ -69,7 +69,6 @@ gem 'devise_ldap_authenticatable'
 gem 'rolify'
 
 gem 'airbrake', '~> 5.0'
-gem 'dotenv-rails', :groups => [:development, :test]
 
 gem 'haml'
 gem 'cocoon'

@@ -98,6 +98,8 @@ GEM
       railties (~> 4.0)
     erubis (2.7.0)
     execjs (2.6.0)
+    font-awesome-sass (4.5.0)
+      sass (>= 3.2)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
     haml (4.0.7)
@@ -255,6 +257,7 @@ DEPENDENCIES
   devise
   devise_ldap_authenticatable
   dotenv-rails
+  font-awesome-sass
   haml
   jbuilder (~> 2.0)
   jcrop-rails-v2

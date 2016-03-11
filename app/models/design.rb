@@ -7,6 +7,11 @@ class Design < ActiveRecord::Base
   validates :name, presence: true
   validates_attachment :sample, content_type: { content_type: "application/pdf" }
 
+  # returns the default active card design
+  def self.selected
+    Design.find_by(default: true)
+  end
+
   def render_card(badge = nil, layout_guides = false, update_sample = false)
     # the document is created with the properties of the front side
     return if sides.empty?

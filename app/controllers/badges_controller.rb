@@ -43,10 +43,25 @@ class BadgesController < ApplicationController
   end
 
   def print
-    # print the badge
+    message = {}
+    if ENV["PRINTER"].blank?
+      message[:error] = "No printer defined in PRINTER environment variable."
+    elsif @badge.card.blank?
+      message[:error] = "No card has been generated."
+    else
+      # -o raw 
+      output = `lp -d #{ENV["PRINTER"]} #{@badge.card.path(:original)} 2>&1`
+      printed_ok =$?.success?
+      
+      if printed_ok
+        message[:notice] = "Badge was sent to printer.  #{output}"
+      else
+        message[:error] = "Unable to send badge to printer.  #{output}"
+      end
+    end
 
     respond_to do |format|
-      format.html { redirect_to badges_url }
+      format.html { redirect_to @badge, message }
     end
   end
 
@@ -85,12 +100,16 @@ class BadgesController < ApplicationController
     @badge.picture.reprocess! :badge
     @badge.picture.reprocess! :thumb
 
-    Design.first.render_card(@badge)
+    if Design.selected.blank?
+      flash[:error] = "No default design has been set."
+    else
+      Design.selected.render_card(@badge)
+    end
     @badge.update_ad_thumbnail
 
     respond_to do |format|
-      format.html { render text: @badge.card.url(:preview) }
-      format.json { render json: { url: @badge.card.url(:preview) } }
+      format.html { render text: badge_url(@badge) }
+      format.json { render json: { url: badge_path(@badge) } }
     end
   end
 

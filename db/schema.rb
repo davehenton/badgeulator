@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160310193127) do
+ActiveRecord::Schema.define(version: 20160311011606) do
 
   create_table "artifacts", force: :cascade do |t|
     t.integer  "side_id"
@@ -56,6 +56,7 @@ ActiveRecord::Schema.define(version: 20160310193127) do
     t.string   "sample_content_type"
     t.integer  "sample_file_size"
     t.datetime "sample_updated_at"
+    t.boolean  "default"
   end
 
   create_table "properties", force: :cascade do |t|
