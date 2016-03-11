@@ -4,7 +4,7 @@ class DesignsController < ApplicationController
   # GET /designs
   # GET /designs.json
   def index
-    @designs = Design.all
+    @designs = Design.paginate(page: params[:page])
   end
 
   # GET /designs/1

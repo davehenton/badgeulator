@@ -4,6 +4,8 @@ class Design < ActiveRecord::Base
 
   accepts_nested_attributes_for :sides, reject_if: :all_blank, allow_destroy: true
 
+  default_scope { order(name: :asc) } 
+
   validates :name, presence: true
   validates_attachment :sample, content_type: { content_type: "application/pdf" }
 

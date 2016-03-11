@@ -9,6 +9,8 @@ class User < ActiveRecord::Base
   validates :name, presence: true
   validates_uniqueness_of :email
 
+  default_scope { order(name: :asc) } 
+
   ROLES = %w(admin user none)
 
   def ldap_before_save

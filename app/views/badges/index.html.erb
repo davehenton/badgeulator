@@ -27,4 +27,6 @@
   </tbody>
 </table>
 
+<%= will_paginate @badges, renderer: BootstrapPagination::Rails %>
+<br/>
 <%= link_to 'New Badge', new_badge_path, class: 'btn btn-default' %>

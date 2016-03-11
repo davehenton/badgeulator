@@ -4,7 +4,7 @@ class BadgesController < ApplicationController
   # GET /badges
   # GET /badges.json
   def index
-    @badges = Badge.all
+    @badges = Badge.paginate(page: params[:page])
   end
 
   # GET /badges/1

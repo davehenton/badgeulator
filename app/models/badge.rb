@@ -6,6 +6,8 @@ class Badge < ActiveRecord::Base
   has_attached_file :picture, styles: { badge: "300x400>", thumb: ["96x96#", :png] }, processors: [:cropper]
   has_attached_file :card, styles: { preview: { geometry: "318x200>", format: :png, convert_options: "-png" } }, processors: [:pdftoppm]
 
+  default_scope { order(created_at: :desc) } 
+
   attr_accessor :crop_x, :crop_y, :crop_h, :crop_w
 
   validates_attachment :picture, content_type: { content_type: "image/jpeg" }
