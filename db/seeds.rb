@@ -11,7 +11,7 @@ User::ROLES.each do |r|
 end
 
 Design.create!([
-  {name: "KPB Portrait w/New Logo", sample_file_name: "badge_24.pdf", sample_content_type: "application/pdf", sample_file_size: 725289, sample_updated_at: "2016-03-10 22:19:36", default: true},
+  {name: "KPB Portrait w/New Logo", sample_file_name: "badge_24.pdf", sample_content_type: "application/pdf", sample_file_size: 725289, sample_updated_at: "2016-03-10 22:19:36", default: false},
   {name: "KPB Traditional Landscape", sample_file_name: nil, sample_content_type: nil, sample_file_size: nil, sample_updated_at: nil, default: nil}
 ])
 
@@ -209,3 +209,4 @@ Property.create!([
   {artifact_id: 31, name: "width", value: "{width}"},
   {artifact_id: 34, name: "width", value: "{remaining}"}
 ])
+
