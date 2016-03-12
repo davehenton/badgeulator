@@ -20,6 +20,7 @@ Rails.application.routes.draw do
     member do
       get 'camera'    # takes image
       get 'print'     # prints badge
+      get 'generate'  # generate badge
 
       get 'crop'      # crops picture
       post 'snapshot' # uploads snapshot

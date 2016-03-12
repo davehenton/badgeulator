@@ -23,5 +23,10 @@
 <%= link_to print_badge_url(@badge), class: 'btn btn-primary' do %>
   <i class="fa fa-printer"></i> Print
 <% end %>
+<% if current_user.has_role?(:admin) %>
+  <%= link_to generate_badge_url(@badge), class: 'btn btn-default' do %>
+    <i class="fa fa-refresh"></i> Print
+  <% end %>
+<% end %>
 
 <%= link_to 'List Badges', badges_path, class: 'btn btn-default' %>

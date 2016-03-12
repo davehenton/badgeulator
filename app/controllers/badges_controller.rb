@@ -1,5 +1,5 @@
 class BadgesController < ApplicationController
-  before_action :set_badge, only: [:show, :edit, :update, :destroy, :camera, :print, :snapshot, :crop]
+  before_action :set_badge, only: [:show, :edit, :update, :destroy, :camera, :print, :snapshot, :crop, :generate]
 
   # GET /badges
   # GET /badges.json
@@ -40,6 +40,15 @@ class BadgesController < ApplicationController
   # GET /badges/:id/camera
   # shows camera, allows taking of snapshot
   def camera
+  end
+
+  def generate
+    begin
+      Design.selected.render_card(@badge)
+    rescue Exception => e
+      flash[:error] = "Unable to generate card - #{e.message}"
+    end
+    redirect_to @badge
   end
 
   def print
