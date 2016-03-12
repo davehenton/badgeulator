@@ -38,6 +38,7 @@ group :development, :test do
   gem 'simplecov', require: false
 
   gem 'dotenv-rails'
+  gem 'seed_dump'
 end
 
 group :development do
