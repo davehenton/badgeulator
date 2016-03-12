@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
   devise :ldap_authenticatable, :trackable, :timeoutable
 
   validates :name, presence: true
+  validates :email, presence: true
   validates_uniqueness_of :email
 
   default_scope { order(name: :asc) } 
