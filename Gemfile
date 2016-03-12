@@ -73,3 +73,5 @@ gem 'airbrake', '~> 5.0'
 
 gem 'haml'
 gem 'cocoon'
+
+gem 'mysql2'
