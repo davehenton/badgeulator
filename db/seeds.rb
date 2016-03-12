@@ -11,50 +11,52 @@ User::ROLES.each do |r|
 end
 
 Design.create!([
-  {name: "KPB Portrait w/New Logo", sample_file_name: "badge_24.pdf", sample_content_type: "application/pdf", sample_file_size: 725289, sample_updated_at: "2016-03-10 22:19:36", default: false},
-  {name: "KPB Traditional Landscape", sample_file_name: nil, sample_content_type: nil, sample_file_size: nil, sample_updated_at: nil, default: nil}
+  {id: 1, name: "KPB Traditional Landscape", sample_file_name: nil, sample_content_type: nil, sample_file_size: nil, sample_updated_at: nil, default: nil},
+  {id: 2, name: "KPB Portrait w/New Logo", sample_file_name: "badge_24.pdf", sample_content_type: "application/pdf", sample_file_size: 725289, sample_updated_at: "2016-03-10 22:19:36", default: true}
 ])
 
 Side.create!([
-  {design_id: 1, order: 0, orientation: 0, margin: 7, width: 243, height: 153},
-  {design_id: 2, order: 0, orientation: 0, margin: 1, width: 153, height: 243}
+  {id: 1, design_id: 1, order: 0, orientation: 0, margin: 7, width: 243, height: 153},
+  {id: 2, design_id: 2, order: 0, orientation: 0, margin: 1, width: 153, height: 243}
 ])
 
 Artifact.create!([
-  {side_id: 1, name: "image", order: 10, description: "logo", value: "{attachment}", attachment_file_name: "OldkpblogoT.JPG", attachment_content_type: "image/jpeg", attachment_file_size: 4958, attachment_updated_at: "2016-03-10 18:49:03"},
-  {side_id: 1, name: "move_down", order: 20, description: "space for hanger hole", value: "30", attachment_file_name: nil, attachment_content_type: nil, attachment_file_size: nil, attachment_updated_at: nil},
   {side_id: 1, name: "textbox", order: 30, description: "KPB", value: "Kenai Peninsula Borough", attachment_file_name: nil, attachment_content_type: nil, attachment_file_size: nil, attachment_updated_at: nil},
-  {side_id: 1, name: "move_down", order: 40, description: "spacing above name", value: "15", attachment_file_name: nil, attachment_content_type: nil, attachment_file_size: nil, attachment_updated_at: nil},
   {side_id: 1, name: "textbox", order: 50, description: "name", value: "{name}", attachment_file_name: nil, attachment_content_type: nil, attachment_file_size: nil, attachment_updated_at: nil},
+  {side_id: 1, name: "move_down", order: 3, description: "delete me", value: "0", attachment_file_name: nil, attachment_content_type: nil, attachment_file_size: nil, attachment_updated_at: nil},
   {side_id: 1, name: "textbox", order: 60, description: "department", value: "{department}", attachment_file_name: nil, attachment_content_type: nil, attachment_file_size: nil, attachment_updated_at: nil},
   {side_id: 1, name: "textbox", order: 70, description: "title", value: "{title}", attachment_file_name: nil, attachment_content_type: nil, attachment_file_size: nil, attachment_updated_at: nil},
+  {side_id: 1, name: "move_down", order: 6, description: "delete me", value: "0", attachment_file_name: nil, attachment_content_type: nil, attachment_file_size: nil, attachment_updated_at: nil},
   {side_id: 1, name: "textbox", order: 80, description: "employee id", value: "{employee_id}", attachment_file_name: nil, attachment_content_type: nil, attachment_file_size: nil, attachment_updated_at: nil},
   {side_id: 1, name: "image", order: 90, description: "photo", value: "{photo}", attachment_file_name: nil, attachment_content_type: nil, attachment_file_size: nil, attachment_updated_at: nil},
-  {side_id: 2, name: "font", order: 10, description: "Base Font", value: "{attachment}", attachment_file_name: "AlegreyaSC-Regular.ttf", attachment_content_type: "application/x-font-ttf", attachment_file_size: 73388, attachment_updated_at: "2016-03-10 18:44:36"},
-  {side_id: 2, name: "fill_gradient", order: 20, description: "background gradient", value: "", attachment_file_name: nil, attachment_content_type: nil, attachment_file_size: nil, attachment_updated_at: nil},
-  {side_id: 2, name: "fill_rectangle", order: 30, description: "background rectangle", value: "", attachment_file_name: nil, attachment_content_type: nil, attachment_file_size: nil, attachment_updated_at: nil},
-  {side_id: 2, name: "move_down", order: 40, description: "spacing for hole", value: "10", attachment_file_name: nil, attachment_content_type: nil, attachment_file_size: nil, attachment_updated_at: nil},
+  {side_id: 1, name: "move_down", order: 20, description: "space for hanger hole", value: "30", attachment_file_name: nil, attachment_content_type: nil, attachment_file_size: nil, attachment_updated_at: nil},
+  {side_id: 1, name: "move_down", order: 40, description: "spacing above name", value: "15", attachment_file_name: nil, attachment_content_type: nil, attachment_file_size: nil, attachment_updated_at: nil},
+  {side_id: 1, name: "image", order: 10, description: "logo", value: "{attachment}", attachment_file_name: "OldkpblogoT.JPG", attachment_content_type: "image/jpeg", attachment_file_size: 4958, attachment_updated_at: "2016-03-10 18:49:03"},
   {side_id: 2, name: "image", order: 50, description: "photo", value: "{photo}", attachment_file_name: nil, attachment_content_type: nil, attachment_file_size: nil, attachment_updated_at: nil},
-  {side_id: 2, name: "fill_rectangle", order: 60, description: "name background", value: "", attachment_file_name: nil, attachment_content_type: nil, attachment_file_size: nil, attachment_updated_at: nil},
-  {side_id: 2, name: "image", order: 70, description: "logo", value: "{attachment}", attachment_file_name: "kpblogoshadow.png", attachment_content_type: "image/png", attachment_file_size: 714260, attachment_updated_at: "2016-03-10 18:47:46"},
-  {side_id: 2, name: "move_up", order: 80, description: "position text after picture", value: "0", attachment_file_name: nil, attachment_content_type: nil, attachment_file_size: nil, attachment_updated_at: nil},
   {side_id: 2, name: "text_box", order: 90, description: "first name", value: "{first_name}", attachment_file_name: nil, attachment_content_type: nil, attachment_file_size: nil, attachment_updated_at: nil},
-  {side_id: 2, name: "move_up", order: 100, description: "adjust for font irregular spacing", value: "10", attachment_file_name: nil, attachment_content_type: nil, attachment_file_size: nil, attachment_updated_at: nil},
-  {side_id: 2, name: "font", order: 110, description: "bold", value: "{attachment}", attachment_file_name: "AlegreyaSC-Bold.ttf", attachment_content_type: "application/x-font-ttf", attachment_file_size: 72460, attachment_updated_at: "2016-03-10 22:15:11"},
   {side_id: 2, name: "text_box", order: 120, description: "last name", value: "{last_name}", attachment_file_name: nil, attachment_content_type: nil, attachment_file_size: nil, attachment_updated_at: nil},
-  {side_id: 2, name: "font", order: 130, description: "normal", value: "{attachment}", attachment_file_name: "AlegreyaSC-Regular.ttf", attachment_content_type: "application/x-font-ttf", attachment_file_size: 73388, attachment_updated_at: "2016-03-10 22:13:47"},
-  {side_id: 2, name: "move_down", order: 140, description: "space after name", value: "0", attachment_file_name: nil, attachment_content_type: nil, attachment_file_size: nil, attachment_updated_at: nil},
   {side_id: 2, name: "text_box", order: 150, description: "department", value: "{department}", attachment_file_name: nil, attachment_content_type: nil, attachment_file_size: nil, attachment_updated_at: nil},
   {side_id: 2, name: "text_box", order: 160, description: "title", value: "{title}", attachment_file_name: nil, attachment_content_type: nil, attachment_file_size: nil, attachment_updated_at: nil},
-  {side_id: 2, name: "text_box", order: 170, description: "employee number", value: "Employee # {employee_id}", attachment_file_name: nil, attachment_content_type: nil, attachment_file_size: nil, attachment_updated_at: nil},
-  {side_id: 2, name: "move_down", order: 180, description: "spacing after employee number", value: "0", attachment_file_name: nil, attachment_content_type: nil, attachment_file_size: nil, attachment_updated_at: nil},
+  {side_id: 2, name: "image", order: 70, description: "logo", value: "{attachment}", attachment_file_name: "kpblogoshadow.png", attachment_content_type: "image/png", attachment_file_size: 714260, attachment_updated_at: "2016-03-10 18:47:46"},
   {side_id: 2, name: "text_box", order: 190, description: "Kenai Peninsula", value: "Kenai Peninsula", attachment_file_name: nil, attachment_content_type: nil, attachment_file_size: nil, attachment_updated_at: nil},
-  {side_id: 2, name: "text_box", order: 200, description: "Borough", value: "Borough", attachment_file_name: nil, attachment_content_type: nil, attachment_file_size: nil, attachment_updated_at: nil},
   {side_id: 2, name: "text_box", order: 210, description: "address", value: "144 N. Binkley St.", attachment_file_name: nil, attachment_content_type: nil, attachment_file_size: nil, attachment_updated_at: nil},
   {side_id: 2, name: "text_box", order: 220, description: "city state zip", value: "Soldotna, AK 99669", attachment_file_name: nil, attachment_content_type: nil, attachment_file_size: nil, attachment_updated_at: nil},
-  {side_id: 2, name: "move_down", order: 230, description: "spacing above phone", value: "0", attachment_file_name: nil, attachment_content_type: nil, attachment_file_size: nil, attachment_updated_at: nil},
   {side_id: 2, name: "text_box", order: 240, description: "phone", value: "(907) 262-4441", attachment_file_name: nil, attachment_content_type: nil, attachment_file_size: nil, attachment_updated_at: nil},
-  {side_id: 2, name: "text_box", order: 250, description: "url", value: "www.kpb.us", attachment_file_name: nil, attachment_content_type: nil, attachment_file_size: nil, attachment_updated_at: nil}
+  {side_id: 2, name: "text_box", order: 250, description: "url", value: "www.kpb.us", attachment_file_name: nil, attachment_content_type: nil, attachment_file_size: nil, attachment_updated_at: nil},
+  {side_id: 2, name: "move_down", order: 40, description: "spacing for hole", value: "10", attachment_file_name: nil, attachment_content_type: nil, attachment_file_size: nil, attachment_updated_at: nil},
+  {side_id: 2, name: "text_box", order: 170, description: "employee number", value: "Employee # {employee_id}", attachment_file_name: nil, attachment_content_type: nil, attachment_file_size: nil, attachment_updated_at: nil},
+  {side_id: 2, name: "move_up", order: 80, description: "position text after picture", value: "0", attachment_file_name: nil, attachment_content_type: nil, attachment_file_size: nil, attachment_updated_at: nil},
+  {side_id: 2, name: "move_down", order: 230, description: "spacing above phone", value: "0", attachment_file_name: nil, attachment_content_type: nil, attachment_file_size: nil, attachment_updated_at: nil},
+  {side_id: 2, name: "fill_rectangle", order: 60, description: "name background", value: "", attachment_file_name: nil, attachment_content_type: nil, attachment_file_size: nil, attachment_updated_at: nil},
+  {side_id: 2, name: "move_down", order: 140, description: "space after name", value: "0", attachment_file_name: nil, attachment_content_type: nil, attachment_file_size: nil, attachment_updated_at: nil},
+  {side_id: 2, name: "move_down", order: 180, description: "spacing after employee number", value: "0", attachment_file_name: nil, attachment_content_type: nil, attachment_file_size: nil, attachment_updated_at: nil},
+  {side_id: 2, name: "fill_gradient", order: 20, description: "background gradient", value: "", attachment_file_name: nil, attachment_content_type: nil, attachment_file_size: nil, attachment_updated_at: nil},
+  {side_id: 2, name: "fill_rectangle", order: 30, description: "background rectangle", value: "", attachment_file_name: nil, attachment_content_type: nil, attachment_file_size: nil, attachment_updated_at: nil},
+  {side_id: 2, name: "font", order: 10, description: "Base Font", value: "{attachment}", attachment_file_name: "AlegreyaSC-Regular.ttf", attachment_content_type: "application/x-font-ttf", attachment_file_size: 73388, attachment_updated_at: "2016-03-10 18:44:36"},
+  {side_id: 2, name: "move_up", order: 100, description: "adjust for font irregular spacing", value: "10", attachment_file_name: nil, attachment_content_type: nil, attachment_file_size: nil, attachment_updated_at: nil},
+  {side_id: 2, name: "text_box", order: 200, description: "Borough", value: "Borough", attachment_file_name: nil, attachment_content_type: nil, attachment_file_size: nil, attachment_updated_at: nil},
+  {side_id: 2, name: "font", order: 110, description: "bold", value: "{attachment}", attachment_file_name: "AlegreyaSC-Bold.ttf", attachment_content_type: "application/x-font-ttf", attachment_file_size: 72460, attachment_updated_at: "2016-03-10 22:15:11"},
+  {side_id: 2, name: "font", order: 130, description: "normal", value: "{attachment}", attachment_file_name: "AlegreyaSC-Regular.ttf", attachment_content_type: "application/x-font-ttf", attachment_file_size: 73388, attachment_updated_at: "2016-03-10 22:13:47"}
 ])
 
 Property.create!([
@@ -209,4 +211,3 @@ Property.create!([
   {artifact_id: 31, name: "width", value: "{width}"},
   {artifact_id: 34, name: "width", value: "{remaining}"}
 ])
-
