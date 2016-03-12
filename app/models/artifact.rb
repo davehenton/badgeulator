@@ -4,7 +4,7 @@ class Artifact < ActiveRecord::Base
 
   has_attached_file :attachment
 
-  default_scope { order(%q(side_id asc, "order" asc, name asc)) } 
+  default_scope { order( { side_id: :asc, order: :asc, name: :asc } ) } 
 
   accepts_nested_attributes_for :properties, reject_if: :all_blank, allow_destroy: true
 
