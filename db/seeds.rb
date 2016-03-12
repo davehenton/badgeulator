@@ -61,7 +61,7 @@ Artifact.create!([
 
 Property.create!([
   {artifact_id: 1, name: "size", value: "12"},
-  {artifact_id: 3, name: "up", value: "0"}
+  {artifact_id: 3, name: "up", value: "0"},
   {artifact_id: 1, name: "at", value: "75, {cursor}"},
   {artifact_id: 1, name: "height", value: "18"},
   {artifact_id: 1, name: "width", value: "163"},
@@ -70,13 +70,13 @@ Property.create!([
   {artifact_id: 2, name: "height", value: "14"},
   {artifact_id: 2, name: "width", value: "134"},
   {artifact_id: 2, name: "overflow", value: "shrink_to_fit"},
-  {artifact_id: 3, name: "up", value: "0"}
+  {artifact_id: 3, name: "up", value: "0"},
   {artifact_id: 2, name: "size", value: "10"},
   {artifact_id: 4, name: "at", value: "0, {cursor}"},
   {artifact_id: 4, name: "height", value: "14"},
   {artifact_id: 4, name: "width", value: "134"},
   {artifact_id: 4, name: "overflow", value: "shrink_to_fit"},
-  {artifact_id: 3, name: "up", value: "0"}
+  {artifact_id: 3, name: "up", value: "0"},
   {artifact_id: 4, name: "size", value: "10"},
   {artifact_id: 2, name: "align", value: "left"},
   {artifact_id: 4, name: "align", value: "left"},
@@ -85,17 +85,17 @@ Property.create!([
   {artifact_id: 5, name: "height", value: "14"},
   {artifact_id: 5, name: "overflow", value: "shrink_to_fit"},
   {artifact_id: 5, name: "size", value: "10"},
-  {artifact_id: 3, name: "up", value: "0"}
+  {artifact_id: 3, name: "up", value: "0"},
   {artifact_id: 5, name: "width", value: "134"},
   {artifact_id: 7, name: "at", value: "0, {cursor}"},
-  {artifact_id: 3, name: "up", value: "0"}
+  {artifact_id: 3, name: "up", value: "0"},
   {artifact_id: 7, name: "height", value: "14"},
   {artifact_id: 7, name: "width", value: "134"},
   {artifact_id: 7, name: "overflow", value: "shrink_to_fit"},
   {artifact_id: 7, name: "size", value: "10"},
   {artifact_id: 7, name: "align", value: "left"},
   {artifact_id: 1, name: "style", value: "bold"},
-  {artifact_id: 3, name: "up", value: "0"}
+  {artifact_id: 3, name: "up", value: "0"},
   {artifact_id: 2, name: "valign", value: "middle"},
   {artifact_id: 1, name: "valign", value: "middle"},
   {artifact_id: 4, name: "valign", value: "middle"},
@@ -110,7 +110,7 @@ Property.create!([
   {artifact_id: 11, name: "height", value: "70"},
   {artifact_id: 11, name: "width", value: "70"},
   {artifact_id: 11, name: "fit", value: "true"},
-  {artifact_id: 3, name: "up", value: "0"}
+  {artifact_id: 3, name: "up", value: "0"},
   {artifact_id: 12, name: "height", value: "80"},
   {artifact_id: 12, name: "width", value: "{width}"},
   {artifact_id: 12, name: "fit", value: "true"},
@@ -204,10 +204,10 @@ Property.create!([
   {artifact_id: 31, name: "width", value: "{width}"},
   {artifact_id: 31, name: "height", value: "{height}"},
   {artifact_id: 22, name: "overflow", value: "shrink_to_fit"},
-  {artifact_id: 3, name: "up", value: "0"}
-  {artifact_id: 3, name: "up", value: "0"}
+  {artifact_id: 3, name: "up", value: "0"},
+  {artifact_id: 3, name: "up", value: "0"},
   {artifact_id: 16, name: "up", value: "6"},
-  {artifact_id: 3, name: "up", value: "0"}
+  {artifact_id: 3, name: "up", value: "0"},
   {artifact_id: 24, name: "up", value: "12"},
   {artifact_id: 34, name: "align", value: "center"},
   {artifact_id: 34, name: "at", value: "60, {cursor}"},
