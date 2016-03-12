@@ -1,6 +1,6 @@
 class Artifact < ActiveRecord::Base
   belongs_to :side
-  has_many :properties
+  has_many :properties, dependent: :destroy
 
   has_attached_file :attachment
 

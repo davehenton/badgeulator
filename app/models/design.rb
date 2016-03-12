@@ -1,5 +1,6 @@
 class Design < ActiveRecord::Base
-  has_many :sides
+  has_many :sides, dependent: :destroy
+  
   has_attached_file :sample, styles: { preview: { geometry: "318x200>", format: :png, convert_options: "-png" } }, processors: [:pdftoppm]
 
   accepts_nested_attributes_for :sides, reject_if: :all_blank, allow_destroy: true

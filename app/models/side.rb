@@ -3,7 +3,7 @@ class Side < ActiveRecord::Base
   ORIENTATIONS = [{ name: 'Portrait', value: 0 }, { name: 'Landscape', value: 1 }].freeze
 
   belongs_to :design
-  has_many :artifacts
+  has_many :artifacts, dependent: :destroy
 
   accepts_nested_attributes_for :artifacts, reject_if: :all_blank, allow_destroy: true
 
