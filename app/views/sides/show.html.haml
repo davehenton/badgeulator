@@ -1,38 +1,6 @@
-.row
-  .col-sm-6
-    %h1= link_to "Design #{@side.design.name}", @side.design
-    %h2= link_to "Side #{@side.side_name}", edit_side_path(@side)
-    %ul
-      %li= "Orientation: #{@side.orientation_name}"
-      %li= "Margin: #{@side.margin}"
-      %li= "Width: #{@side.width}"
-      %li= "Height: #{@side.height}"
-  .col-sm-6
-    .card-preview=image_tag @side.design.sample.url(:preview)
+= render partial: 'details', locals: { side: @side }
+= render partial: 'artifact_details', locals: { side: @side }
 
-%h3 Artifacts
-%table.table.table-striped
-  %thead
-    %tr
-      %th Name
-      %th Order
-      %th Description
-      %th Value
-      %th Properties
-  %tbody
-    -@side.artifacts.each do |a|
-      %tr
-        %td= link_to a.name, edit_artifact_path(a)
-        %td= a.order
-        %td= a.description
-        %td= a.value
-        %td
-          - if a.properties.present?
-            %ul.props
-              - a.properties.each do |p|
-                %li
-                  %span= "#{p.name}:"
-                  = "#{p.value}"
 .form-actions
   = link_to 'Edit', edit_side_path(@side), class: "btn btn-default"
   = link_to 'Back', sides_path, class: "btn btn-default"

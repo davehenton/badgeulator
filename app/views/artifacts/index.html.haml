@@ -23,9 +23,9 @@
             - artifact.properties.each do |p|
               %li= link_to "#{p.name}: #{p.value}", edit_property_path(p)
         %td
-          = link_to 'Copy Prior Props', copy_props_artifact_path(artifact), class: 'btn btn-sm btn-default'
-          = link_to "Edit", edit_artifact_path(artifact), class: 'btn btn-sm btn-default'
-          = link_to 'Delete', artifact, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-danger'
+          = link_to 'Copy Prior Props', copy_props_artifact_path(artifact), class: 'btn btn-xs btn-default'
+          = link_to "Edit", edit_artifact_path(artifact), class: 'btn btn-xs btn-default'
+          = link_to 'Delete', artifact, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-xs btn-danger'
 
 = will_paginate @artifacts, renderer: BootstrapPagination::Rails
 

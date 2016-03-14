@@ -14,7 +14,7 @@
         %td= link_to property.name, edit_property_path(property)
         %td= property.value
         %td
-          = link_to 'Delete', property, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-danger'
+          = link_to 'Delete', property, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-xs btn-danger'
 
 = will_paginate @properties, renderer: BootstrapPagination::Rails
 

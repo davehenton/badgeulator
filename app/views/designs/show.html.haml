@@ -1,32 +1,7 @@
-%h1= @design.name
 - @design.sides.each do |s|
-  %h2= link_to "Side #{s.side_name}", edit_side_path(s)
-  %ul
-    %li= "Orientation: #{s.orientation_name}"
-    %li= "Margin: #{s.margin}"
-    %li= "Width: #{s.width}"
-    %li= "Height: #{s.height}"
-
-  %h3 Artifacts
-  %table.table.table-striped
-    %thead
-      %tr
-        %th Name
-        %th Order
-        %th Description
-        %th Value
-        %th Properties
-    %tbody
-      -s.artifacts.each do |a|
-        %tr
-          %td= link_to a.name, a
-          %td= a.order
-          %td= a.description
-          %td= a.value
-          %td
-            - a.properties.each do |p|
-              .property= "#{p.name}: #{p.value}"
-
+  = render partial: 'sides/details', locals: { side: s }
+  = render partial: 'sides/artifact_details', locals: { side: s }
+  
 .form-actions
   = link_to 'Edit', edit_design_path(@design), class: "btn btn-default"
   = link_to 'Back', designs_path, class: "btn btn-default"
