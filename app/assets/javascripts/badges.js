@@ -1,5 +1,6 @@
 var camera;
-var snapshot; // only one at a time
+var snapshot;   // only one at a time
+var jcrop_api;
 
 function startCamera() {
   if ($('#camera').length == 1) {
@@ -14,23 +15,7 @@ function takeSnapshot() {
 
   //$('.retake-snapshot, .use-snapshot').removeClass('hidden');
   $('.take-snapshot').addClass('hidden');
-  useSnapshot();
-}
 
-function discardSnapshot() {
-  console.log('discarding snapshot');
-  if (snapshot !== null) {
-    snapshot.discard();
-    snapshot = null;
-  }
-  $('#upload_response').html('');
-  $('#cropbox').addClass("hidden");
-  $('#camerabox').removeClass("hidden");
-  $('.take-snapshot').removeClass('hidden');
-  $('.retake-snapshot, .use-snapshot').addClass('hidden');
-}
-
-function useSnapshot() {
   console.log('uploading snapshot');
   if (snapshot !== null) {
     snapshot.upload({ api_url: $('.use-snapshot').data('url') }).done(function(response) {
@@ -43,11 +28,30 @@ function useSnapshot() {
         setSelect: [0, 0, 170, 200],
         onChange: updateCrop,
         onSelect: updateCrop
+      }, function() {
+        jcrop_api = this;
       });
     }).fail(function(status_code, error_message, response) {
       $('#upload_response').html("Upload failed with status " + status_code);
     });
   }
+}
+
+function discardSnapshot() {
+  console.log('discarding snapshot');
+  if (jcrop_api !== null) {
+    jcrop_api.destroy();
+    jcrop_api = null;
+  }
+  if (snapshot !== null) {
+    snapshot.discard();
+    snapshot = null;
+  }
+  $('#upload_response').html('');
+  $('#cropbox').addClass("hidden");
+  $('#camerabox').removeClass("hidden");
+  $('.take-snapshot').removeClass('hidden');
+  $('.retake-snapshot, .use-snapshot').addClass('hidden');
 }
 
 function updateCrop(coords) {
