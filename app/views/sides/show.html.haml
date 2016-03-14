@@ -33,6 +33,6 @@
                 %li
                   %span= "#{p.name}:"
                   = "#{p.value}"
-
-= link_to 'Edit', edit_side_path(@side), class: "btn btn-default"
-= link_to 'Back', sides_path, class: "btn btn-default"
+.form-actions
+  = link_to 'Edit', edit_side_path(@side), class: "btn btn-default"
+  = link_to 'Back', sides_path, class: "btn btn-default"

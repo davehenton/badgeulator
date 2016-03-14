@@ -19,5 +19,6 @@
   <div class="form-actions">
     <%= link_to_add_association 'Add Artifact', f, :artifacts, class: 'btn btn-default' %>
     <%= f.button :submit, class: 'btn btn-default' %>
+    <%= content_for :buttons %>
   </div>
 <% end %>

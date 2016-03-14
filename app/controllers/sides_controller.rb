@@ -4,7 +4,7 @@ class SidesController < ApplicationController
   # GET /sides
   # GET /sides.json
   def index
-    @sides = Side.all
+    @sides = Side.paginate(page: params[:page])
   end
 
   # GET /sides/1
