@@ -1,0 +1,20 @@
+%h1 Badge
+
+.row
+  .col-xs-6.col-sm-4
+    = render partial: 'form', locals: { badge: @badge, options: { input_html: { readonly: :readonly } }}
+  .col-xs-6.col-sm-4
+    - unless @badge.card.blank?
+      .card-preview
+        %img{src: @badge.card.url(:preview)}
+
+.form-actions
+  = link_to print_badge_url(@badge), class: 'btn btn-primary' do
+    %i.fa.fa-printer
+    Print
+  - if current_user.has_role?(:admin)
+    = link_to generate_badge_url(@badge), class: 'btn btn-default' do
+      %i.fa.fa-refresh
+      Generate
+
+  = link_to 'List Badges', badges_path, class: 'btn btn-default'

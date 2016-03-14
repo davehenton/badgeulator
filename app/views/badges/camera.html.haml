@@ -1,0 +1,19 @@
+%h1 New Badge
+.row
+  .col-xs-6.col-sm-4
+    = render partial: 'form', locals: { badge: @badge, options: { input_html: { readonly: :readonly } }}
+  .col-xs-6.col-sm-4
+    #camerabox
+      #camera
+      %button.btn.btn-primary.take-snapshot{ onclick: "takeSnapshot()" } Take
+      %button.btn.btn-default.retake-snapshot.hidden{ onclick: "discardSnapshot()" } Retake
+      %button.btn.btn-primary.use-snapshot.hidden{ onclick: "useSnapshot()", data: { url: snapshot_badge_url(@badge) } } Use
+      #upload_response
+    #cropbox.hidden
+      %img
+      %button.btn.btn-primary.retake2-snapshot{ onclick: "discardSnapshot()" } Retake
+      %button.btn.btn-primary.crop-snapshot{ onclick: "cropSnapshot()", data: { url: crop_badge_url(@badge, format: :json) } } Crop
+
+%script
+  $(document).ready(startCamera);
+  $(document).on('page:load', startCamera);

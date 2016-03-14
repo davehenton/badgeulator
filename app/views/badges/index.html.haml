@@ -1,0 +1,26 @@
+%h1 Badges
+
+%table.table.table-striped
+  %thead
+    %tr
+      %th Employee Id
+      %th Name
+      %th Title
+      %th Department
+      %th Created
+      %th
+  %tbody
+    - @badges.each do |badge|
+      %tr
+        %td= badge.employee_id
+        %td= link_to badge.name, badge
+        %td= badge.title
+        %td= badge.department
+        %td= l(badge.created_at.localtime, format: :short)
+        %td
+          = link_to 'Delete', badge, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-xs btn-danger' if !current_user.nil? && current_user.has_role?(:admin)
+
+= will_paginate @badges, renderer: BootstrapPagination::Rails
+
+.form-actions
+  = link_to 'New Badge', new_badge_path, class: 'btn btn-default'

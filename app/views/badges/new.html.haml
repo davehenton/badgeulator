@@ -1,0 +1,15 @@
+%h1 New Badge
+
+.row
+  .col-xs-6.col-sm-4
+    - if @badge.new_record?
+      .lookup-form
+        = simple_form_for :lookup, url: lookup_url(format: :json), remote: true, html: { class: "form-inline lookup-form" } do
+          .form-group
+            %label{for: "employee_id"} Employee ID
+            %input.form-control.required{type: "text", name: "id", id: "employee_id"}
+            %button.btn.btn-default.lookup-employee
+              %i.fa.fa-search
+              Lookup
+        .lookup-status
+    = render partial: 'form', locals: { badge: @badge, options: {} }
