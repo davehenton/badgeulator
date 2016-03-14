@@ -1,5 +1,6 @@
 class DesignsController < ApplicationController
-  before_action :set_design, only: [:show, :edit, :update, :destroy]
+  #before_action :set_design, only: [:show, :edit, :update, :destroy]
+  load_and_authorize_resource # from cancancan
 
   # GET /designs
   # GET /designs.json
@@ -56,7 +57,7 @@ class DesignsController < ApplicationController
   def destroy
     @design.destroy
     respond_to do |format|
-      format.html { redirect_to designs_url, notice: 'Design was successfully destroyed.' }
+      format.html { redirect_to designs_url, notice: 'Design was successfully deleted.' }
       format.json { head :no_content }
     end
   end

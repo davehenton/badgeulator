@@ -9,7 +9,10 @@
   %tbody
     - @users.each do |user|
       %tr
-        %td= link_to user.name, edit_user_path(user)
+        %td
+          = link_to user.name, edit_user_path(user)
+          - if user.has_role?(:admin)
+            %span.badge.badge-default Admin
         %td= user.email
         %td= link_to 'Delete', user, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-xs btn-danger'
 

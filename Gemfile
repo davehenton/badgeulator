@@ -68,6 +68,7 @@ gem 'paperclip', '~> 4.3.5'
 gem 'devise'
 gem 'devise_ldap_authenticatable'
 gem 'rolify'
+gem 'cancancan', '~> 1.10'
 
 gem 'airbrake', '~> 5.0'
 

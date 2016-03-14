@@ -8,6 +8,10 @@ class Side < ActiveRecord::Base
   accepts_nested_attributes_for :artifacts, reject_if: :all_blank, allow_destroy: true
 
   validates :order, presence: true
+  validates :orientation, presence: true
+  validates :margin, presence: true
+  validates :width, presence: true
+  validates :height, presence: true
 
   def name
     "#{design.name} (#{side_name})"

@@ -1,9 +1,12 @@
 <%= simple_form_for(@side) do |f| %>
+  <%= f.error_notification %>
 
   <div class="form-inputs">
     <%= f.association :design, wrapper_html: { class: 'col-xs-12' } %>
-    <%= f.input :order, wrapper_html: { class: 'col-xs-3' } %>
-    <%= f.input :orientation, wrapper_html: { class: 'col-xs-3' } %>
+    <%= f.input :order, collection: Side::SIDES.map {|s| [ s[:name], s[:value] ]}, 
+      include_blank: false, wrapper_html: { class: 'col-xs-3' } %>
+    <%= f.input :orientation, collection: Side::ORIENTATIONS.map {|s| [ s[:name], s[:value] ]}, 
+      include_blank: false, wrapper_html: { class: 'col-xs-3' } %>
     <%= f.input :margin, wrapper_html: { class: 'col-xs-2' } %>
     <%= f.input :width, wrapper_html: { class: 'col-xs-2' } %>
     <%= f.input :height, wrapper_html: { class: 'col-xs-2' } %>

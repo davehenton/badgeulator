@@ -1,8 +1,9 @@
 .nested-fields.row
-  = f.input :order, wrapper_html: { class: 'col-xs-2' }
+  = f.input :order, collection: Side::SIDES.map {|s| [ s[:name], s[:value] ]}, include_blank: false, wrapper_html: { class: 'col-xs-2' }
   = f.input :margin, wrapper_html: { class: 'col-xs-2' }
-  = f.input :orientation, wrapper_html: { class: 'col-xs-2' }
+  = f.input :orientation, collection: Side::ORIENTATIONS.map {|s| [ s[:name], s[:value] ]}, include_blank: false, wrapper_html: { class: 'col-xs-2' }
   = f.input :width, wrapper_html: { class: 'col-xs-2' }
   = f.input :height, wrapper_html: { class: 'col-xs-2' }
   %div.form-group.col-xs-2
-    = link_to_remove_association "remove", f, class: 'btn btn-default'
+    %br
+    = link_to_remove_association "remove", f, class: 'btn btn-xs btn-danger'

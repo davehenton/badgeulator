@@ -44,7 +44,7 @@ class ArtifactsController < ApplicationController
       if @artifact.update(artifact_params)
         # to assist in designing cards, update the sample when an artifact is updated
         # TODO! check performance
-        @artifact.side.design.render_card Badge.last, false, true
+        @artifact.side.design.render_card Badge.last, false, true unless Badge.last.blank?
 
         format.html { redirect_to @artifact.side, notice: 'Artifact was successfully updated.' }
         format.json { render :show, status: :ok, location: @artifact }
@@ -60,7 +60,7 @@ class ArtifactsController < ApplicationController
   def destroy
     @artifact.destroy
     respond_to do |format|
-      format.html { redirect_to artifacts_url, notice: 'Artifact was successfully destroyed.' }
+      format.html { redirect_to artifacts_url, notice: 'Artifact was successfully deleted.' }
       format.json { head :no_content }
     end
   end

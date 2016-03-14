@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  load_and_authorize_resource # from cancancan
 
   # GET /users
   # GET /users.json
@@ -24,7 +25,9 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create
-    @user = User.new(user_params)
+    parms = user_params
+    parms.delete(:role_ids) if !current_user.has_role?(:admin)
+    @user = User.new(parms)
 
     respond_to do |format|
       if @user.save
@@ -59,7 +62,7 @@ class UsersController < ApplicationController
   def destroy
     @user.destroy
     respond_to do |format|
-      format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
+      format.html { redirect_to users_url, notice: 'User was successfully deleted.' }
       format.json { head :no_content }
     end
   end

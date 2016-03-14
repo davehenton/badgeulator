@@ -8,6 +8,11 @@
   %strong Email:
   = @user.email
 
+%p
+  %strong Role:
+  - @user.roles.each do |role|
+    %span= role.name
+
 .form-actions
   = link_to 'Edit', edit_user_path(@user), class: 'btn btn-default'
   = link_to 'Back', users_path, class: 'btn btn-default'

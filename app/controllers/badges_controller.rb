@@ -99,7 +99,7 @@ class BadgesController < ApplicationController
   def destroy
     @badge.destroy
     respond_to do |format|
-      format.html { redirect_to badges_url, notice: 'Badge was successfully destroyed.' }
+      format.html { redirect_to badges_url, notice: 'Badge was successfully deleted.' }
       format.json { head :no_content }
     end
   end

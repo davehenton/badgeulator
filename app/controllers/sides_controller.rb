@@ -56,7 +56,7 @@ class SidesController < ApplicationController
   def destroy
     @side.destroy
     respond_to do |format|
-      format.html { redirect_to sides_url, notice: 'Side was successfully destroyed.' }
+      format.html { redirect_to sides_url, notice: 'Side was successfully deleted.' }
       format.json { head :no_content }
     end
   end
