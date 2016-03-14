@@ -1,0 +1,23 @@
+%h3 Artifacts
+%table.table.table-striped.table-condensed
+  %thead
+    %tr
+      %th Name
+      %th Order
+      %th Description
+      %th Value
+      %th Properties
+  %tbody
+    -side.artifacts.each do |a|
+      %tr
+        %td= link_to a.name, edit_artifact_path(a)
+        %td= a.order
+        %td= a.description
+        %td= a.value
+        %td
+          - if a.properties.present?
+            %ul.props
+              - a.properties.each do |p|
+                %li
+                  %span= "#{p.name}:"
+                  = "#{p.value}"

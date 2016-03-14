@@ -1,0 +1,18 @@
+.row
+  .col-sm-6
+    %h1
+      = link_to side.design do
+        - if side.design.default == true
+          %i.fa.fa-star{title: 'default design'}
+        = "#{side.design.name} Design"
+    %h2= link_to "#{side.side_name} Side", edit_side_path(side)
+    %ul
+      %li= "Orientation: #{side.orientation_name}"
+      %li= "Margin: #{side.margin}"
+      %li= "Width: #{side.width}"
+      %li= "Height: #{side.height}"
+  .col-sm-6
+    - if side.design.sample.blank? || !File.exist?(side.design.sample.path(:preview))
+      No preview available
+    - else
+      .card-preview=image_tag side.design.sample.url(:preview)
