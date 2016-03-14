@@ -2,14 +2,7 @@
 
 <div class="row">
   <div class="col-xs-6 col-sm-4">
-    <%= simple_form_for @badge do |f| %>
-      <%= f.input :first_name, input_html: { readonly: :readonly } %>
-      <%= f.input :last_name, input_html: { readonly: :readonly } %>
-      <%= f.input :department, input_html: { readonly: :readonly } %>
-      <%= f.input :title, input_html: { readonly: :readonly } %>
-      <%= f.input :employee_id, label: 'Employee ID', input_html: { readonly: :readonly } %>
-      <%= f.hidden_field :dn, label: 'AD Distinguished Name', title: 'required for updating thumbnail in AD' %>
-    <% end %>
+    <%= render partial: 'form', locals: { badge: @badge, options: { input_html: { readonly: :readonly } }} %>
   </div>
   <div class="col-xs-6 col-sm-4">
     <% unless @badge.card.blank? %>
