@@ -1,0 +1,15 @@
+%p
+  %strong Artifact:
+  = @property.artifact.description
+
+%p
+  %strong Name:
+  = @property.name
+
+%p
+  %strong Value:
+  = @property.value
+
+.form-actions
+  = link_to 'Edit', edit_property_path(@property), class: "btn btn-default"
+  = link_to 'Back', properties_path, class: "btn btn-default"

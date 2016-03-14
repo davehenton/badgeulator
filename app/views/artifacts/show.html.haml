@@ -1,0 +1,43 @@
+%p
+  %strong Design:
+  = link_to @artifact.side.design.name, @artifact.side.design
+
+%p
+  %strongSide:
+  = link_to @artifact.side.side_name, @artifact.side
+
+%p
+  %strongName:
+  = @artifact.name
+
+%p
+  %strongOrder:
+  = @artifact.order
+
+%p
+  %strongDescription:
+  = @artifact.description
+
+%p
+  %strongValue:
+  = @artifact.value
+
+%p
+  %strongAttachement:
+  = image_tag @artifact.attachment.url unless @artifact.attachment.blank?
+
+%table.table.table-striped
+  %thead
+    %tr
+      %th Name
+      %th Value
+  %tbody
+    - @artifact.properties.each do |p|
+      %tr
+        %td= p.name
+        %td= p.value
+
+.form-actions
+  = link_to 'Edit', edit_artifact_path(@artifact), class: "btn btn-default"
+  = link_to 'New Property', new_property_path, class: "btn btn-default"
+  = link_to 'Back', artifacts_path, class: "btn btn-default"

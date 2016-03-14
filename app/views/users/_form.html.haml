@@ -1,0 +1,13 @@
+= simple_form_for(@user) do |f|
+  = f.error_notification
+  .form-inputs
+    = f.input :name
+    = f.input :email
+    - if current_user.has_role? :admin
+      = f.input :role_ids, :collection => Role.all, :as => :radio_buttons, :label_method => lambda {|t| t.name.titleize unless t.name.nil? }, :label => false, :item_wrapper_class => 'inline', checked: @user.role_ids.first, :required => true
+    - else
+      = f.hidden_field :role_ids
+
+  .form-actions
+    = f.button :submit, class: 'btn btn-default'
+    = content_for :buttons

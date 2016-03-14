@@ -1,0 +1,19 @@
+%h1 Users
+
+%table.table.table-striped
+  %thead
+    %tr
+      %th Name
+      %th Email
+      %th
+  %tbody
+    - @users.each do |user|
+      %tr
+        %td= link_to user.name, edit_user_path(user)
+        %td= user.email
+        %td= link_to 'Delete', user, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-danger'
+
+= will_paginate @users, renderer: BootstrapPagination::Rails
+
+.form-actions
+  = link_to 'New User', new_user_path, class: 'btn btn-default'

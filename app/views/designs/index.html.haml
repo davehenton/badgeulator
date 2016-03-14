@@ -1,0 +1,19 @@
+%h1 Designs
+
+%table.table.table-striped
+  %thead
+    %tr
+      %th Name
+      %th
+  %tbody
+    - @designs.each do |design|
+      %tr
+        %td= link_to design.name, design
+        %td
+          = link_to 'Edit', edit_design_path(design), class: 'btn btn-sm btn-default'
+          = link_to 'Delete', design, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-danger'
+
+= will_paginate @designs, renderer: BootstrapPagination::Rails
+
+.form-actions
+  = link_to 'New Design', new_design_path, class: 'btn btn-default'

@@ -1,0 +1,7 @@
+%h1 Editing Design
+
+- content_for :buttons do
+  = link_to 'Show', @design, class: 'btn btn-default'
+  = link_to 'Back', designs_path, class: 'btn btn-default'
+
+= render 'form'

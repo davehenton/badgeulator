@@ -1,0 +1,23 @@
+%h1 Listing Properties
+
+%table.table.table-striped
+  %thead
+    %tr
+      %th Artifact
+      %th Name
+      %th Value
+      %th
+  %tbody
+    - @properties.each do |property|
+      %tr
+        %td= property.artifact.description
+        %td= link_to property.name, edit_property_path(property)
+        %td= property.value
+        %td
+          = link_to 'Delete', property, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-danger'
+
+= will_paginate @properties, renderer: BootstrapPagination::Rails
+
+.form-actions
+  = link_to 'New Property', new_property_path, class: 'btn btn-default'
+  = link_to 'Artifacts', artifacts_path, class: 'btn btn-default'

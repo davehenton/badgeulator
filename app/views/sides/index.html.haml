@@ -1,0 +1,32 @@
+%h1 Sides
+
+%table.table.table-striped
+  %thead
+    %tr
+      %th Design
+      %th Order
+      %th Orientation
+      %th Margin
+      %th Width
+      %th Height
+      %th
+
+  %tbody
+    - @sides.each do |side|
+      %tr
+        %td= side.design.name
+        %td= side.side_name
+        %td= side.orientation
+        %td= side.margin
+        %td= side.width
+        %td= side.height
+        %td
+          = link_to 'Show', side
+          = link_to 'Edit', edit_side_path(side)
+          = link_to 'Delete', side, method: :delete, data: { confirm: 'Are you sure?' }
+
+= will_paginate @sides, renderer: BootstrapPagination::Rails
+
+.form-buttons
+  = link_to 'New Side', new_side_path, class: "btn btn-default" 
+  = link_to 'Designs', designs_path, class: "btn btn-default"
