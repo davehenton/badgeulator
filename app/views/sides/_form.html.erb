@@ -2,7 +2,7 @@
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <%= f.association :design, wrapper_html: { class: 'col-xs-12' } %>
+    <%= f.association :design, include_blank: false, wrapper_html: { class: 'col-xs-12' } %>
     <%= f.input :order, collection: Side::SIDES.map {|s| [ s[:name], s[:value] ]}, 
       include_blank: false, wrapper_html: { class: 'col-xs-3' } %>
     <%= f.input :orientation, collection: Side::ORIENTATIONS.map {|s| [ s[:name], s[:value] ]}, 
