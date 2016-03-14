@@ -1,5 +1,6 @@
 class BadgesController < ApplicationController
-  before_action :set_badge, only: [:show, :edit, :update, :destroy, :camera, :print, :snapshot, :crop, :generate]
+  #before_action :set_badge, only: [:show, :edit, :update, :destroy, :camera, :print, :snapshot, :crop, :generate]
+  load_and_authorize_resource except: :lookup
 
   # GET /badges
   # GET /badges.json

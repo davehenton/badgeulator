@@ -1,5 +1,6 @@
 class ArtifactsController < ApplicationController
-  before_action :set_artifact, only: [:show, :edit, :update, :destroy, :copy_props]
+  #before_action :set_artifact, only: [:show, :edit, :update, :destroy, :copy_props]
+  load_and_authorize_resource # from cancancan
 
   # GET /artifacts
   # GET /artifacts.json
@@ -68,7 +69,6 @@ class ArtifactsController < ApplicationController
   def copy_props
     prior = Artifact.where('side_id = :side and "order" < :order', side: @artifact.side_id, order: @artifact.order).last
     unless prior.blank?
-      # TODO! merge, dont blindly add
       prior.properties.each do |property|
         @artifact.properties.build({name: property.name, value: property.value}) unless @artifact.properties.exists?(name: property.name)
       end

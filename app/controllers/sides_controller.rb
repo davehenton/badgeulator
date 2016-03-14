@@ -1,5 +1,6 @@
 class SidesController < ApplicationController
-  before_action :set_side, only: [:show, :edit, :update, :destroy]
+  #before_action :set_side, only: [:show, :edit, :update, :destroy]
+  load_and_authorize_resource # from cancancan
 
   # GET /sides
   # GET /sides.json

@@ -1,5 +1,6 @@
 class PropertiesController < ApplicationController
-  before_action :set_property, only: [:show, :edit, :update, :destroy]
+  #before_action :set_property, only: [:show, :edit, :update, :destroy]
+  load_and_authorize_resource # from cancancan
 
   # GET /properties
   # GET /properties.json
