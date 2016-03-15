@@ -3,6 +3,8 @@ require 'test_helper'
 class BadgesControllerTest < ActionController::TestCase
   setup do
     @badge = badges(:one)
+    @user = users(:user)
+    sign_in @user
   end
 
   test "should get index" do
@@ -18,10 +20,10 @@ class BadgesControllerTest < ActionController::TestCase
 
   test "should create badge" do
     assert_difference('Badge.count') do
-      post :create, badge: { department: @badge.department, employee_id: @badge.employee_id, name: @badge.name, picture: @badge.picture, title: @badge.title }
+      post :create, badge: { department: @badge.department, employee_id: @badge.employee_id, first_name: @badge.first_name, last_name: @badge.last_name, title: @badge.title }
     end
 
-    assert_redirected_to badge_path(assigns(:badge))
+    assert_redirected_to camera_badge_path(assigns(:badge))
   end
 
   test "should show badge" do

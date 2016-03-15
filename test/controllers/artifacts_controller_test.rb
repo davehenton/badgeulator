@@ -3,7 +3,9 @@ require 'test_helper'
 class ArtifactsControllerTest < ActionController::TestCase
   setup do
     @artifact = artifacts(:one)
-  end
+    @user = users(:admin)
+    sign_in @user
+ end
 
   test "should get index" do
     get :index
@@ -36,7 +38,7 @@ class ArtifactsControllerTest < ActionController::TestCase
 
   test "should update artifact" do
     patch :update, id: @artifact, artifact: { description: @artifact.description, name: @artifact.name, order: @artifact.order, side_id: @artifact.side_id, value: @artifact.value }
-    assert_redirected_to artifact_path(assigns(:artifact))
+    assert_redirected_to side_path(assigns(:artifact).side)
   end
 
   test "should destroy artifact" do

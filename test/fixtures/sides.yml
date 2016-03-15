@@ -1,7 +1,7 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  design_id: 
+  design: one
   order: 1
   orientation: 1
   margin: 1
@@ -9,7 +9,7 @@ one:
   height: 1
 
 two:
-  design_id: 
+  design: one
   order: 1
   orientation: 1
   margin: 1

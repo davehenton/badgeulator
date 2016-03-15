@@ -3,6 +3,8 @@ require 'test_helper'
 class PropertiesControllerTest < ActionController::TestCase
   setup do
     @property = properties(:one)
+    @user = users(:admin)
+    sign_in @user
   end
 
   test "should get index" do

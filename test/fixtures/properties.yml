@@ -1,11 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  artifact_id: 
+  artifact: one
   name: MyString
   value: MyString
 
 two:
-  artifact_id: 
+  artifact: one
   name: MyString
   value: MyString
