@@ -26,6 +26,8 @@ It does not do any encoding, though adding a barcode would be simple since prawn
 - Devise needs to be configured in the initializer
 - Errbit (airbrake) needs to be configured in the initializer
 - upload your own logo for the badge
+- Make sure you have pdftoppm installed.  It's in the poppler-utils apt-get package.  This is used for
+converting the pdf to images for previews and does a much crisper job than imagemagick.
 
 = DEPLOYMENT
 Deploy with capistrano.  `cap staging deploy`
