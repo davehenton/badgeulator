@@ -1,15 +1,15 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  employee_id: MyString
-  name: MyString
+  employee_id: one
+  first_name: Jane
+  last_name: Doe
   title: MyString
   department: MyString
-  picture: 
 
 two:
-  employee_id: MyString
-  name: MyString
+  employee_id: two
+  first_name: John
+  last_name: Doe
   title: MyString
   department: MyString
-  picture: 
