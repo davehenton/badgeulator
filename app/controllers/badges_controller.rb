@@ -46,6 +46,7 @@ class BadgesController < ApplicationController
   def generate
     begin
       Design.selected.render_card(@badge)
+      flash[:notice] = "Card has been generated and is ready to print."
     rescue Exception => e
       flash[:error] = "Unable to generate card - #{e.message}"
     end

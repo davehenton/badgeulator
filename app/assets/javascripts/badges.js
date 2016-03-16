@@ -61,7 +61,8 @@ function updateCrop(coords) {
 
 function cropSnapshot() {
   console.log('cropping the snapshot');
-
+  $('button.retake2-snapshot').prop('disabled', true);
+  $('button.crop-snapshot').html('<i class="fa fa-spin fa-spinner"></i> Working...').prop('disabled', true);
   $.ajax($('.crop-snapshot').data('url'), { data: $('.crop-snapshot').data('coords') })
   .success(function (data, status, jqxhr) {
     console.log('successfully cropped snapshot');
@@ -101,6 +102,11 @@ function handleLookup() {
         $('.lookup-status').text("Searching...");
       }
     });
+
+  // wireup generate button
+  $(document).on('click', 'a.generate-badge', function () {
+    $(this).html('<i class="fa fa-spin fa-spinner"></i> Generating...').addClass('disabled');
+  });
 }
 
 $(document).ready(handleLookup);

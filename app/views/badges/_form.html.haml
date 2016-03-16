@@ -6,4 +6,4 @@
   = f.input :title, options
   = f.input :employee_id, { label: 'Employee ID' }.merge(options)
   = f.hidden_field :dn, label: 'AD Distinguished Name', title: 'required for updating thumbnail in AD'
-  = f.button :submit, "Next >", class: 'btn btn-primary' if @badge.new_record?
+  = f.button :submit, "Next >", class: 'btn btn-primary', data: { disable_with: "Working..." } if @badge.new_record?

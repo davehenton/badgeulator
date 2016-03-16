@@ -1,9 +1,9 @@
 %h1 Badge
 
 .row
-  .col-xs-6.col-sm-4
+  .col-xs-6.col-sm-5
     = render partial: 'form', locals: { badge: @badge, options: { input_html: { readonly: :readonly } }}
-  .col-xs-6.col-sm-4
+  .col-xs-6.col-sm-5
     - unless @badge.card.blank?
       .card-preview
         %img{src: @badge.card.url(:preview)}
@@ -13,7 +13,7 @@
     %i.fa.fa-printer
     Print
   - if current_user.has_role?(:admin)
-    = link_to generate_badge_url(@badge), class: 'btn btn-default' do
+    = link_to generate_badge_url(@badge), class: 'btn btn-default generate-badge' do
       %i.fa.fa-refresh
       Generate
 

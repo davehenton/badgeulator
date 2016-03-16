@@ -1,8 +1,8 @@
 %h1 New Badge
 .row
-  .col-xs-6.col-sm-4
+  .col-xs-6.col-sm-5
     = render partial: 'form', locals: { badge: @badge, options: { input_html: { readonly: :readonly } }}
-  .col-xs-6.col-sm-4
+  .col-xs-6.col-sm-5
     #camerabox
       #camera
       %button.btn.btn-primary.take-snapshot{ onclick: "takeSnapshot()" } Take
@@ -12,7 +12,7 @@
     #cropbox.hidden
       %img
       %button.btn.btn-primary.retake2-snapshot{ onclick: "discardSnapshot()" } Retake
-      %button.btn.btn-primary.crop-snapshot{ onclick: "cropSnapshot()", data: { url: crop_badge_url(@badge, format: :json) } } Crop
+      %button.btn.btn-primary.crop-snapshot{ onclick: "cropSnapshot()", data: { url: crop_badge_url(@badge, format: :json), disable_with: 'Working...' }} Crop
 
 %script
   $(document).ready(startCamera);
