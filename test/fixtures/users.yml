@@ -4,12 +4,17 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
+none:
+  name: bobnone
+  email: bobnone@example.comments
+  roles: none
+  
 user:
-  name: bobo
-  email: bobo@example.comments
+  name: bob
+  email: bob@example.comments
   roles: user
   
 admin:
-  name: boboadmin
-  email: boboadmin@example.comments
+  name: bobadmin
+  email: bobadmin@example.comments
   roles: admin

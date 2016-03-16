@@ -5,7 +5,38 @@ class ArtifactsControllerTest < ActionController::TestCase
     @artifact = artifacts(:one)
     @user = users(:admin)
     sign_in @user
- end
+  end
+
+  test "non-admin users cannot perform any actions on artifacts" do
+    sign_out @user
+    [:user, :none].each do |user|
+      @user = users(:user)
+      sign_in @user
+
+      [:index, :new, :show, :edit].each do |action|
+        get action if [:index, :new].include?(action)
+        get action, id: @artifact if [:show, :edit].include?(action)
+        assert_response :redirect, "#{user} should have been redirected on #{action}"
+        assert_redirected_to root_path, "#{user} should have been redirected to root_path on #{action}"
+        assert_match 'not authorized', flash[:alert], "#{user} should not have been authorized on #{action}"
+      end
+
+      post :create, artifact: { description: @artifact.description, name: @artifact.name, order: @artifact.order, side_id: @artifact.side_id, value: @artifact.value }
+      assert_response :redirect, "#{user} should have been redirected on :create"
+      assert_redirected_to root_path, "#{user} should have been redirected to root_path on :create"
+      assert_match 'not authorized', flash[:alert], "#{user} should not have been authorized on :create"
+
+      patch :update, id: @artifact, artifact: { description: @artifact.description, name: @artifact.name, order: @artifact.order, side_id: @artifact.side_id, value: @artifact.value }
+      assert_response :redirect, "#{user} should have been redirected on :update"
+      assert_redirected_to root_path, "#{user} should have been redirected to root_path on :update"
+      assert_match 'not authorized', flash[:alert], "#{user} should not have been authorized on :update"
+
+      delete :destroy, id: @artifact
+      assert_response :redirect, "#{user} should have been redirected on :delete"
+      assert_redirected_to root_path, "#{user} should have been redirected to root_path on :delete"
+      assert_match 'not authorized', flash[:alert], "#{user} should not have been authorized on :delete"
+    end
+  end
 
   test "should get index" do
     get :index
