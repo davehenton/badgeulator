@@ -17,8 +17,8 @@ ul.props {
 
 .card-preview {
   display: inline-block;
-  background-color: #ccc;
-  padding: 8px;
+  background-color: $state-info-bg;
+  padding: 4px;
 
   img {
     max-width: 636px;  // .629629

@@ -1,0 +1,21 @@
+.steps-bar
+  %ul.steps
+    %li.step-enter{class: "step#{step == 1 ? '-active' : ''}"}
+      .item
+        Lookup or Enter Details
+      .arrow-right
+    %li.step-take{class: "step#{step == 2 ? '-active' : ''}"}
+      .arrow-in
+      .item
+        Take Picture
+      .arrow-right
+    %li.step-crop{class: "step#{step == 3 ? '-active' : ''}"}
+      .arrow-in
+      .item
+        Crop Picture
+      .arrow-right
+    %li.step-print{class: "step#{step == 4 ? '-active' : ''}"}
+      .arrow-in
+      .item
+        Print Badge
+

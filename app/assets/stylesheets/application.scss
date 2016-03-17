@@ -10,8 +10,6 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
- *= require_self
- *= require_tree .
  */
 
 @import 'bootstrap-sprockets';
@@ -21,6 +19,13 @@
 @import 'font-awesome';
 
 @import 'jquery.Jcrop';
+
+@import 'artifacts';
+@import 'badges';
+@import 'designs';
+@import 'properties';
+@import 'sides';
+@import 'users';
 
 .btn {
   margin-bottom: .25em;

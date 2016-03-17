@@ -28,8 +28,8 @@ div.employee-info {
 
 div#preview {
   display: inline-block;
-  background-color: #ccc;
-  padding: 8px;
+  background-color: $state-info-bg;
+  padding: 4px;
 }
 
 div#preview img {
@@ -50,4 +50,64 @@ div#preview img {
 
 div.lookup-form {
   margin-bottom: .75em;
+}
+
+.steps-bar {
+  height: 3em;
+  margin-bottom: 1em;
+ 
+  ul.steps {
+    list-style-type: none;
+    font-size: .9em;
+
+    li {
+      float: left;
+      margin: 0;
+      display: table;
+
+      .item {
+        display: table-cell;
+        height: 2em;
+        background-color: $gray-lighter;
+        vertical-align: middle;
+        text-transform: uppercase;
+        padding: .5em;
+        color: $gray-light;
+        font-weight: bold;
+      }
+
+      .arrow-right {
+          width: 0;
+          height: 0;
+          border-top: 1.5em solid transparent;
+          border-bottom: 1.5em solid transparent;
+          border-left: .5em solid $gray-lighter;
+          display: inline-block;
+          float: left;
+      }
+
+      .arrow-in {
+          width: 0;
+          height: 0;
+          border-top: 1.5em solid transparent;
+          border-bottom: 1.5em solid transparent;
+          border-left: .5em solid #FFF;
+          display: inline-block;
+          float: left;
+          background-color: $gray-lighter;
+      }
+    }
+
+    li.step-active {
+      .item {
+        background-color: $state-success-bg;
+      }
+      .arrow-right {
+        border-left: .5em solid $state-success-bg;
+      }
+      .arrow-in {
+        background-color: $state-success-bg;
+      }
+    }
+  }
 }

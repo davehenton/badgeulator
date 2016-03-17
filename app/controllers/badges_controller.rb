@@ -54,28 +54,7 @@ class BadgesController < ApplicationController
   end
 
   def print
-    if ENV["PRINTER"].blank?
-      flash[:error] = "No printer defined in PRINTER environment variable."
-    elsif @badge.card.blank?
-      # there is no card so try to generate one
-      begin
-        Design.selected.render_card(@badge)
-      rescue Exception => e
-        flash[:error] = "Unable to generate card - #{e.message}"
-      end
-    end
-
-    if flash[:error].blank?
-      # -o raw 
-      output = `lp -d #{ENV["PRINTER"]} #{@badge.card.path(:original)} 2>&1`
-      printed_ok =$?.success?
-      
-      if printed_ok
-        flash[:notice] = "Badge was sent to printer.  #{output}"
-      else
-        flash[:error] = "Unable to send badge to printer.  #{output}"
-      end
-    end
+    print_badge
 
     respond_to do |format|
       format.html { redirect_to @badge }
@@ -118,6 +97,16 @@ class BadgesController < ApplicationController
     @badge.picture.reprocess! :thumb
 
     begin
+      @badge.update_ad_thumbnail
+    rescue => e
+      flash[:error] ||= []
+      flash[:error] << e.message
+    rescue Exception => e
+      flash[:error] ||= []
+      flash[:error] << e.message
+    end
+
+    begin
       if Design.selected.blank?
         flash[:error] ||= []
         flash[:error] << "No default design has been set."
@@ -129,17 +118,12 @@ class BadgesController < ApplicationController
       flash[:error] << "Unable to print card - #{e.message}"
     end
 
-    begin
-      @badge.update_ad_thumbnail
-    rescue => e
-      flash[:error] ||= []
-      flash[:error] << e.message
-    rescue Exception => e
-      flash[:error] ||= []
-      flash[:error] << e.message
+    if ENV["AUTO_PRINT"].blank? || ENV["AUTO_PRINT"] == "true"
+      print_badge
     end
 
     respond_to do |format|
+      # crop is posted via ajax so you cannot just redirect have to tell the browser to
       format.html { render text: badge_url(@badge) }
       format.json { render json: { url: badge_path(@badge) } }
     end
@@ -192,5 +176,29 @@ class BadgesController < ApplicationController
     def badge_params
       params.require(:badge).permit(:employee_id, :first_name, :last_name, :title, :department, :dn)
     end
-  
+
+    def print_badge
+      if ENV["PRINTER"].blank?
+        flash[:error] = "No printer defined in PRINTER environment variable."
+      elsif @badge.card.blank?
+        # there is no card so try to generate one
+        begin
+          Design.selected.render_card(@badge)
+        rescue Exception => e
+          flash[:error] = "Unable to generate card - #{e.message}"
+        end
+      end
+
+      if flash[:error].blank?
+        # -o raw 
+        output = `lp -d #{ENV["PRINTER"]} #{@badge.card.path(:original)} 2>&1`
+        printed_ok =$?.success?
+        
+        if printed_ok
+          flash[:notice] = "Badge was sent to printer.  #{output}"
+        else
+          flash[:error] = "Unable to send badge to printer.  #{output}"
+        end
+      end
+    end  
 end

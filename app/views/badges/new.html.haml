@@ -1,5 +1,6 @@
 %h1 New Badge
-
+.row
+  = render partial: 'steps', locals: { step: 1 }
 .row
   .col-xs-6.col-sm-5
     - if @badge.new_record?

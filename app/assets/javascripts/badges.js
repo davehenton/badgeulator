@@ -31,6 +31,8 @@ function takeSnapshot() {
       }, function() {
         jcrop_api = this;
       });
+      $('.step-take').removeClass("step-active");
+      $('.step-crop').addClass("step-active");
     }).fail(function(status_code, error_message, response) {
       $('#upload_response').html("Upload failed with status " + status_code);
     });
@@ -52,6 +54,8 @@ function discardSnapshot() {
   $('#camerabox').removeClass("hidden");
   $('.take-snapshot').removeClass('hidden');
   $('.retake-snapshot, .use-snapshot').addClass('hidden');
+  $('.step-take').addClass("step-active");
+  $('.step-crop').removeClass("step-active");
 }
 
 function updateCrop(coords) {
@@ -67,7 +71,7 @@ function cropSnapshot() {
   .success(function (data, status, jqxhr) {
     console.log('successfully cropped snapshot');
 
-    window.location =data['url'];
+    window.location = data['url'];
   });
 }
 

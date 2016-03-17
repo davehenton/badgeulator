@@ -1,5 +1,7 @@
 %h1 New Badge
 .row
+  = render partial: 'steps', locals: { step: 2 }
+.row
   .col-xs-6.col-sm-5
     = render partial: 'form', locals: { badge: @badge, options: { input_html: { readonly: :readonly } }}
   .col-xs-6.col-sm-5
