@@ -42,3 +42,6 @@ It currently looks up the employee information based on the employeeId attribute
 Uses the jpeg_camera gem to take a snapshot from the webcam and saves it in the /tmp directory using the name picture_#{number}.jpg where number comes from the employee id/number field in the form.
 
 When prawn generates the pdf of the badge it is stored in the /tmp directory using the name badge_#{number}.pdf
+
+ATTRIBUTION
+Badger image taken from photo by (James Perdue)[https://www.flickr.com/photos/rvguy/3860650150], via (CC2 license)[https://creativecommons.org/licenses/by/2.0/].

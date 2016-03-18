@@ -15,12 +15,26 @@ class Design < ActiveRecord::Base
     Design.find_by(default: true)
   end
 
-  def render_card(badge = nil, layout_guides = false, update_sample = false)
+  def render_card(src_badge = nil, layout_guides = false, update_sample = false)
     # the document is created with the properties of the front side
     return if sides.empty?
 
     front = sides.first
     back = sides.last if sides.size > 1
+
+    # set up the sample data if no badge was specified
+    if src_badge.blank?
+      badge = Badge.new({
+          # Redwall
+          employee_id: '0-399-21549-2',
+          first_name: 'Boar',
+          last_name: 'the Fighter',
+          title: 'Badger Lord',
+          department: 'Salamandastron'
+        })
+    else
+      badge = src_badge
+    end
 
     # TODO! doument should have custom properties too
     p = Prawn::Document.new({ page_size: [front.width, front.height], page_layout: front.orientation_name.downcase.to_sym, margin: front.margin })
@@ -110,16 +124,15 @@ class Design < ActiveRecord::Base
       end
 
       value = artifact.value
-      unless badge.blank?
-        value = value.gsub("{employee_id}", badge.employee_id)
-        value = value.gsub("{name}", badge.name)
-        value = value.gsub("{first_name}", badge.first_name)
-        value = value.gsub("{last_name}", badge.last_name)
-        value = value.gsub("{department}", badge.department)
-        value = value.gsub("{title}", badge.title)
-        value = value.gsub("{photo}", badge.picture.path(:badge)) unless badge.picture.blank?
-        value = value.gsub("{attachment}", artifact.attachment.path) unless artifact.attachment.blank?
-      end
+      value = value.gsub("{employee_id}", badge.employee_id)
+      value = value.gsub("{name}", badge.name)
+      value = value.gsub("{first_name}", badge.first_name)
+      value = value.gsub("{last_name}", badge.last_name)
+      value = value.gsub("{department}", badge.department)
+      value = value.gsub("{title}", badge.title)
+      # where there is no image, bobby badger will appear
+      value = value.gsub("{photo}", (badge.picture.blank? ? Rails.root.join('app', 'assets', 'images', 'badger_300r.jpg').to_s : badge.picture.path(:badge)))
+      value = value.gsub("{attachment}", artifact.attachment.path) unless artifact.attachment.blank?
 
       if false
       elsif artifact.name == "fill_gradient"
@@ -132,7 +145,7 @@ class Design < ActiveRecord::Base
       elsif artifact.name == "font"
         p.font value
       elsif artifact.name == "image"
-        if badge.blank? || !File.exist?(value)
+        if !File.exist?(value)
           if props.key?(:at) && props.key?(:height) && props.key?(:width)
             p.stroke_rectangle props[:at], props[:width], props[:height]
             p.text_box value, props
@@ -165,9 +178,9 @@ class Design < ActiveRecord::Base
     #   p.image Rails.root.join('app', 'assets', 'images', 'kpblogot.jpg'), width: 90, at: [0, p.bounds.bottom + 86]
     # end
 
-    # THIS IS WHERE WE WOULD DO THE OTHER SIDE
+    # TODO! THIS IS WHERE WE WOULD DO THE OTHER SIDE
 
-    if badge.blank?
+    if src_badge.blank?
       filename = "/tmp/design#{id}.pdf"
       p.render_file(filename)
     else

@@ -31,3 +31,20 @@
   margin-bottom: .25em;
   margin-right: .25em;
 }
+
+a.navbar-brand {
+  padding-top: 2px;
+  padding-bottom: 0;
+  
+  img {
+    max-width: 60px;
+    max-height: 60px;
+    border: solid 1px $gray-light;
+    border-radius: 50%;
+  
+    opacity: .75;
+    -ms-transform: rotate(-14deg); /* IE 9 */
+    -webkit-transform: rotate(-14deg); /* Chrome, Safari, Opera */
+    transform: rotate(-14deg);    
+  }
+}
