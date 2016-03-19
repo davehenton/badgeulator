@@ -11,7 +11,7 @@ function startCamera() {
 
 function takeSnapshot() {
   console.log('taking snapshot');
-  snapshot = camera.capture().show();
+  snapshot = camera.capture({ mirror: true }).show();
 
   //$('.retake-snapshot, .use-snapshot').removeClass('hidden');
   $('.take-snapshot').addClass('hidden');
