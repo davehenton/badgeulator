@@ -1,4 +1,16 @@
 class Artifact < ActiveRecord::Base
+  ALLOWED = [
+    "layout_guides",
+    "fill_gradient",
+    "fill_rectangle",
+    "font",
+    "image",
+    "move_down",
+    "move_up",
+    "text_box", 
+    "textbox"
+  ].freeze
+
   belongs_to :side
   has_many :properties, dependent: :destroy
 
@@ -19,4 +31,5 @@ class Artifact < ActiveRecord::Base
   def reorder
     side.reorder_artifacts
   end
+
 end
