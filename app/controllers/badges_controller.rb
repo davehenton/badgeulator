@@ -124,8 +124,13 @@ class BadgesController < ApplicationController
 
     respond_to do |format|
       # crop is posted via ajax so you cannot just redirect have to tell the browser to
-      format.html { render text: badge_url(@badge) }
-      format.json { render json: { url: badge_path(@badge) } }
+      if ENV["AUTO_PRINT"].blank? || ENV["AUTO_PRINT"] == "true"
+        format.html { render text: badges_url }
+        format.json { render json: { url: badges_url } }
+      else
+        format.html { render text: badge_url(@badge) }
+        format.json { render json: { url: badge_path(@badge) } }
+      end
     end
   end
 

@@ -14,7 +14,11 @@
     #cropbox.hidden
       %img
       %button.btn.btn-primary.retake2-snapshot{ onclick: "discardSnapshot()" } Retake
-      %button.btn.btn-primary.crop-snapshot{ onclick: "cropSnapshot()", data: { url: crop_badge_url(@badge, format: :json), disable_with: 'Working...' }} Crop
+      %button.btn.btn-primary.crop-snapshot{ onclick: "cropSnapshot()", data: { url: crop_badge_url(@badge, format: :json), disable_with: 'Working...' }}
+        - if ENV["AUTO_PRINT"].blank? || ENV["AUTO_PRINT"] == "true"
+          Crop & Print
+        - else
+          Crop
 
 %script
   $(document).ready(startCamera);
