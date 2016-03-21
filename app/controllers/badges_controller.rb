@@ -190,9 +190,10 @@ class BadgesController < ApplicationController
       end
 
       if flash[:error].blank?
-        # -o raw 
-        output = `lp -d #{ENV["PRINTER"]} #{@badge.card.path(:original)} 2>&1`
+        cmd = "lp -d #{ENV["PRINTER"]} #{ENV["PRINTER_OPTIONS"]} #{@badge.card.path(:original)} 2>&1"
+        output = `#{cmd}`
         printed_ok =$?.success?
+        Rails.logger.info "#{cmd} = #{printed_ok}"
         
         if printed_ok
           flash[:notice] = "Badge was sent to printer.  #{output}"
