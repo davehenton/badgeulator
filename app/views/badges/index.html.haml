@@ -12,7 +12,11 @@
   %tbody
     - @badges.each do |badge|
       %tr
-        %td= badge.employee_id
+        %td
+          = badge.employee_id
+          - if badge.picture.blank?
+            %span.label.label-warning.label-as-badge
+              photo missing
         %td= link_to badge.name, badge
         %td= badge.title
         %td= badge.department
