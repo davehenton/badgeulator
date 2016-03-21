@@ -2,7 +2,7 @@
 .row
   = render partial: 'steps', locals: { step: 1 }
 .row
-  .col-xs-6.col-sm-5
+  .col-xs-12
     - if @badge.new_record?
       .lookup-form
         = simple_form_for :lookup, url: lookup_url(format: :json), remote: true, html: { class: "form-inline lookup-form" } do
