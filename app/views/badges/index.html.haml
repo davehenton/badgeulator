@@ -16,7 +16,10 @@
           = badge.employee_id
           - if badge.picture.blank?
             %span.label.label-warning.label-as-badge
-              photo missing
+              no photo
+          - elsif badge.card.blank?
+            %span.label.label-warning.label-as-badge
+              no card
         %td= link_to badge.name, badge
         %td= badge.title
         %td= badge.department
