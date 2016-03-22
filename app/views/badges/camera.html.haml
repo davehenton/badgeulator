@@ -2,9 +2,11 @@
 .row
   = render partial: 'steps', locals: { step: 2 }
 .row
-  .col-xs-6.col-sm-5
-    = render partial: 'form', locals: { badge: @badge, options: { input_html: { readonly: :readonly } }}
-  .col-xs-6.col-sm-5
+  .col-xs-12.col-sm-4
+    = render partial: 'form', locals: { badge: @badge, 
+      options: { input_html: { readonly: :readonly } },
+      checkbox_options: { input_html: { disabled: :disabled } } }
+  .col-xs-12.col-sm-4
     #camerabox
       #camera
       %button.btn.btn-primary.take-snapshot{ onclick: "takeSnapshot()" } Take

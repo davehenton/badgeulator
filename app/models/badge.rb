@@ -63,6 +63,12 @@ class Badge < ActiveRecord::Base
           employee_id: entry.employeeid.first,
           dn: entry.dn
         }
+        # write current ad thumbnail photo to tmp dir
+        # File.open("/tmp/adthumb-#{entry.employeeid.first}", "wb") do |file|
+        #   entry.thumbnailPhoto.each do |b|
+        #     file.write b
+        #   end
+        # end
       end
     else
       Rails.logger.debug("no employee lookup defined")
@@ -76,7 +82,7 @@ class Badge < ActiveRecord::Base
   end
 
   def update_ad_thumbnail
-    return if ENV["USE_LDAP"] != "true" || dn.blank?
+    return if ENV["USE_LDAP"] != "true" || dn.blank? || update_thumbnail == false
 
     with_ldap do |ldap|
       picture_data = File.binread(picture.path(:thumb))

@@ -2,7 +2,9 @@
 
 .row
   .col-xs-6.col-sm-5
-    = render partial: 'form', locals: { badge: @badge, options: { input_html: { readonly: :readonly } }}
+    = render partial: 'form', locals: { badge: @badge, 
+      options: { input_html: { readonly: :readonly } }, 
+      checkbox_options: { input_html: { disabled: :disabled } } }
   .col-xs-6.col-sm-5
     - unless @badge.card.blank?
       .card-preview

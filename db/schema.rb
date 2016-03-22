@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160311011606) do
+ActiveRecord::Schema.define(version: 20160322193218) do
 
   create_table "artifacts", force: :cascade do |t|
     t.integer  "side_id"
@@ -34,8 +34,8 @@ ActiveRecord::Schema.define(version: 20160311011606) do
     t.string   "last_name"
     t.string   "title"
     t.string   "department"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
     t.string   "picture_file_name"
     t.string   "picture_content_type"
     t.integer  "picture_file_size"
@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(version: 20160311011606) do
     t.datetime "card_updated_at"
     t.string   "dn"
     t.string   "first_name"
+    t.boolean  "update_thumbnail",     default: true
   end
 
   create_table "designs", force: :cascade do |t|
