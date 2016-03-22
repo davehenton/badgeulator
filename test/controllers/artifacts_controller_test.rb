@@ -79,4 +79,18 @@ class ArtifactsControllerTest < ActionController::TestCase
 
     assert_redirected_to artifacts_path
   end
+
+  test "copy properties" do
+    a = artifacts(:two)
+    get :copy_props, id: a
+    assert_redirected_to artifacts_url
+    assert_not_nil a.properties.find_by(name: 'nop')
+  end
+
+  test "copy properties does not overwrite existing" do
+    a = artifacts(:two)
+    get :copy_props, id: a
+    assert_redirected_to artifacts_url
+    assert_equal a.properties.find_by(name: 'up').value, '10'
+  end
 end

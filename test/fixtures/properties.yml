@@ -9,3 +9,8 @@ two:
   artifact: two
   name: up
   value: 10
+
+three:
+  artifact: one
+  name: up
+  value: 5
