@@ -2,14 +2,14 @@
 
 one:
   side: one
-  name: MyString
-  order: 1
-  description: MyString
-  value: MyString
+  name: move_down
+  order: 10
+  description: move down a little
+  value: 10
 
 two:
   side:  one
-  name: MyString
-  order: 1
-  description: MyString
-  value: MyString
+  name: move_up
+  order: 20
+  description: move up a little
+  value: 10

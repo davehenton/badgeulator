@@ -26,6 +26,13 @@ class BadgesControllerTest < ActionController::TestCase
     assert_redirected_to camera_badge_path(assigns(:badge))
   end
 
+  test "should not create empty badge" do
+    assert_no_difference('Badge.count') do
+      post :create, badge: { department: 'huzzah' }
+    end
+    assert_template :new
+  end
+
   test "should show badge" do
     get :show, id: @badge
     assert_response :success
@@ -47,5 +54,11 @@ class BadgesControllerTest < ActionController::TestCase
     end
 
     assert_redirected_to badges_path
+  end
+
+  test "should generate badge" do
+    get :generate, id: @badge
+    assert_redirected_to badge_path(@badge)
+    assert_match "been generated", flash[:notice]
   end
 end

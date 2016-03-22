@@ -2,10 +2,10 @@
 
 one:
   artifact: one
-  name: MyString
-  value: MyString
+  name: nop
+  value: do nothing
 
 two:
-  artifact: one
-  name: MyString
-  value: MyString
+  artifact: two
+  name: up
+  value: 10
