@@ -3,6 +3,14 @@
 
 A system to keep track of and print employee identification cards.  
 
+<table>
+<tr>
+<td align="center"><img src="https://raw.githubusercontent.com/KPB-US/badgeulator/master/test/samples/Selection_144.png" alt="Info &amp; Cropping"><br/><em>Info &amp; Cropping</em></td>
+<td align="center"><img src="https://raw.githubusercontent.com/KPB-US/badgeulator/master/test/samples/Selection_145.png" alt="Preview"><br/><em>Preview</em></td>
+<td align="center"><img src="https://raw.githubusercontent.com/KPB-US/badgeulator/master/test/samples/Selection_146.png" alt="Design"><br/><em>Design</em></td>
+</tr>
+</table>
+
 # FEATURES
 
 - admin and user roles, admin can maintain users and delete data, devise ldap authentication by default
@@ -20,9 +28,10 @@ It does not do any encoding, though adding a barcode would be simple since prawn
 - .env (or your environment) needs the following:
   - USE_LDAP=true - to lookup employee information based on the employee id via an LDAP query
   - ALLOW_EDIT=true - to allow employee fields (for the badge) to be edited
+  - PRINTER=it-riopro - specify the name of the cups printer to use
+  - PRINTER_OPTIONS="options" - specify any options you want to pass on to the printer driver
 - Devise needs to be configured in the initializer
 - Errbit (airbrake) needs to be configured in the initializer
-- upload your own logo for the badge
 - Make sure you have pdftoppm installed.  It's in the poppler-utils apt-get package.  This is used for
 converting the pdf to images for previews and does a much crisper job than imagemagick.
 
@@ -32,6 +41,8 @@ Deploy with capistrano.  `cap staging deploy`
 If you get a weird error from passenger about a binary ruby version, then check to make sure your database.yml and ldap.yml files are set up properly.
 
 If Chrome says that you've disallowed access to your camera, it might be because you need to have SSL enabled for the site and it will only work under a secure connection to the server.
+
+You may choose to run `rake db:seed` to populate the sample badge designs.
 
 Changing the LDAP query
 It currently looks up the employee information based on the employeeId attribute, you could change this to something else in badge_controller#lookup or in the badge model's lookup_employee method if more complex query is needed.
