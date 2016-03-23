@@ -1,8 +1,5 @@
 [![Build Status](https://travis-ci.org/KPB-US/badgeulator.svg?branch=master)](https://travis-ci.org/KPB-US/badgeulator)
- ![Code Climate](https://codeclimate.com/github/KPB-US/badgeulator/badges/gpa.svg) ![Coverage](https://codeclimate.com/github/KPB-US/badgeulator/badges/coverage.svg)
-
-
-# README
+[![Code Climate](https://codeclimate.com/github/KPB-US/badgeulator/badges/gpa.svg)](https://codeclimate.com/github/KPB-US/badgeulator) [![Coverage](https://codeclimate.com/github/KPB-US/badgeulator/badges/coverage.svg)](https://codeclimate.com/github/KPB-US/badgeulator)
 
 A system to keep track of and print employee identification cards.  
 
