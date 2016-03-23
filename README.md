@@ -46,4 +46,4 @@ When prawn generates the pdf of the badge it is stored in the /tmp directory usi
 
 # ATTRIBUTION
 
-Badger image taken from photo by (James Perdue)[https://www.flickr.com/photos/rvguy/3860650150], via (CC2 license)[https://creativecommons.org/licenses/by/2.0/].
+Badger image taken from photo by [James Perdue](https://www.flickr.com/photos/rvguy/3860650150), via [CC2 license] (https://creativecommons.org/licenses/by/2.0/).
