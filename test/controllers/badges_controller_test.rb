@@ -61,4 +61,19 @@ class BadgesControllerTest < ActionController::TestCase
     assert_redirected_to badge_path(@badge)
     assert_match "been generated", flash[:notice]
   end
+
+  test "should print badge" do
+    get :print, id: @badge
+
+    assert_redirected_to badge_path(assigns(:badge))
+  end
+
+  test "should crop image" do
+    @badge.picture = File.new(Rails.root.join('app', 'assets', 'images', 'badger_300r.jpg').to_s)
+    @badge.save
+    get :crop, {id: @badge, x: 1, y: 1, w: 10, h: 10 }
+    
+    assert_response :success
+  end
+
 end

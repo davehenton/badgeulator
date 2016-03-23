@@ -48,11 +48,13 @@ You may choose to run `rake db:seed` to populate the sample badge designs.
 
 It currently looks up the employee information based on the employeeId attribute, you could change this to something else in badge_controller#lookup or in the badge model's lookup_employee method if more complex query is needed.
 
-# HOW IT WORKS
+# TESTING
 
-Uses the jpeg_camera gem to take a snapshot from the webcam and saves it in the /tmp directory using the name picture_#{number}.jpg where number comes from the employee id/number field in the form.
+May need to add a _nowhere_ printer.  
 
-When prawn generates the pdf of the badge it is stored in the /tmp directory using the name badge_#{number}.pdf
+```
+lpadmin -p nowhere -E -v file:/dev/null
+```
 
 # ATTRIBUTION
 
