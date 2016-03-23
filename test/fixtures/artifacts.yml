@@ -13,3 +13,17 @@ two:
   order: 20
   description: move up a little
   value: 10
+
+rectangle:
+  side:  one
+  name: fill_rectangle
+  order: 30
+  description: sample
+  value: rectangular
+
+textbox:
+  side:  one
+  name: textbox
+  order: 40
+  description: sample
+  value: e

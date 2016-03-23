@@ -14,3 +14,38 @@ three:
   artifact: one
   name: up
   value: 5
+
+four:
+  artifact: rectangle
+  name: at
+  value: '0, {cursor}'
+
+five:
+  artifact: rectangle
+  name: width
+  value: '{width}'
+
+six:
+  artifact: rectangle
+  name: height
+  value: 100
+
+tfour:
+  artifact: textbox
+  name: at
+  value: '0, {cursor}'
+
+tfive:
+  artifact: textbox
+  name: width
+  value: '{remaining}'
+
+tsix:
+  artifact: textbox
+  name: height
+  value: 100
+
+tseven:
+  artifact: textbox
+  name: overflow
+  value: shrink_to_fit
