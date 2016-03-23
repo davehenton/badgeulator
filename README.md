@@ -44,7 +44,8 @@ If Chrome says that you've disallowed access to your camera, it might be because
 
 You may choose to run `rake db:seed` to populate the sample badge designs.
 
-Changing the LDAP query
+## Changing the LDAP query
+
 It currently looks up the employee information based on the employeeId attribute, you could change this to something else in badge_controller#lookup or in the badge model's lookup_employee method if more complex query is needed.
 
 # HOW IT WORKS
