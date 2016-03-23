@@ -1,4 +1,4 @@
-![Build Status](https://travis-ci.org/KPB-US/badgeulator.svg?branch=master) ![Code Climate](https://codeclimate.com/github/KPB-US/badgeulator/badges/gpa.svg) ![Coverage](https://codeclimate.com/github/KPB-US/badgeulator/badges/coverage.svg")
+![Build Status](https://travis-ci.org/KPB-US/badgeulator.svg?branch=master) ![Code Climate](https://codeclimate.com/github/KPB-US/badgeulator/badges/gpa.svg) ![Coverage](https://codeclimate.com/github/KPB-US/badgeulator/badges/coverage.svg)
 
 
 # README
