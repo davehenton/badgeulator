@@ -23,8 +23,8 @@ function takeSnapshot() {
       $('#camerabox').addClass("hidden");
       $('#cropbox img').attr('src', response);
       $('#cropbox').removeClass("hidden");
-      $('#cropbox img').Jcrop({ 
-        aspectRatio: 0.85, 
+      $('#cropbox img').Jcrop({
+        aspectRatio: 0.85,
         setSelect: [0, 0, 170, 200],
         onChange: updateCrop,
         onSelect: updateCrop

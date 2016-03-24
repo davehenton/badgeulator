@@ -1,5 +1,4 @@
 class DesignsController < ApplicationController
-  #before_action :set_design, only: [:show, :edit, :update, :destroy]
   load_and_authorize_resource # from cancancan
 
   # GET /designs
@@ -63,14 +62,10 @@ class DesignsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_design
-      @design = Design.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def design_params
-      params.require(:design).permit(:name, :sample, :default,
-        sides_attributes: [:id, :order, :design_id, :orientation, :margin, :width, :height, :_destroy])
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def design_params
+    params.require(:design).permit(:name, :sample, :default,
+      sides_attributes: [:id, :order, :design_id, :orientation, :margin, :width, :height, :_destroy])
+  end
 end
