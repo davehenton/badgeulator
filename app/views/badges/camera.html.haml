@@ -9,14 +9,16 @@
   .col-xs-12.col-sm-4
     #camerabox
       #camera
+      .status
       %button.btn.btn-primary.take-snapshot{ onclick: "takeSnapshot()" } Take
       %button.btn.btn-default.retake-snapshot.hidden{ onclick: "discardSnapshot()" } Retake
       %button.btn.btn-primary.use-snapshot.hidden{ onclick: "useSnapshot()", data: { url: snapshot_badge_url(@badge, format: :json) } } Use
       #upload_response
     #cropbox.hidden
       %img
-      %button.btn.btn-primary.retake2-snapshot{ onclick: "discardSnapshot()" } Retake
-      %button.btn.btn-primary.crop-snapshot{ onclick: "cropSnapshot()", data: { url: crop_badge_url(@badge, format: :json), disable_with: 'Working...' }}
+      .status
+      %button.btn.btn-primary.retake2-snapshot.hidden{ onclick: "discardSnapshot()" } Retake
+      %button.btn.btn-primary.crop-snapshot.hidden{ onclick: "cropSnapshot()", data: { url: crop_badge_url(@badge, format: :json), disable_with: 'Working...' }}
         - if ENV["AUTO_PRINT"].blank? || ENV["AUTO_PRINT"] == "true"
           Crop & Print
         - else

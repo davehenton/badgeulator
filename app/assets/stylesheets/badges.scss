@@ -11,6 +11,9 @@ div#camera, div#snapshot {
 
 div#cropbox > .jcrop-holder {
   border: solid 1px gray;
+}
+
+div#cropbox img, div#cropbox > .jcrop-holder {
   margin-bottom: .25em;
 }
 
@@ -55,7 +58,7 @@ div.lookup-form {
 .steps-bar {
   height: 3em;
   margin-bottom: 1em;
- 
+
   ul.steps {
     list-style-type: none;
     font-size: .9em;

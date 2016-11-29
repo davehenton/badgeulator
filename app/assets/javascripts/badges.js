@@ -17,10 +17,14 @@ function takeSnapshot() {
 
   //$('.retake-snapshot, .use-snapshot').removeClass('hidden');
   $('.take-snapshot').addClass('hidden');
+  $('.crop-snapshot').addClass('hidden');
+  $('.retake2-snapshot').addClass('hidden');
+  $('.status').html("<i class='fa fa-spin fa-spinner'></i> Processing...");
 
   console.log('uploading snapshot');
   if (snapshot !== null) {
-    snapshot.upload({ api_url: $('.use-snapshot').data('url') }).done(function(data) {
+    snapshot.upload({ api_url: $('.use-snapshot').data('url') })
+    .done(function(data) {
       data = JSON.parse(data);
       $('#camerabox').addClass("hidden");
       $('#cropbox img').attr('src', data.url);
@@ -30,7 +34,11 @@ function takeSnapshot() {
       kairos.detect(data.base64, function(results) {
         console.debug(results.responseText);
         z = JSON.parse(results.responseText);
-        if (z && z.images[0].status == 'Complete') {
+        if (z && typeof z.Errors != "undefined") {
+          console.error(z.Errors[0].Message);
+          $('.status').text(z.Errors[0].Message);
+          $('.retake2-snapshot').removeClass('hidden');
+        } else if (z && typeof z.images != "undefined" && z.images[0].status == 'Complete') {
           // found so lets pinpoint
           // ratio
           var r_v = 400 / z.images[0].height;
@@ -73,11 +81,16 @@ function takeSnapshot() {
           }, function() {
             jcrop_api = this;
           });
+          $('.crop-snapshot').removeClass('hidden');
+          $('.retake2-snapshot').removeClass('hidden');
           $('.retake-snapshot').removeClass('hidden');
           $('.step-take').removeClass("step-active");
           $('.step-crop').addClass("step-active");
+          $('.status').empty();
         } else {
           console.debug('unable to find face');
+          $('#upload_response').html("Unable to find a face in the photo.");
+          $('.status').empty();
         }
       }, {});
 
@@ -96,17 +109,18 @@ function takeSnapshot() {
 */
     }).fail(function(status_code, error_message, response) {
       $('#upload_response').html("Upload failed with status " + status_code);
+      $('.status').empty();
     });
   }
 }
 
 function discardSnapshot() {
   console.log('discarding snapshot');
-  if (jcrop_api !== null) {
+  if (typeof jcrop_api !== 'undefined' && jcrop_api !== null) {
     jcrop_api.destroy();
     jcrop_api = null;
   }
-  if (snapshot !== null) {
+  if (typeof snapshot !== 'undefined' && snapshot !== null) {
     snapshot.discard();
     snapshot = null;
   }
