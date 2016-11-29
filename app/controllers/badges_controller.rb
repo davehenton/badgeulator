@@ -146,7 +146,7 @@ class BadgesController < ApplicationController
 
     respond_to do |format|
       format.html { render text: @badge.picture.url(:badge) }
-      format.json { render json: { url: @badge.picture.url(:badge) }, status: :ok }
+      format.json { render json: { url: @badge.picture.url(:badge), base64: Base64.encode64(request.raw_post) }, status: :ok }
     end
   end
 
@@ -199,12 +199,12 @@ class BadgesController < ApplicationController
         output = `#{cmd}`
         printed_ok =$?.success?
         Rails.logger.info "#{cmd} = #{printed_ok}"
-        
+
         if printed_ok
           flash[:notice] = "Badge was sent to printer.  #{output}"
         else
           flash[:error] = "Unable to send badge to printer.  #{output}"
         end
       end
-    end  
+    end
 end

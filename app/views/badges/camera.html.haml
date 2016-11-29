@@ -3,7 +3,7 @@
   = render partial: 'steps', locals: { step: 2 }
 .row
   .col-xs-12.col-sm-4
-    = render partial: 'form', locals: { badge: @badge, 
+    = render partial: 'form', locals: { badge: @badge,
       options: { input_html: { readonly: :readonly } },
       checkbox_options: { input_html: { disabled: :disabled } } }
   .col-xs-12.col-sm-4
@@ -11,7 +11,7 @@
       #camera
       %button.btn.btn-primary.take-snapshot{ onclick: "takeSnapshot()" } Take
       %button.btn.btn-default.retake-snapshot.hidden{ onclick: "discardSnapshot()" } Retake
-      %button.btn.btn-primary.use-snapshot.hidden{ onclick: "useSnapshot()", data: { url: snapshot_badge_url(@badge) } } Use
+      %button.btn.btn-primary.use-snapshot.hidden{ onclick: "useSnapshot()", data: { url: snapshot_badge_url(@badge, format: :json) } } Use
       #upload_response
     #cropbox.hidden
       %img

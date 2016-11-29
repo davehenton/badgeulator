@@ -19,4 +19,5 @@
 //= require jpeg_camera_init
 //= require jquery.Jcrop
 //= require cocoon
+//= require kairos
 //= require_tree .
