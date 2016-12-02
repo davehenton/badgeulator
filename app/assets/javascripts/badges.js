@@ -1,5 +1,3 @@
-var kairos;
-
 var camera;
 var snapshot;   // only one at a time
 var jcrop_api;
@@ -30,83 +28,64 @@ function takeSnapshot() {
       $('#cropbox img').attr('src', data.url);
       $('#cropbox').removeClass("hidden");
 
-      // use kairos to find the face and set the max crop size
-      kairos.detect(data.base64, function(results) {
-        console.debug(results.responseText);
-        z = JSON.parse(results.responseText);
-        if (z && typeof z.Errors != "undefined") {
-          console.error(z.Errors[0].Message);
-          $('.status').text(z.Errors[0].Message);
-          $('.retake2-snapshot').removeClass('hidden');
-        } else if (z && typeof z.images != "undefined" && z.images[0].status == 'Complete') {
-          // found so lets pinpoint
-          // ratio
-          var r_v = 400 / z.images[0].height;
-          var r_h = 300 / z.images[0].width;
-          var face = {
-            x: z.images[0].faces[0].topLeftX * r_h,
-            y: z.images[0].faces[0].topLeftY * r_v,
-            x2: (z.images[0].faces[0].topLeftX + z.images[0].faces[0].width) * r_h,
-            y2: (z.images[0].faces[0].topLeftY + z.images[0].faces[0].height) * r_v
-          };
-          var w = z.images[0].faces[0].width/4 * r_h + 3;
-          var h = z.images[0].faces[0].height/2 * r_v + 10;
-          if (face.x - w > 0) {
-            face.x = face.x - w;
+        z = data.results;
+        // console.debug(z);
+        if (z && typeof z.faces != "undefined") {
+          if (z.faces.length == 0) {
+            $('.status').text("Unable to find face in photo");
+            $('.retake2-snapshot').removeClass('hidden');
           } else {
-            face.x = 0;
-          }
-          if (face.x2 + w < 300) {
-            face.x2 = face.x2 + w;
-          } else {
-            face.x2 = 300;
-          }
-          if (face.y - h > 0) {
-            face.y = face.y - h;
-          } else {
-            face.y = 0;
-          }
-          if (face.y2 + h < 400) {
-            face.y2 = face.y2 + h;
-          } else {
-            face.y2 = 400;
-          }
+            // found so lets pinpoint
+            var face = {
+              x: z.faces[0].x,
+              y: z.faces[0].y,
+              x2: z.faces[0].x + z.faces[0].width,
+              y2: z.faces[0].y + z.faces[0].height
+            };
+            var w = z.faces[0].width / 8;   // width margin to include
+            var h = z.faces[0].height / 4;  // height margin to include
+            if (face.x - w > 0) {
+              face.x = face.x - w;
+            } else {
+              face.x = 0;
+            }
+            if (face.x2 + w < 300) {
+              face.x2 = face.x2 + w;
+            } else {
+              face.x2 = 300;
+            }
+            if (face.y - h > 0) {
+              face.y = face.y - h;
+            } else {
+              face.y = 0;
+            }
+            if (face.y2 + h < 400) {
+              face.y2 = face.y2 + h;
+            } else {
+              face.y2 = 400;
+            }
 
-          $('#cropbox img').Jcrop({
-            aspectRatio: 0.85,
-            setSelect: [face.x, face.y, face.x2, face.y2],
-            maxSize: [face.x2 - face.x, face.y2 - face.y],
-            onChange: updateCrop,
-            onSelect: updateCrop
-          }, function() {
-            jcrop_api = this;
-          });
-          $('.crop-snapshot').removeClass('hidden');
-          $('.retake2-snapshot').removeClass('hidden');
-          $('.retake-snapshot').removeClass('hidden');
-          $('.step-take').removeClass("step-active");
-          $('.step-crop').addClass("step-active");
-          $('.status').empty();
+            $('#cropbox img').Jcrop({
+              aspectRatio: 0.85,
+              setSelect: [face.x, face.y, face.x2, face.y2],
+              maxSize: [face.x2 - face.x, face.y2 - face.y],
+              onChange: updateCrop,
+              onSelect: updateCrop
+            }, function() {
+              jcrop_api = this;
+            });
+            $('.crop-snapshot').removeClass('hidden');
+            $('.retake2-snapshot').removeClass('hidden');
+            $('.retake-snapshot').removeClass('hidden');
+            $('.step-take').removeClass("step-active");
+            $('.step-crop').addClass("step-active");
+            $('.status').empty();
+          }
         } else {
           console.debug('unable to find face');
           $('#upload_response').html("Unable to find a face in the photo.");
           $('.status').empty();
         }
-      }, {});
-
-      // move this into the kairos handler so we can set it based on those results
-/*
-      $('#cropbox img').Jcrop({
-        aspectRatio: 0.85,
-        setSelect: [0, 0, 170, 200],
-        onChange: updateCrop,
-        onSelect: updateCrop
-      }, function() {
-        jcrop_api = this;
-      });
-      $('.step-take').removeClass("step-active");
-      $('.step-crop').addClass("step-active");
-*/
     }).fail(function(status_code, error_message, response) {
       $('#upload_response').html("Upload failed with status " + status_code);
       $('.status').empty();
@@ -124,6 +103,7 @@ function discardSnapshot() {
     snapshot.discard();
     snapshot = null;
   }
+  $('.status').text("");
   $('#upload_response').html('');
   $('#cropbox').addClass("hidden");
   $('#camerabox').removeClass("hidden");
@@ -152,12 +132,6 @@ function cropSnapshot() {
 
 function handleLookup() {
   console.log("handling lookup");
-
-  // initializing kairos
-  if (kairos == null) {
-    console.debug('initializing kairos...');
-    kairos = new Kairos("768742e6", "983747b77efeec3910f7ae6479c05e5f");
-  }
 
   $(document)
     .on('ajax:success', '.lookup-form', function (e, data, status, xhr) {

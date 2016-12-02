@@ -144,9 +144,69 @@ class BadgesController < ApplicationController
     @badge.save!
     File.delete("/tmp/picture_#{id}.jpg") if File.exist?("/tmp/picture_#{id}.jpg")
 
+
+
+
+    # # These code snippets use an open-source library. http://unirest.io/ruby
+    response = Unirest.post "https://apicloud-facerect.p.mashape.com/process-file.json",
+      headers:{
+        "X-Mashape-Key" => "DG3G8aFfsemshG7TRzYqz5f9FFPwp1BjRDejsncx9nQ6T06SW3"
+      },
+      parameters:{
+        "image" => File.new(@badge.picture.path(:badge))
+      }
+
+    # JSON results:
+    # {
+    #   "faces": [
+    #     {
+    #       "orientation": "frontal",
+    #       "x": 147,
+    #       "y": 161,
+    #       "width": 478,
+    #       "height": 478,
+    #       "features": {
+    #         "eyes": [
+    #           {
+    #             "x": 277,
+    #             "y": 309,
+    #             "width": 62,
+    #             "height": 62
+    #           },
+    #           {
+    #             "x": 417,
+    #             "y": 295,
+    #             "width": 83,
+    #             "height": 83
+    #           }
+    #         ],
+    #         "nose": {
+    #           "x": 350,
+    #           "y": 406,
+    #           "width": 76,
+    #           "height": 64
+    #         },
+    #         "mouth": {
+    #           "x": 319,
+    #           "y": 481,
+    #           "width": 146,
+    #           "height": 88
+    #         }
+    #       }
+    #     }
+    #   ],
+    #   "image": {
+    #     "width": 800,
+    #     "height": 800
+    #   }
+    # }
+
+
+
+
     respond_to do |format|
       format.html { render text: @badge.picture.url(:badge) }
-      format.json { render json: { url: @badge.picture.url(:badge), base64: Base64.encode64(request.raw_post) }, status: :ok }
+      format.json { render json: { url: @badge.picture.url(:badge), results: response.body }, status: :ok }
     end
   end
 
