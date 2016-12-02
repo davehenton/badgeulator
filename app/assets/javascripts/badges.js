@@ -42,8 +42,8 @@ function takeSnapshot() {
               x2: z.faces[0].x + z.faces[0].width,
               y2: z.faces[0].y + z.faces[0].height
             };
-            var w = z.faces[0].width / 8;   // width margin to include
-            var h = z.faces[0].height / 4;  // height margin to include
+            var w = z.faces[0].width / 6;   // width margin to include
+            var h = z.faces[0].height / 3;  // height margin to include
             if (face.x - w > 0) {
               face.x = face.x - w;
             } else {
