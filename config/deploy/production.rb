@@ -1,6 +1,6 @@
 server 'admweb4', user: 'deploy', roles: %w(app db web)
 
-set :rvm_ruby_version, '2.2.1'
+set :rvm_ruby_version, '2.3.3'
 
 # server-based syntax
 # ======================
