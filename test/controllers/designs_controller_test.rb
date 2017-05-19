@@ -1,49 +1,55 @@
 require 'test_helper'
 
-class DesignsControllerTest < ActionController::TestCase
+class DesignsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @design = designs(:one)
     @user = users(:admin)
     sign_in @user
   end
 
-  test "should get index" do
-    get :index
+  test 'should get index' do
+    get designs_url
     assert_response :success
     assert_not_nil assigns(:designs)
   end
 
-  test "should get new" do
-    get :new
+  test 'should get new' do
+    get new_design_url
     assert_response :success
   end
 
-  test "should create design" do
+  test 'should create design' do
     assert_difference('Design.count') do
-      post :create, design: { name: @design.name }
+      post designs_url, params: {
+        design: {
+          name: @design.name
+        }
+      }
     end
 
     assert_redirected_to design_path(assigns(:design))
   end
 
-  test "should show design" do
-    get :show, id: @design
+  test 'should show design' do
+    get design_url(@design)
     assert_response :success
   end
 
-  test "should get edit" do
-    get :edit, id: @design
+  test 'should get edit' do
+    get edit_design_url(@design)
     assert_response :success
   end
 
-  test "should update design" do
-    patch :update, id: @design, design: { name: @design.name }
+  test 'should update design' do
+    patch design_url(@design), params: {
+      design: { name: @design.name }
+    }
     assert_redirected_to design_path(assigns(:design))
   end
 
-  test "should destroy design" do
+  test 'should destroy design' do
     assert_difference('Design.count', -1) do
-      delete :destroy, id: @design
+      delete design_url(@design)
     end
 
     assert_redirected_to designs_path

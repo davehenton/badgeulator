@@ -1,4 +1,4 @@
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   rolify
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
   validates :email, presence: true
   validates_uniqueness_of :email
 
-  default_scope { order(name: :asc) } 
+  default_scope { order(name: :asc) }
 
   ROLES = %w(admin user none)
 

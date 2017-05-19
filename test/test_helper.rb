@@ -1,6 +1,3 @@
-require "codeclimate-test-reporter"
-CodeClimate::TestReporter.start
-
 require 'simplecov'
 SimpleCov.start
 
@@ -15,6 +12,6 @@ class ActiveSupport::TestCase
   # Add more helper methods to be used by all tests here...
 end
 
-class ActionController::TestCase
-  include Devise::TestHelpers
+class ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers
 end

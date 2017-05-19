@@ -1,4 +1,4 @@
-class Property < ActiveRecord::Base
+class Property < ApplicationRecord
   belongs_to :artifact
 
   ALLOWED = [
@@ -32,5 +32,5 @@ class Property < ActiveRecord::Base
   default_scope { order( { artifact_id: :asc, name: :asc } ) }
 
   validates :name, presence: true
-  
+
 end

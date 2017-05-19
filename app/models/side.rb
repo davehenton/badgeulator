@@ -1,4 +1,4 @@
-class Side < ActiveRecord::Base
+class Side < ApplicationRecord
   SIDES = [{ name: 'Front', value: 0 }, { name: 'Back', value: 1 }].freeze
   ORIENTATIONS = [{ name: 'Portrait', value: 0 }, { name: 'Landscape', value: 1 }].freeze
 
@@ -30,7 +30,7 @@ class Side < ActiveRecord::Base
     artifacts.each do |artifact|
       i = i + 10
       # skip validations and callbacks and stamping
-      artifact.update_columns(order: i)
+      artifact.update_columns(order: i) unless artifact.destroyed?
     end
   end
 end

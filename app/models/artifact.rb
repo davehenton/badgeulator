@@ -1,4 +1,4 @@
-class Artifact < ActiveRecord::Base
+class Artifact < ApplicationRecord
   ALLOWED = [
     "layout_guides",
     "fill_gradient",
@@ -7,7 +7,7 @@ class Artifact < ActiveRecord::Base
     "image",
     "move_down",
     "move_up",
-    "text_box", 
+    "text_box",
     "textbox"
   ].freeze
 
@@ -16,7 +16,7 @@ class Artifact < ActiveRecord::Base
 
   has_attached_file :attachment
 
-  default_scope { order( { side_id: :asc, order: :asc, name: :asc } ) } 
+  default_scope { order( { side_id: :asc, order: :asc, name: :asc } ) }
 
   accepts_nested_attributes_for :properties, reject_if: :all_blank, allow_destroy: true
 

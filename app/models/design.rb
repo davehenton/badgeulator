@@ -1,11 +1,11 @@
-class Design < ActiveRecord::Base
+class Design < ApplicationRecord
   has_many :sides, dependent: :destroy
-  
+
   has_attached_file :sample, styles: { preview: { geometry: "318x200>", format: :png, convert_options: "-png" } }, processors: [:pdftoppm]
 
   accepts_nested_attributes_for :sides, reject_if: :all_blank, allow_destroy: true
 
-  default_scope { order(name: :asc) } 
+  default_scope { order(name: :asc) }
 
   validates :name, presence: true
   validates_attachment :sample, content_type: { content_type: "application/pdf" }
@@ -38,7 +38,7 @@ class Design < ActiveRecord::Base
 
     side_count = 0
     sides.each do |side|
-      
+
       side_count += 1
       if side_count == 2
         # set up flip side
@@ -115,7 +115,7 @@ class Design < ActiveRecord::Base
           props[:fit] = [props[:width], props[:height]]
         end
 
-        
+
         # render the artifact
 
         # make adjustments to position based on our custom :up or :down props

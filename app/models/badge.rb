@@ -1,12 +1,12 @@
 require 'ldap_helper'
 include LdapHelper
 
-class Badge < ActiveRecord::Base
+class Badge < ApplicationRecord
 
   has_attached_file :picture, styles: { badge: "300x400>", thumb: ["96x96#", :png] }, processors: [:cropper]
   has_attached_file :card, styles: { preview: { geometry: "318x200>", format: :png, convert_options: "-png" } }, processors: [:pdftoppm]
 
-  default_scope { order(created_at: :desc) } 
+  default_scope { order(created_at: :desc) }
 
   attr_accessor :crop_x, :crop_y, :crop_h, :crop_w
 
@@ -34,9 +34,9 @@ class Badge < ActiveRecord::Base
     if ENV["USE_LDAP"] == "true"
       with_ldap do |ldap|
         results = ldap.search(
-          filter: "(#{attribute}=#{value})",      # active_filter, 
+          filter: "(#{attribute}=#{value})",      # active_filter,
           attributes: %w(givenname mail dn sn employeeID manager title department thumbnailPhoto) )
-        Rails.logger.debug("#{results.size} results found")        
+        Rails.logger.debug("#{results.size} results found")
         if results.size == 1
           entry = results.first
         end
@@ -73,7 +73,7 @@ class Badge < ActiveRecord::Base
     else
       Rails.logger.debug("no employee lookup defined")
     end
-    
+
     info
   end
 

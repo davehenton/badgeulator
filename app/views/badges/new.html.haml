@@ -9,7 +9,7 @@
           .form-group
             %label{for: "employee_id"} Employee ID
             %input.form-control.required{type: "text", name: "id", id: "employee_id"}
-            %button.btn.btn-default.lookup-employee{ data: { disable_with: "<i class='fa fa-spin fa-spinner'></i> Looking...".html_safe }}
+            %button.btn.btn-default.lookup-employee{ "data-disable-with": "<i class=\"fa fa-spin fa-spinner\"></i> Looking...".html_safe }
               %i.fa.fa-search
               Lookup
         .lookup-status
