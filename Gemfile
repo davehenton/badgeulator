@@ -40,7 +40,7 @@ gem 'rails-controller-testing', group: :test
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
-  gem 'web-console', '~> 3.3.0'
+  gem 'web-console', '~> 3.5.0'
 
   # Use Capistrano for deployment
   gem 'capistrano', '~> 3.6'
@@ -60,10 +60,10 @@ gem 'will_paginate-bootstrap'
 
 gem 'jcrop-rails-v2'
 gem 'jpeg_camera', '~> 1.3.2'
-gem 'paperclip', '~> 4.3.5'
+gem 'paperclip', '~> 5.0.0'
 gem 'prawn'
 
-gem 'cancancan', '~> 1.10'
+gem 'cancancan', '~> 2.0'
 gem 'devise'
 gem 'devise_ldap_authenticatable'
 gem 'rolify'
