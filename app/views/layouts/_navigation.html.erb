@@ -21,6 +21,11 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li>
+          <%= link_to new_badge_path do %>
+            <i class="fa fa-plus-circle"></i> New Badge
+          <% end %>
+        </li>
+        <li>
           <%= link_to badges_path do %>
             <i class="fa fa-credit-card"></i> Badges
           <% end %>
