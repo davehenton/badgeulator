@@ -13,6 +13,9 @@
       %button.btn.btn-primary.take-snapshot{ onclick: "takeSnapshot()" } Take
       %button.btn.btn-default.retake-snapshot.hidden{ onclick: "discardSnapshot()" } Retake
       %button.btn.btn-primary.use-snapshot.hidden{ onclick: "useSnapshot()", data: { url: snapshot_badge_url(@badge, format: :json) } } Use
+      = simple_form_for(:badge, url: snapshot_badge_url(@badge.id, format: :js), data: { remote: true }, html: { class: 'form-inline upload-pic'}) do |f|
+        = f.input :picture, as: :file, label: false
+        %button.btn.btn-default Upload
       #upload_response
     #cropbox.hidden
       %img

@@ -22,6 +22,7 @@ Rails.application.routes.draw do
       get 'print'     # prints badge
       get 'generate'  # generate badge
 
+      patch 'snapshot'  # uploads file
       get 'crop'      # crops picture
       post 'snapshot' # uploads snapshot
     end

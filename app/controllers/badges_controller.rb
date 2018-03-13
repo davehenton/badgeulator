@@ -137,15 +137,19 @@ class BadgesController < ApplicationController
   # POST /snapshot
   def snapshot
     id = @badge.id
-    File.open("/tmp/picture_#{id}.jpg", 'wb') do |f|
-      f.write(request.raw_post)
+
+    if params[:badge].present? and params[:badge][:picture].present?
+      # do it the paperclip way
+      @badge.update(snapshot_params)
+    else
+      # do it the raw_post way from the jpeg_camera js
+      File.open("/tmp/picture_#{id}.jpg", 'wb') do |f|
+        f.write(request.raw_post)
+      end
+      @badge.picture =  File.open "/tmp/picture_#{id}.jpg"
+      @badge.save!
+      File.delete("/tmp/picture_#{id}.jpg") if File.exist?("/tmp/picture_#{id}.jpg")
     end
-    @badge.picture =  File.open "/tmp/picture_#{id}.jpg"
-    @badge.save!
-    File.delete("/tmp/picture_#{id}.jpg") if File.exist?("/tmp/picture_#{id}.jpg")
-
-
-
 
     # # These code snippets use an open-source library. http://unirest.io/ruby
     response = Unirest.post "https://apicloud-facerect.p.mashape.com/process-file.json",
@@ -201,12 +205,12 @@ class BadgesController < ApplicationController
     #   }
     # }
 
-
-
+    s = "handleSnapshotUploadResponse('" + { url: @badge.picture.url(:badge), results: response.body }.to_json.to_s + "');"
 
     respond_to do |format|
       format.html { render text: @badge.picture.url(:badge) }
       format.json { render json: { url: @badge.picture.url(:badge), results: response.body }, status: :ok }
+      format.js { render js: s, status: :ok }
     end
   end
 
@@ -240,6 +244,10 @@ class BadgesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def badge_params
       params.require(:badge).permit(:employee_id, :first_name, :last_name, :title, :department, :dn, :update_thumbnail)
+    end
+
+    def snapshot_params
+      params.require(:badge).permit(:picture)
     end
 
     def print_badge

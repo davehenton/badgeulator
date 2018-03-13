@@ -77,3 +77,5 @@ gem 'cocoon'
 gem 'mysql2'
 
 gem 'unirest'  # for accessing mashape face detection api
+
+gem 'remotipart'

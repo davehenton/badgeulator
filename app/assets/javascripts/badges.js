@@ -9,6 +9,72 @@ function startCamera() {
   }
 }
 
+function handleSnapshotUploadResponse(data) {
+  data = JSON.parse(data);
+  $('#camerabox').addClass("hidden");
+  $('#cropbox img').attr('src', data.url);
+  $('#cropbox').removeClass("hidden");
+
+  z = data.results;
+  // console.debug(z);
+  if (z && typeof z.faces != "undefined") {
+    if (z.faces.length == 0) {
+      $('.status').text("Unable to find face in photo");
+      $('.retake2-snapshot').removeClass('hidden');
+    } else {
+      // found so lets pinpoint
+      var face = {
+        x: z.faces[0].x,
+        y: z.faces[0].y,
+        x2: z.faces[0].x + z.faces[0].width,
+        y2: z.faces[0].y + z.faces[0].height
+      };
+      var w = z.faces[0].width / 6;   // width margin to include
+      var h = z.faces[0].height / 3;  // height margin to include
+      if (face.x - w > 0) {
+        face.x = face.x - w;
+      } else {
+        face.x = 0;
+      }
+      if (face.x2 + w < 300) {
+        face.x2 = face.x2 + w;
+      } else {
+        face.x2 = 300;
+      }
+      if (face.y - h > 0) {
+        face.y = face.y - h;
+      } else {
+        face.y = 0;
+      }
+      if (face.y2 + h < 400) {
+        face.y2 = face.y2 + h;
+      } else {
+        face.y2 = 400;
+      }
+
+      $('#cropbox img').Jcrop({
+        aspectRatio: 0.85,
+        setSelect: [face.x, face.y, face.x2, face.y2],
+        maxSize: [face.x2 - face.x, face.y2 - face.y],
+        onChange: updateCrop,
+        onSelect: updateCrop
+      }, function() {
+        jcrop_api = this;
+      });
+      $('.crop-snapshot').removeClass('hidden');
+      $('.retake2-snapshot').removeClass('hidden');
+      $('.retake-snapshot').removeClass('hidden');
+      $('.step-take').removeClass("step-active");
+      $('.step-crop').addClass("step-active");
+      $('.status').empty();
+    }
+  } else {
+    console.debug('unable to find face');
+    $('#upload_response').html("Unable to find a face in the photo.");
+    $('.status').empty();
+  }
+}
+
 function takeSnapshot() {
   console.log('taking snapshot');
   snapshot = camera.capture({ mirror: true }).show();
@@ -22,71 +88,8 @@ function takeSnapshot() {
   console.log('uploading snapshot');
   if (snapshot !== null) {
     snapshot.upload({ api_url: $('.use-snapshot').data('url') })
-    .done(function(data) {
-      data = JSON.parse(data);
-      $('#camerabox').addClass("hidden");
-      $('#cropbox img').attr('src', data.url);
-      $('#cropbox').removeClass("hidden");
-
-        z = data.results;
-        // console.debug(z);
-        if (z && typeof z.faces != "undefined") {
-          if (z.faces.length == 0) {
-            $('.status').text("Unable to find face in photo");
-            $('.retake2-snapshot').removeClass('hidden');
-          } else {
-            // found so lets pinpoint
-            var face = {
-              x: z.faces[0].x,
-              y: z.faces[0].y,
-              x2: z.faces[0].x + z.faces[0].width,
-              y2: z.faces[0].y + z.faces[0].height
-            };
-            var w = z.faces[0].width / 6;   // width margin to include
-            var h = z.faces[0].height / 3;  // height margin to include
-            if (face.x - w > 0) {
-              face.x = face.x - w;
-            } else {
-              face.x = 0;
-            }
-            if (face.x2 + w < 300) {
-              face.x2 = face.x2 + w;
-            } else {
-              face.x2 = 300;
-            }
-            if (face.y - h > 0) {
-              face.y = face.y - h;
-            } else {
-              face.y = 0;
-            }
-            if (face.y2 + h < 400) {
-              face.y2 = face.y2 + h;
-            } else {
-              face.y2 = 400;
-            }
-
-            $('#cropbox img').Jcrop({
-              aspectRatio: 0.85,
-              setSelect: [face.x, face.y, face.x2, face.y2],
-              maxSize: [face.x2 - face.x, face.y2 - face.y],
-              onChange: updateCrop,
-              onSelect: updateCrop
-            }, function() {
-              jcrop_api = this;
-            });
-            $('.crop-snapshot').removeClass('hidden');
-            $('.retake2-snapshot').removeClass('hidden');
-            $('.retake-snapshot').removeClass('hidden');
-            $('.step-take').removeClass("step-active");
-            $('.step-crop').addClass("step-active");
-            $('.status').empty();
-          }
-        } else {
-          console.debug('unable to find face');
-          $('#upload_response').html("Unable to find a face in the photo.");
-          $('.status').empty();
-        }
-    }).fail(function(status_code, error_message, response) {
+    .done(handleSnapshotUploadResponse)
+    .fail(function(status_code, error_message, response) {
       $('#upload_response').html("Upload failed with status " + status_code);
       $('.status').empty();
     });
@@ -166,6 +169,22 @@ function handleLookup() {
   $(document).on('click', 'a.generate-badge', function () {
     $(this).html('<i class="fa fa-spin fa-spinner"></i> Generating...').addClass('disabled');
   });
+
+  // wireup file upload form for upload images instead of using camera
+  $(document)
+    .on('ajax:success', '.upload-pic', function (e, data, status, xhr) {
+      console.log('upload  success');
+      //console.debug(data);
+      //handleSnapshotUploadResponse(data);
+    })
+    .on('ajax:error', '.upload-pic', function (e, xhr, status, error) {
+      console.log('upload error');
+      $('#upload_response').html("Unable to upload the photo. Must be jpg or jpeg.");
+      $('.status').empty();
+    })
+    .on('submit', '.upload-pic', function () {
+      console.debug('upload submitted');
+    });
 }
 
 $(document).ready(handleLookup);

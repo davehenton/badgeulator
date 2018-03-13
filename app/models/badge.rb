@@ -10,7 +10,7 @@ class Badge < ApplicationRecord
 
   attr_accessor :crop_x, :crop_y, :crop_h, :crop_w
 
-  validates_attachment :picture, content_type: { content_type: "image/jpeg" }
+  validates_attachment :picture, content_type: { content_type: ["image/jpeg", "image/png"] }
   validates_attachment :card, content_type: { content_type: "application/pdf" }
 
   validates :first_name, presence: true
