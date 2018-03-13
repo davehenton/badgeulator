@@ -55,12 +55,11 @@ end
 gem 'bootstrap-sass'
 gem 'font-awesome-sass'
 gem 'simple_form'
-# gem 'will_paginate', '~> 3.1.0'
 gem 'will_paginate-bootstrap'
 
 gem 'jcrop-rails-v2'
 gem 'jpeg_camera', '~> 1.3.2'
-gem 'paperclip', '~> 5.0.0'
+gem 'paperclip', '~> 5.3.0'
 gem 'prawn'
 
 gem 'cancancan', '~> 2.0'
@@ -76,6 +75,5 @@ gem 'cocoon'
 
 gem 'mysql2'
 
-gem 'unirest'  # for accessing mashape face detection api
-
-gem 'remotipart'
+gem 'rest-client'  # for accessing mashape face detection api
+gem 'remotipart'   # for ajax form posting

@@ -136,6 +136,8 @@ class BadgesController < ApplicationController
 
   # POST /snapshot
   def snapshot
+    require 'rest-client'
+
     id = @badge.id
 
     if params[:badge].present? and params[:badge][:picture].present?
@@ -151,14 +153,19 @@ class BadgesController < ApplicationController
       File.delete("/tmp/picture_#{id}.jpg") if File.exist?("/tmp/picture_#{id}.jpg")
     end
 
-    # # These code snippets use an open-source library. http://unirest.io/ruby
-    response = Unirest.post "https://apicloud-facerect.p.mashape.com/process-file.json",
-      headers:{
-        "X-Mashape-Key" => "DG3G8aFfsemshG7TRzYqz5f9FFPwp1BjRDejsncx9nQ6T06SW3"
-      },
-      parameters:{
-        "image" => File.new(@badge.picture.path(:badge))
-      }
+    response = RestClient.post "https://apicloud-facerect.p.mashape.com/process-file.json",
+      { image: File.new(@badge.picture.path(:badge)) },
+      { "X-Mashape-Key" => "DG3G8aFfsemshG7TRzYqz5f9FFPwp1BjRDejsncx9nQ6T06SW3" }
+
+    # unirest is outdated and has security issues so replaced with rest-client
+    # # # These code snippets use an open-source library. http://unirest.io/ruby
+    # response = Unirest.post "https://apicloud-facerect.p.mashape.com/process-file.json",
+    #   headers:{
+    #     "X-Mashape-Key" => "DG3G8aFfsemshG7TRzYqz5f9FFPwp1BjRDejsncx9nQ6T06SW3"
+    #   },
+    #   parameters:{
+    #     "image" => File.new(@badge.picture.path(:badge))
+    #   }
 
     # JSON results:
     # {
@@ -205,11 +212,12 @@ class BadgesController < ApplicationController
     #   }
     # }
 
-    s = "handleSnapshotUploadResponse('" + { url: @badge.picture.url(:badge), results: response.body }.to_json.to_s + "');"
+    results = JSON.parse(response)
+    s = "handleSnapshotUploadResponse('" + { url: @badge.picture.url(:badge), results: results }.to_json.to_s + "');"
 
     respond_to do |format|
       format.html { render text: @badge.picture.url(:badge) }
-      format.json { render json: { url: @badge.picture.url(:badge), results: response.body }, status: :ok }
+      format.json { render json: { url: @badge.picture.url(:badge), results: results }, status: :ok }
       format.js { render js: s, status: :ok }
     end
   end
