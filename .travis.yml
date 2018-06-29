@@ -17,7 +17,7 @@ after_script:
   - ./cc-test-reporter after-build --debug --exit-code $TRAVIS_TEST_RESULT
 env:
   global:
-    - TEST_REPORTER_ID=a01e4f1dd1cb1fcd1cbc0cc7864c3da556b88f11f8799d4273e363b5209df084 bundle exec rake
+    - TEST_REPORTER_ID=ddfced387aa923852b7b0298614fa0a743236011d3f7af5bef3ff65a71189765 bundle exec rake
     - USE_LDAP=false
     - PRINTER=nowhere
 addons:
